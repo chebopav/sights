@@ -15,7 +15,7 @@
     <artifactId>sights-diplom</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <description>
-        Diploma work by Sergeev Dmitriy and Chebotaev Pavel
+        Diplom work by Sergeev Dmitriy and Chebotaev Pavel
         IFMO - Junior Java Developer 2020
     </description>
 
@@ -155,7 +155,7 @@
                     </filters>
                     <transformers>
                         <transformer>
-                            <mainClass>Application</mainClass>
+                            <mainClass>com.project.app.Application</mainClass>
                         </transformer>
                     </transformers>
                 </configuration>
