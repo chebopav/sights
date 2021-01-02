@@ -8,13 +8,13 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(LifeHack.class)
 public abstract class LifeHack_ {
 
+	public static volatile SingularAttribute<LifeHack, BaseData> baseData;
 	public static volatile SingularAttribute<LifeHack, Long> id;
 	public static volatile SingularAttribute<LifeHack, String> text;
-	public static volatile SingularAttribute<LifeHack, Place> place;
 
+	public static final String BASE_DATA = "baseData";
 	public static final String ID = "id";
 	public static final String TEXT = "text";
-	public static final String PLACE = "place";
 
 }
 

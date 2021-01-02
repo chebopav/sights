@@ -5,7 +5,7 @@ import java.util.Objects;
 
 /**
  * Класс Лайфхаков
- * имеет связь 1 к 1 с местом
+ * имеет связь много к 1 с местом
  */
 @Entity
 public class LifeHack {
@@ -16,10 +16,14 @@ public class LifeHack {
     @Column(nullable = false)
     private String text;
 
-    @OneToOne(mappedBy = "lifeHack")
-    private Place place;
+    @ManyToOne
+    private BaseData baseData;
 
     public LifeHack() {
+    }
+
+    public LifeHack(String text) {
+        this.setText(text);
     }
 
     public long getId() {
@@ -31,7 +35,8 @@ public class LifeHack {
     }
 
     public void setText(String text) {
-        Objects.requireNonNull(text);
+        if (text == null || text.trim().length() < 5)
+            throw new IllegalArgumentException("Некорректное описание лайфхака");
         this.text = text;
     }
 }

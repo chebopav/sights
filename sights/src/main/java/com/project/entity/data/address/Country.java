@@ -16,4 +16,16 @@ public class Country {
     @Column(nullable = false)
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<City> cities = new HashSet<>();
+
+    public Country() {
+    }
+
+    public Country(String name) {
+        this.name = name;
+    }
+
+    public void addCity(City city){
+        cities.add(city);
+        city.setCountry(this);
+    }
 }

@@ -1,5 +1,7 @@
 package com.project.entity.users;
 
+import com.project.helpers_and_statics.StaticVerifiers;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -36,6 +38,12 @@ public class User {
     public User() {
     }
 
+    public User(String login, String password, Status status) {
+        this.setLogin(login);
+        this.setPassword(password);
+        this.setStatus(status);
+    }
+
     public long getId() {
         return id;
     }
@@ -67,14 +75,14 @@ public class User {
     }
 
     public void setPassword(String password) {
-        if (!verifiedPass(password)) {
+        if (!StaticVerifiers.verifiedPass(password)) {
             throw new IllegalArgumentException("Недопустимый пароль");
         }
         this.password = password;
     }
 
     public void setEmail(String email) {
-        if (!verifiedEMail(email))
+        if (!StaticVerifiers.verifiedEMail(email))
             throw new IllegalArgumentException("Недопустимый пароль");
         this.email = email;
     }
@@ -88,27 +96,7 @@ public class User {
         this.photoURL = photoURL;
     }
 
-    /**
-     * Метод проверки пароля
-     * Проверяет на null, на наличие цифры, наличие буквы, содержание символа
-     * @param password пароль
-     * @return прошел проверку или нет
-     */
-    private boolean verifiedPass(String password){
-        Objects.requireNonNull(password);
-        return password.contains("\\d")               // проверка на содержание цифры
-                && password.contains("\\D")           // проверка на содержание буквы
-                && password.contains("\\W");          // проверка на содержание символа
-    }
 
-    /**
-     * Метод проверки e-mail
-     * @param email email
-     * @return рошел проверку или нет
-     */
-    private boolean verifiedEMail(String email){
-        Objects.requireNonNull(email);
-        return  email.contains("@")
-                && (email.endsWith(".ru") || email.endsWith(".com") || email.endsWith(".net"));
-    }
+
+
 }
