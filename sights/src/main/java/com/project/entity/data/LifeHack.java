@@ -1,7 +1,6 @@
 package com.project.entity.data;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 /**
  * Класс Лайфхаков
