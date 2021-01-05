@@ -13,7 +13,6 @@ public class Country {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<City> cities = new HashSet<>();
 

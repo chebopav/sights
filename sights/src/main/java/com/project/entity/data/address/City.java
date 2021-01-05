@@ -19,7 +19,6 @@ public class City {
     private String name;
 
     @ManyToOne
-    @Column(nullable = false, unique = true)
     private Country country;
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)

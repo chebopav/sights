@@ -2,15 +2,10 @@ package com.project.entity.data;
 
 import com.project.entity.data.address.City;
 import com.project.helpers_and_statics.StaticVerifiers;
+import com.project.helpers_and_statics.WorkDays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
-import java.time.DayOfWeek;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 @Entity
 public class Museum extends BaseData {
@@ -20,28 +15,23 @@ public class Museum extends BaseData {
     @Column(nullable = false)
     private String fullAddress;
 
-    //
-    @Transient
-    private Set<DayOfWeek> workDays = new HashSet<>(7);
-
-    @Transient
-    private Map<DayOfWeek, Map<String, Integer>> priceList = new HashMap<>();
-
-
     private String phone;
 
     private String email;
 
+    private WorkDays[] workDays;
+
     public Museum() {
     }
 
-    public Museum(City city, String name, String fullAddress, String description, String phone, int[] workDays) {
+    public Museum(City city, String name, String fullAddress, String description, String phone, WorkDays...days) {
         super(city, description);
         this.setName(name);
         this.setFullAddress(fullAddress);
         this.setPhone(phone);
-        for (int workDay : workDays) {
-            this.workDays.add(DayOfWeek.of(workDay));
+        workDays = new WorkDays[days.length];
+        for (int i = 0; i < days.length; i++) {
+            workDays[i] = days[i];
         }
     }
 
@@ -65,22 +55,6 @@ public class Museum extends BaseData {
         this.fullAddress = fullAddress;
     }
 
-    public Set<DayOfWeek> getWorkDays() {
-        return workDays;
-    }
-
-    public void setWorkDays(Set<DayOfWeek> workDays) {
-        this.workDays = workDays;
-    }
-
-    public Map<DayOfWeek, Map<String, Integer>> getPriceList() {
-        return priceList;
-    }
-
-    public void setPriceList(Map<DayOfWeek, Map<String, Integer>> priceList) {
-        this.priceList = priceList;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -98,5 +72,13 @@ public class Museum extends BaseData {
         if (!StaticVerifiers.verifiedEMail(email))
             throw new IllegalArgumentException("Некорректный e-mail");
         this.email = email;
+    }
+
+    public WorkDays[] getWorkDays() {
+        return workDays;
+    }
+
+    public void setWorkDays(WorkDays[] workDays) {
+        this.workDays = workDays;
     }
 }

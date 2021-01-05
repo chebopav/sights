@@ -15,8 +15,8 @@ public class LifeHack {
     @Column(nullable = false)
     private String text;
 
-    @ManyToOne
-    private BaseData baseData;
+//    @ManyToOne
+//    private BaseData baseData;
 
     public LifeHack() {
     }

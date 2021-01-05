@@ -1,6 +1,7 @@
 package com.project.entity.data;
 
 import com.project.entity.data.address.City;
+import com.project.helpers_and_statics.WorkDays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,23 +18,18 @@ public class Excursion extends BaseData{
     @Column(nullable = false)
     private Type type;
 
-    //
-    @Transient
-    private Set<DayOfWeek> workDays = new HashSet<>(7);
-
-    //
-    @Transient
-    private Map<DayOfWeek, Map<String, Integer>> priceList = new HashMap<>();
+    private WorkDays[] workDays;
 
     public Excursion() {
     }
 
-    public Excursion(City city, String description, String startAddress, Type type, int[] workDays) {
+    public Excursion(City city, String description, String startAddress, Type type, WorkDays...days) {
         super(city, description);
         this.setStartAddress(startAddress);
         this.setType(type);
-        for (int workDay : workDays) {
-            this.workDays.add(DayOfWeek.of(workDay));
+        workDays = new WorkDays[days.length];
+        for (int i = 0; i < days.length; i++) {
+            workDays[i] = days[i];
         }
     }
 
@@ -53,24 +49,6 @@ public class Excursion extends BaseData{
 
     public void setType(Type type) {
         this.type = type;
-    }
-
-    public Set<DayOfWeek> getWorkDays() {
-        return workDays;
-    }
-
-    public void setWorkDays(Set<DayOfWeek> workDays) {
-        Objects.requireNonNull(workDays);
-        this.workDays = workDays;
-    }
-
-    public Map<DayOfWeek, Map<String, Integer>> getPriceList() {
-        return priceList;
-    }
-
-    public void setPriceList(Map<DayOfWeek, Map<String, Integer>> priceList) {
-        Objects.requireNonNull(priceList);
-        this.priceList = priceList;
     }
 
     public enum Type{
