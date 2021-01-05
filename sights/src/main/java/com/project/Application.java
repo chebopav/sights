@@ -1,5 +1,7 @@
-package com.project.app;
+package com.project;
 
+import com.project.entity.data.address.City;
+import com.project.exceptions.ArgumentException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

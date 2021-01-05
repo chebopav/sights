@@ -1,7 +1,7 @@
 package com.project.services;
 
 import com.project.entity.users.User;
-import com.project.exception.DataException;
+import com.project.exceptions.DataException;
 import com.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,21 +24,21 @@ public class UserService {
         return repository;
     }
 
-    public User addUser(User user){
+    public User addUser(User user) throws DataException {
         if(repository.existsById(user.getId())){
             throw new DataException("User уже существует");
         }
         return repository.save(user);
     }
 
-    public User updateUser(User user){
+    public User updateUser(User user) throws DataException {
         if(!repository.existsById(user.getId())){
             throw new DataException("User не существует");
         }
         return repository.save(user);
     }
 
-    public Page<User> getPageOfUsers(int page, int size){
+    public Page<User> getPageOfUsers(int page, int size) throws DataException {
         Pageable pageable = PageRequest.of(page, size);
         Page<User> userPage = repository.findAll(pageable);
         if (userPage.isEmpty()){
@@ -47,7 +47,7 @@ public class UserService {
         return userPage;
     }
 
-    public Optional<User> getUserById(long id){
+    public Optional<User> getUserById(long id) throws DataException {
         Optional<User> result = repository.findById(id);
         if (result.isEmpty()){
             throw new DataException("User не найден");
@@ -55,7 +55,7 @@ public class UserService {
         return result;
     }
 
-    public void deleteUserById(long id){
+    public void deleteUserById(long id) throws DataException {
         if (!repository.existsById(id)){
             throw new DataException("User не найден");
         }

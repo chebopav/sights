@@ -10,6 +10,7 @@ import java.util.Objects;
  * Не вижу смысла делить юзеров на обычных и суперюзеров
  */
 @Entity
+@Table(name = "all_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

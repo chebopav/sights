@@ -23,8 +23,18 @@ public class StaticVerifiers {
      */
     public static boolean verifiedPass(String password){
         Objects.requireNonNull(password);
-        return password.contains("\\d")               // проверка на содержание цифры
-                && password.contains("\\D")           // проверка на содержание буквы
-                && password.contains("\\W");          // проверка на содержание символа
+        int length = password.length();
+        if (length < 8 || length > 30)
+            throw new IllegalArgumentException("Пароль не может быть меньше 8 символов и больше 30 символов");
+        String verifier = password.replaceAll("\\d", "");
+        if (verifier.length() == length)
+            throw new IllegalArgumentException("Пароль должен содержать цифру");
+        length = verifier.length();
+        verifier = verifier.replaceAll("\\W", "");
+        if (verifier.length() == length)
+            throw new IllegalArgumentException("Пароль должен содержать символ");
+        if (verifier.length() == 0)
+            throw new IllegalArgumentException("Пароль должен содержать букву");
+        return true;
     }
 }

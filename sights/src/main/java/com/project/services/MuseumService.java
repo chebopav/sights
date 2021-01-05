@@ -1,7 +1,7 @@
 package com.project.services;
 
 import com.project.entity.data.Museum;
-import com.project.exception.DataException;
+import com.project.exceptions.DataException;
 import com.project.repository.MuseumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,21 +25,21 @@ public class MuseumService {
         return repository;
     }
 
-    public Museum addMuseum(Museum museum){
+    public Museum addMuseum(Museum museum) throws DataException {
         if(repository.existsById(museum.getId())){
             throw new DataException("Музей уже существует");
         }
         return repository.save(museum);
     }
 
-    public Museum updateMuseum(Museum museum){
+    public Museum updateMuseum(Museum museum) throws DataException {
         if(!repository.existsById(museum.getId())){
             throw new DataException("Музей не существует");
         }
         return repository.save(museum);
     }
 
-    public Page<Museum> getPageOfMuseums(int page, int size){
+    public Page<Museum> getPageOfMuseums(int page, int size) throws DataException {
         Pageable pageable = PageRequest.of(page, size);
         Page<Museum> museumPage = repository.findAll(pageable);
         if (museumPage.isEmpty()){
@@ -48,7 +48,7 @@ public class MuseumService {
         return museumPage;
     }
 
-    public Optional<Museum> getMuseumById(long id){
+    public Optional<Museum> getMuseumById(long id) throws DataException {
         Optional<Museum> result = repository.findById(id);
         if (result.isEmpty()){
             throw new DataException("Музей не найден");
@@ -56,7 +56,7 @@ public class MuseumService {
         return result;
     }
 
-    public void deleteMuseumById(long id){
+    public void deleteMuseumById(long id) throws DataException {
         if (!repository.existsById(id)){
             throw new DataException("Музей не найден");
         }

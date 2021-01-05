@@ -2,10 +2,14 @@ package com.project.entity.data;
 
 import com.project.entity.data.address.City;
 import com.project.helpers_and_statics.StaticVerifiers;
-import com.project.helpers_and_statics.WorkDays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Museum extends BaseData {
@@ -19,20 +23,16 @@ public class Museum extends BaseData {
 
     private String email;
 
-    private WorkDays[] workDays;
+    private ArrayList<Integer> workDays = new ArrayList<>(7);
 
     public Museum() {
     }
 
-    public Museum(City city, String name, String fullAddress, String description, String phone, WorkDays...days) {
+    public Museum(City city, String name, String fullAddress, String description, String phone) {
         super(city, description);
         this.setName(name);
         this.setFullAddress(fullAddress);
         this.setPhone(phone);
-        workDays = new WorkDays[days.length];
-        for (int i = 0; i < days.length; i++) {
-            workDays[i] = days[i];
-        }
     }
 
     public String getName() {
@@ -60,7 +60,7 @@ public class Museum extends BaseData {
     }
 
     public void setPhone(String phone) {
-        // TODO: Проверка номера телефона из строки
+        if (phone.contains("[a-zA-Z]"))
         this.phone = phone;
     }
 
@@ -74,11 +74,19 @@ public class Museum extends BaseData {
         this.email = email;
     }
 
-    public WorkDays[] getWorkDays() {
+    public List<Integer> getWorkDays() {
         return workDays;
     }
 
-    public void setWorkDays(WorkDays[] workDays) {
+    public void setWorkDays(ArrayList<Integer> workDays) {
         this.workDays = workDays;
+    }
+
+    public Set<DayOfWeek> getWorkDays(List<Integer> set){
+        Set<DayOfWeek> workDays = new HashSet<>();
+        for (Integer i : set) {
+            workDays.add(DayOfWeek.of(i));
+        }
+        return workDays;
     }
 }

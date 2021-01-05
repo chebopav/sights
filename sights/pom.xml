@@ -155,7 +155,7 @@
                     </filters>
                     <transformers>
                         <transformer>
-                            <mainClass>com.project.app.Application</mainClass>
+                            <mainClass>com.project.Application</mainClass>
                         </transformer>
                     </transformers>
                 </configuration>

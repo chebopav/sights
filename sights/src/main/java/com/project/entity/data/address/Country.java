@@ -1,5 +1,7 @@
 package com.project.entity.data.address;
 
+import com.project.exceptions.ArgumentException;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,8 +21,8 @@ public class Country {
     public Country() {
     }
 
-    public Country(String name) {
-        this.name = name;
+    public Country(String name) throws ArgumentException {
+        this.setName(name);
     }
 
     public long getId() {
@@ -31,7 +33,9 @@ public class Country {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws ArgumentException {
+        if (name == null || name.trim().length() < 3)
+            throw new ArgumentException("Некорректное название страны");
         this.name = name;
     }
 

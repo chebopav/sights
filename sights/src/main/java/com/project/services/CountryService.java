@@ -1,7 +1,7 @@
 package com.project.services;
 
 import com.project.entity.data.address.Country;
-import com.project.exception.DataException;
+import com.project.exceptions.DataException;
 import com.project.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,21 +25,21 @@ public class CountryService {
         return repository;
     }
 
-    public Country addCountry(Country country){
+    public Country addCountry(Country country) throws DataException {
         if(repository.existsById(country.getId())){
             throw new DataException("Страна уже существует");
         }
         return repository.save(country);
     }
 
-    public Country updateCountry(Country country){
+    public Country updateCountry(Country country) throws DataException {
         if(!repository.existsById(country.getId())){
             throw new DataException("Страна не существует");
         }
         return repository.save(country);
     }
 
-    public Page<Country> getPageOfCountries(int page, int size){
+    public Page<Country> getPageOfCountries(int page, int size) throws DataException {
         Pageable pageable = PageRequest.of(page, size);
         Page<Country> countryPage = repository.findAll(pageable);
         if (countryPage.isEmpty()){
@@ -48,7 +48,7 @@ public class CountryService {
         return countryPage;
     }
 
-    public Optional<Country> getCountryById(long id){
+    public Optional<Country> getCountryById(long id) throws DataException {
         Optional<Country> result = repository.findById(id);
         if (result.isEmpty()){
             throw new DataException("Страна не найдена");
@@ -56,7 +56,7 @@ public class CountryService {
         return result;
     }
 
-    public void deleteCountryById(long id){
+    public void deleteCountryById(long id) throws DataException {
         if (!repository.existsById(id)){
             throw new DataException("Страна не найдена");
         }
