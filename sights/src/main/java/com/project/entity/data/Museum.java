@@ -5,6 +5,7 @@ import com.project.helpers_and_statics.StaticVerifiers;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,15 +14,19 @@ import java.util.Set;
 
 @Entity
 public class Museum extends BaseData {
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false)
     private String fullAddress;
 
+    //
+    @Transient
     private Set<DayOfWeek> workDays = new HashSet<>(7);
 
+    @Transient
     private Map<DayOfWeek, Map<String, Integer>> priceList = new HashMap<>();
+
 
     private String phone;
 
@@ -30,7 +35,7 @@ public class Museum extends BaseData {
     public Museum() {
     }
 
-    public Museum(City city, String fullAddress, String name, String description, String phone, int[] workDays) {
+    public Museum(City city, String name, String fullAddress, String description, String phone, int[] workDays) {
         super(city, description);
         this.setName(name);
         this.setFullAddress(fullAddress);

@@ -4,6 +4,7 @@ import com.project.entity.data.address.City;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.time.DayOfWeek;
 import java.util.*;
 
@@ -16,8 +17,12 @@ public class Excursion extends BaseData{
     @Column(nullable = false)
     private Type type;
 
+    //
+    @Transient
     private Set<DayOfWeek> workDays = new HashSet<>(7);
 
+    //
+    @Transient
     private Map<DayOfWeek, Map<String, Integer>> priceList = new HashMap<>();
 
     public Excursion() {
@@ -71,6 +76,7 @@ public class Excursion extends BaseData{
     public enum Type{
         BUS,
         WATER,
-        ON_FOOT
+        ON_FOOT,
+        COMPLEX
     }
 }
