@@ -3,7 +3,6 @@ package com.project.entity.data.address;
 import com.project.entity.data.Excursion;
 import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;
-import com.project.exceptions.ArgumentException;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -33,7 +32,7 @@ public class City {
     public City() {
     }
 
-    public City(String name) throws ArgumentException{
+    public City(String name){
         this.setName(name);
     }
 
@@ -53,9 +52,9 @@ public class City {
         this.country = country;
     }
 
-    public void setName(String name) throws ArgumentException {
+    public void setName(String name) {
         if (name == null || name.trim().length() < 4)
-            throw new ArgumentException("Некорректное название города");
+            throw new IllegalArgumentException("Некорректное название города");
         this.name = name;
     }
 
@@ -63,9 +62,9 @@ public class City {
         return museums;
     }
 
-    public void setMuseums(Set<Museum> museums) throws ArgumentException {
+    public void setMuseums(Set<Museum> museums){
         if(museums == null)
-            throw new ArgumentException("Музеи не могут быть null");
+            throw new IllegalArgumentException("Музеи не могут быть null");
         this.museums = museums;
     }
 
@@ -73,9 +72,9 @@ public class City {
         return sights;
     }
 
-    public void setSights(Set<Sight> sights) throws ArgumentException {
+    public void setSights(Set<Sight> sights){
         if(sights == null)
-            throw new ArgumentException("Достопримечательности не могут быть null");
+            throw new IllegalArgumentException("Достопримечательности не могут быть null");
         this.sights = sights;
     }
 
@@ -83,9 +82,9 @@ public class City {
         return excursions;
     }
 
-    public void setExcursions(Set<Excursion> excursions) throws ArgumentException {
+    public void setExcursions(Set<Excursion> excursions){
         if(excursions == null)
-            throw new ArgumentException("Экскурсии не могут быть null");
+            throw new IllegalArgumentException("Экскурсии не могут быть null");
         this.excursions = excursions;
     }
 }

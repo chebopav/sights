@@ -26,6 +26,13 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    private String name;
+
+    private String phone;
+
+    private boolean isOnline;
+
+    @Column(nullable = false)
     private Status status;
 
     @Column(unique = true)
@@ -39,10 +46,21 @@ public class User {
     public User() {
     }
 
-    public User(String login, String password, Status status) {
+    public User(String login, String password, String email, String name) {
         this.setLogin(login);
         this.setPassword(password);
-        this.setStatus(status);
+        this.setEmail(email);
+        this.setName(name);
+        this.setStatus(Status.USER);
+    }
+
+    public User(String login, String password, String email, String name, String phone) {
+        this.setLogin(login);
+        this.setPassword(password);
+        this.setEmail(email);
+        this.setName(name);
+        this.setPhone(phone);
+        this.setStatus(Status.USER);
     }
 
     public long getId() {
@@ -69,6 +87,18 @@ public class User {
         return photoURL;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
     public void setLogin(String login) {
         if (login == null || login.trim().length() < 3)
             throw new IllegalArgumentException("Некорректный логин");
@@ -84,7 +114,7 @@ public class User {
 
     public void setEmail(String email) {
         if (!StaticVerifiers.verifiedEMail(email))
-            throw new IllegalArgumentException("Недопустимый пароль");
+            throw new IllegalArgumentException("Недопустимый e-mail");
         this.email = email;
     }
 
@@ -97,7 +127,17 @@ public class User {
         this.photoURL = photoURL;
     }
 
+    public void setName(String name) {
+        if (name == null || name.trim().length() < 3)
+            throw new IllegalArgumentException("Некорректное имя пользователя");
+        this.name = name;
+    }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-
+    public void setOnline(boolean online) {
+        isOnline = online;
+    }
 }

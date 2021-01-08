@@ -20,9 +20,6 @@ public abstract class BaseData {
     @ManyToOne
     private City city;
 
-//    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY, orphanRemoval = true)
-//    private Set<LifeHack> lifeHacks = new HashSet<>();
-
     @Column(nullable = false)
     private String description;
 
@@ -46,15 +43,6 @@ public abstract class BaseData {
         Objects.requireNonNull(city);
         this.city = city;
     }
-
-//    public Set<LifeHack> getLifeHacks() {
-//        return lifeHacks;
-//    }
-//
-//    public void setLifeHacks(Set<LifeHack> lifeHacks) {
-//        Objects.requireNonNull(lifeHacks);
-//        this.lifeHacks = lifeHacks;
-//    }
 
     public String getDescription() {
         return description;
