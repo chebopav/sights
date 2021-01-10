@@ -1,5 +1,8 @@
 package com.project.entity.data;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 /**
@@ -9,10 +12,12 @@ import javax.persistence.*;
 @Entity
 public class LifeHack {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
     @Column(nullable = false)
+    @Type(type = "text")
     private String text;
 
     public LifeHack() {

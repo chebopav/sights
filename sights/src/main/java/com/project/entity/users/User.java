@@ -1,9 +1,19 @@
 package com.project.entity.users;
 
 import com.project.helpers_and_statics.StaticVerifiers;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.URL;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Класс Юзеров
@@ -11,37 +21,44 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "all_users")
-public class User {
+public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
     @Column(nullable = false, length = 30, unique = true)
+    @NotBlank(message = "Логин не может быть пустым")
+    @Size(min = 3, max = 30, message = "Не короче 3 и не длиннее 30 симовлов")
     private String login;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 30)
+    @NotBlank(message = "Пароль не может быть пустым")
+    @Size(min = 8, max = 30, message = "Не короче 8 и не длиннее 30 симовлов")
     private String password;
 
+    @Transient
+    private String passwordConfirm;
+
     @Column(nullable = false, length = 50, unique = true)
+    @Email(message = "Некорректный e-mail")
     private String email;
 
     @Column(nullable = false)
+    @NotBlank(message = "Имя не может быть пустым")
     private String name;
 
     private String phone;
 
+    @Transient
     private boolean isOnline;
 
-    @Column(nullable = false)
-    private Status status;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
 
     @Column(unique = true)
+    @URL
     private String photoURL;
-
-    public enum Status{
-        ADMIN,
-        USER
-    }
 
     public User() {
     }
@@ -51,7 +68,6 @@ public class User {
         this.setPassword(password);
         this.setEmail(email);
         this.setName(name);
-        this.setStatus(Status.USER);
     }
 
     public User(String login, String password, String email, String name, String phone) {
@@ -60,7 +76,6 @@ public class User {
         this.setEmail(email);
         this.setName(name);
         this.setPhone(phone);
-        this.setStatus(Status.USER);
     }
 
     public long getId() {
@@ -77,10 +92,6 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public Status getStatus() {
-        return status;
     }
 
     public String getPhotoURL() {
@@ -118,11 +129,6 @@ public class User {
         this.email = email;
     }
 
-    public void setStatus(Status status) {
-        Objects.requireNonNull(status);
-        this.status = status;
-    }
-
     public void setPhotoURL(String photoURL) {
         this.photoURL = photoURL;
     }
@@ -139,5 +145,51 @@ public class User {
 
     public void setOnline(boolean online) {
         isOnline = online;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

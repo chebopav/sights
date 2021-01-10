@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CountryRepository extends PagingAndSortingRepository<Country, Long> {
 
-    @Query(value = "SELECT c FROM Country c WHERE UPPER(c.name) = :name")
+    @Query(value = "SELECT c FROM Country c WHERE c.name = :name")
     public Country getCountryByName(@Param("name") String name);
 }

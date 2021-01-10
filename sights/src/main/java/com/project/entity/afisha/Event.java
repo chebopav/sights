@@ -1,5 +1,9 @@
 package com.project.entity.afisha;
 
+import com.project.entity.data.Theater;
+import com.project.entity.data.address.City;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -15,13 +19,16 @@ public class Event {
     @Column(nullable = false)
     private LocalDate date;
 
-    @Column(nullable = false)
-    private String theater;
+    @ManyToOne
+    private Theater theater;
+
+    @ManyToOne
+    private City city;
 
     public Event() {
     }
 
-    public Event(String name,  String theater, LocalDate date){
+    public Event(String name, Theater theater, LocalDate date){
         this.setName(name);
         this.setDate(date);
         this.setTheater(theater);
@@ -32,8 +39,6 @@ public class Event {
     }
 
     public void setName(String name)  {
-        if (name == null || name.trim().length() < 3)
-            throw new IllegalArgumentException("Некорректное название события");
         this.name = name;
     }
 
@@ -47,15 +52,23 @@ public class Event {
         this.date = date;
     }
 
-    public String getTheater() {
+    public Theater getTheater() {
         return theater;
     }
 
-    public void setTheater(String theater) {
+    public void setTheater(Theater theater) {
         this.theater = theater;
     }
 
     public long getId() {
         return id;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

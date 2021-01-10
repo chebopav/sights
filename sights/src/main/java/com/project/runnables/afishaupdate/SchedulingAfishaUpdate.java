@@ -1,5 +1,6 @@
 package com.project.runnables.afishaupdate;
 
+import com.project.helpers_and_statics.Statics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -12,20 +13,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EnableScheduling
-public class Scheduling {
+public class SchedulingAfishaUpdate {
     private TaskExecutor executor;
     private ApplicationContext context;
 
-    @Transient
-    private static final long dayTime = 1_000 * 60 * 60 * 24;
-
     @Autowired
-    public Scheduling(@Qualifier("executor") TaskExecutor executor, ApplicationContext context) {
+    public SchedulingAfishaUpdate(@Qualifier("executor") TaskExecutor executor, ApplicationContext context) {
         this.executor = executor;
         this.context = context;
     }
 
-    @Scheduled(fixedRate = dayTime)
+    @Scheduled(fixedRate = Statics.DAY_IN_MILLIS)
     public void start(){
         AfishaUpdate update = context.getBean(AfishaUpdate.class);
         executor.execute(update);

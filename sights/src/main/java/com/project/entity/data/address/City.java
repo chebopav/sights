@@ -1,8 +1,10 @@
 package com.project.entity.data.address;
 
+import com.project.entity.afisha.Event;
 import com.project.entity.data.Excursion;
 import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,7 +13,8 @@ import java.util.Set;
 @Entity
 public class City {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
     @Column(nullable = false, unique = true)
@@ -28,6 +31,9 @@ public class City {
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Excursion> excursions = new HashSet<>();
+
+    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Event> events = new HashSet<>();
 
     public City() {
     }

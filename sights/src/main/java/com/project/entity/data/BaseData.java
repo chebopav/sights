@@ -1,6 +1,8 @@
 package com.project.entity.data;
 
 import com.project.entity.data.address.City;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,14 +16,20 @@ import java.util.Set;
 @MappedSuperclass
 public abstract class BaseData {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
     @ManyToOne
     private City city;
 
     @Column(nullable = false)
+    @Type(type = "text")
     private String description;
+
+    private double rating;
+
+    private long rateCount;
 
     public BaseData() {
     }
@@ -52,5 +60,28 @@ public abstract class BaseData {
         if (description == null || description.trim().length() < 10)
             throw new IllegalArgumentException("Некорректное описание места");
         this.description = description;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public long getRateCount() {
+        return rateCount;
+    }
+
+    public void setRateCount(long rateCount) {
+        this.rateCount = rateCount;
+    }
+
+    public void addRating(int newRating){
+        if (newRating < 0 || newRating > 5){
+            throw new IllegalArgumentException("Некорректная оценка");
+        }
+        this.rating = ((this.rating * rateCount) + newRating) / (rateCount + 1);
     }
 }

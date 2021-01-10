@@ -62,4 +62,11 @@ public class MuseumService {
         }
         repository.deleteById(id);
     }
+
+    public Museum getMuseumByName(String name) throws DataException {
+        Museum result = repository.getMuseumByName(name);
+        if (result == null)
+            throw new DataException("Музей не найден");
+        return result;
+    }
 }

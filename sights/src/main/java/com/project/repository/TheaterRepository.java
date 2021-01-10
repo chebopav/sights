@@ -1,14 +1,14 @@
 package com.project.repository;
 
-import com.project.entity.data.Museum;
+import com.project.entity.data.Theater;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MuseumRepository extends PagingAndSortingRepository<Museum, Long> {
+public interface TheaterRepository extends PagingAndSortingRepository<Theater, Long> {
 
-    @Query(value = "SELECT m FROM Museum m WHERE m.name = :name")
-    public Museum getMuseumByName(@Param("name") String name);
+    @Query(value = "SELECT t FROM Theater t WHERE t.name = :name")
+    public Theater getTheaterByName(@Param("name") String name);
 }

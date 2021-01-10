@@ -1,8 +1,12 @@
 package com.project.runnables.afishaupdate;
 
 import com.project.entity.afisha.Event;
+import com.project.entity.data.Theater;
 import com.project.exceptions.DataException;
+import com.project.helpers_and_statics.Statics;
+import com.project.services.CityService;
 import com.project.services.EventService;
+import com.project.services.TheaterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +30,11 @@ public class AfishaUpdate implements Runnable{
     @Autowired
     private EventService service;
 
-    private static final LocalDate findDate = LocalDate.now().plus(14, ChronoUnit.DAYS);
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private TheaterService theaterService;
 
     @Override
     public void run() {
@@ -34,7 +42,7 @@ public class AfishaUpdate implements Runnable{
         document = editorKit.createDefaultDocument();
         document.putProperty("IgnoreCharsetDirective", true);
         try {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 String url = getURL((i + 1));
                 InputStreamReader reader = getReader(url);
                 editorKit.read(reader, document, 0);
@@ -45,8 +53,6 @@ public class AfishaUpdate implements Runnable{
         } catch (IOException | BadLocationException | DataException e){
             e.printStackTrace();
         }
-
-
     }
 
 //    public static void main(String[] args) {
@@ -69,7 +75,7 @@ public class AfishaUpdate implements Runnable{
     private static String getURL(int page){
         StringBuilder sb = new StringBuilder();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String date = findDate.format(formatter);
+        String date = Statics.UPDATE_DATE.format(formatter);
         sb.append("https://www.bileter.ru/afisha?date_from=")
                 .append(date)
                 .append("&date_to=")
@@ -99,9 +105,21 @@ public class AfishaUpdate implements Runnable{
             }
             String name = events[i];
             i += 2;
-            String theater = events[i];
+            String place = events[i];
             i += 2;
-            Event event = new Event(name, theater, findDate);
+            if ("1".equals(name))
+                continue;
+            Theater theater;
+            try {
+                theater = theaterService.getTheaterByName(name);
+
+            } catch (DataException e){
+                theater = new Theater(place);
+            }
+            Event event = new Event(name, theater, Statics.UPDATE_DATE);
+            event.setCity(cityService.getCityByName("Санкт-Петербург"));
+            theater.addEvent(event);
+            event.setTheater(theater);
             service.addEvent(event);
         }
     }

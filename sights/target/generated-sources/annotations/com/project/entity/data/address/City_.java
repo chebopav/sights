@@ -1,5 +1,6 @@
 package com.project.entity.data.address;
 
+import com.project.entity.afisha.Event;
 import com.project.entity.data.Excursion;
 import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;
@@ -18,6 +19,7 @@ public abstract class City_ {
 	public static volatile SingularAttribute<City, String> name;
 	public static volatile SetAttribute<City, Excursion> excursions;
 	public static volatile SingularAttribute<City, Long> id;
+	public static volatile SetAttribute<City, Event> events;
 
 	public static final String COUNTRY = "country";
 	public static final String MUSEUMS = "museums";
@@ -25,6 +27,7 @@ public abstract class City_ {
 	public static final String NAME = "name";
 	public static final String EXCURSIONS = "excursions";
 	public static final String ID = "id";
+	public static final String EVENTS = "events";
 
 }
 

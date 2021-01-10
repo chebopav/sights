@@ -1,9 +1,11 @@
 package com.project.services;
 
 import com.project.entity.data.Sight;
+import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.SightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class SightService {
 
     private SightRepository repository;
+
+    private ApplicationContext context;
 
     @Autowired
     public SightService(SightRepository repository) {
@@ -61,5 +65,21 @@ public class SightService {
             throw new DataException("Достопримечательность не найдена");
         }
         repository.deleteById(id);
+    }
+
+    public Sight getSightByName(String name) throws DataException {
+        Sight result = repository.getSightByName(name);
+        if (result == null)
+            throw new DataException("Достопримесательность не найдена");
+        return result;
+    }
+
+    public Iterable<Sight> getSightsByCityName(String cityName) throws DataException {
+        CityService cityService = context.getBean(CityService.class);
+        City city = cityService.getCityByName(cityName);
+        Iterable<Sight> result = repository.getSightsByCity(city.getId());
+        if (result == null)
+            throw new DataException("Записи достопримечательностей не найдены");
+        return result;
     }
 }

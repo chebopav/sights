@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
-    @Query(value = "SELECT u FROM User u WHERE UPPER(u.login) = :login")
+    @Query(value = "SELECT u FROM User u WHERE u.login = :login")
     public User getUserByLogin(@Param("login") String login);
 }

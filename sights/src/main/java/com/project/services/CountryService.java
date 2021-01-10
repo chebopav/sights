@@ -26,7 +26,8 @@ public class CountryService {
     }
 
     public Country addCountry(Country country) throws DataException {
-        if(repository.existsById(country.getId())){
+        if(repository.existsById(country.getId())
+            || repository.getCountryByName(country.getName()) != null){
             throw new DataException("Страна уже существует");
         }
         return repository.save(country);
@@ -61,5 +62,12 @@ public class CountryService {
             throw new DataException("Страна не найдена");
         }
         repository.deleteById(id);
+    }
+
+    public Country getCountryByName(String name) throws DataException {
+        Country result = repository.getCountryByName(name);
+        if (result == null)
+            throw new DataException("Страна не найдена");
+        return result;
     }
 }

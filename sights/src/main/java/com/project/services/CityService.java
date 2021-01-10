@@ -1,10 +1,10 @@
 package com.project.services;
 
 import com.project.entity.data.address.City;
+import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
 import com.project.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +27,8 @@ public class CityService {
     }
 
     public City addCity(City city) throws DataException{
-        if(repository.existsById(city.getId())){
+        if(repository.existsById(city.getId())
+            || repository.getCityByName(city.getName()) != null){
             throw new DataException("Город уже существует");
         }
         return repository.save(city);
@@ -62,5 +63,19 @@ public class CityService {
             throw new DataException("Город не найден");
         }
         repository.deleteById(id);
+    }
+
+    public City getCityByName(String name) throws DataException {
+        City result = repository.getCityByName(name);
+        if (result == null)
+            throw new DataException("Город не найден");
+        return result;
+    }
+
+    public Iterable<City> getAllCitiesOfCountry(Country country) throws DataException {
+        Iterable<City> result = repository.getAllCitiesOfCountry(country);
+        if (result == null)
+            throw new DataException("Города не найдены");
+        return result;
     }
 }

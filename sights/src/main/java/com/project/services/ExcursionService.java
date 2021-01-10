@@ -1,6 +1,7 @@
 package com.project.services;
 
 import com.project.entity.data.Excursion;
+import com.project.entity.data.Sight;
 import com.project.exceptions.DataException;
 import com.project.repository.ExcursionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,5 +64,13 @@ public class ExcursionService {
             throw new DataException("Экскурсия не найдена");
         }
         repository.deleteById(id);
+    }
+
+    public Iterable<Excursion> getExcursionsByType(Excursion.Type type) throws DataException {
+        int i = type.ordinal();
+        Iterable<Excursion> result = repository.getExcursionByType(i);
+        if (result == null)
+            throw new DataException("Экскурсии не найдены");
+        return result;
     }
 }
