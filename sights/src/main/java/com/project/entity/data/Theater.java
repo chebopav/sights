@@ -1,10 +1,9 @@
 package com.project.entity.data;
 
 import com.project.entity.afisha.Event;
+import com.project.entity.data.address.City;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,8 +17,11 @@ public class Theater extends BaseData{
 
     private String phone;
 
-    @OneToMany(mappedBy = "theater")
+    @OneToMany(mappedBy = "theater", fetch = FetchType.EAGER)
     private Set<Event> events = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private City city;
 
     public Theater() {
     }

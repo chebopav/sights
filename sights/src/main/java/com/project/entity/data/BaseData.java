@@ -23,7 +23,6 @@ public abstract class BaseData {
     @ManyToOne
     private City city;
 
-    @Column(nullable = false)
     @Type(type = "text")
     private String description;
 

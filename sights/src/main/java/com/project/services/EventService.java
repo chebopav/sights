@@ -1,7 +1,6 @@
 package com.project.services;
 
 import com.project.entity.afisha.Event;
-import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;

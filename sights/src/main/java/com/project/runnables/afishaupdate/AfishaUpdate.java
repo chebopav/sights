@@ -36,6 +36,12 @@ public class AfishaUpdate implements Runnable{
     @Autowired
     private TheaterService theaterService;
 
+    public AfishaUpdate(EventService service, CityService cityService, TheaterService theaterService) {
+        this.service = service;
+        this.cityService = cityService;
+        this.theaterService = theaterService;
+    }
+
     @Override
     public void run() {
         editorKit = new HTMLEditorKit();
@@ -111,15 +117,22 @@ public class AfishaUpdate implements Runnable{
                 continue;
             Theater theater;
             try {
-                theater = theaterService.getTheaterByName(name);
+                theater = theaterService.getTheaterByName(place);
 
             } catch (DataException e){
                 theater = new Theater(place);
+                theater.setCity(cityService.getCityByName("Санкт-Петербург"));
+                theater.setFullAddress(" ");
+                theater.setPhone(" ");
             }
             Event event = new Event(name, theater, Statics.UPDATE_DATE);
-            event.setCity(cityService.getCityByName("Санкт-Петербург"));
             theater.addEvent(event);
             event.setTheater(theater);
+            try {
+                theaterService.addTheater(theater);
+            } catch (DataException ignored){
+                
+            }
             service.addEvent(event);
         }
     }

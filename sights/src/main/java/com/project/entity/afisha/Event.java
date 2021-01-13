@@ -2,6 +2,7 @@ package com.project.entity.afisha;
 
 import com.project.entity.data.Theater;
 import com.project.entity.data.address.City;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,20 +11,16 @@ import java.time.LocalDate;
 @Entity
 public class Event {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private LocalDate date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Theater theater;
-
-    @ManyToOne
-    private City city;
 
     public Event() {
     }
@@ -64,11 +61,4 @@ public class Event {
         return id;
     }
 
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
 }

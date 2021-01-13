@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Все страны</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<section>
+    <div class="container m-top">
+        <h1>Список стран</h1>
+        <form method="get" >
+        <div th:each="country : ${countries}">
+            <h3>Название: <span th:utext="${country.name}"></span>
+            <span th:utext="${country.id}"></span></h3>
+<!--            <p>Продолжительность: <span th:utext="${movie.duration}"></span></p>-->
+<!--            <p th:if="${movie.actors.empty}">Нет информации об актерах</p>-->
+<!--            <p th:if="not ${movie.actors.empty}">Актеры:</p>-->
+<!--            <div th:each="actor, info : ${movie.actors}">-->
+<!--                <p>-->
+<!--                    <span th:utext="${info.count}"></span>.-->
+<!--                    <span th:utext="${actor.name}"></span>-->
+<!--                </p>-->
+<!--            </div>-->
+        </div>
+        </form>
+    </div>
+
+</section>
+</body>
+</html>

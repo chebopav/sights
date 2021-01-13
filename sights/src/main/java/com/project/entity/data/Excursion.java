@@ -10,6 +10,8 @@ import java.util.*;
 @Entity
 public class Excursion extends BaseData{
 
+    private String name;
+
     @Column(nullable = false)
     private String startAddress;
 

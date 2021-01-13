@@ -4,6 +4,7 @@ import com.project.entity.afisha.Event;
 import com.project.entity.data.Excursion;
 import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;
+import com.project.entity.data.Theater;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -33,7 +34,7 @@ public class City {
     private Set<Excursion> excursions = new HashSet<>();
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Event> events = new HashSet<>();
+    private Set<Theater> theaters = new HashSet<>();
 
     public City() {
     }
