@@ -2,16 +2,16 @@ package com.project.runnables.afishaupdate;
 
 import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
+import com.project.entity.users.Role;
 import com.project.exceptions.DataException;
 import com.project.helpers_and_statics.Statics;
+import com.project.repository.RoleRepository;
 import com.project.services.CityService;
 import com.project.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.data.annotation.Transient;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -36,6 +36,9 @@ public class SchedulingAfishaUpdate {
         City city = new City("Санкт-Петербург");
         country.addCity(city);
         city.setCountry(country);
+        RoleRepository roleRepository = context.getBean(RoleRepository.class);
+        roleRepository.save(new Role("ROLE_USER"));
+        roleRepository.save(new Role("ROLE_ADMIN"));
         try {
             countryService.addCountry(country);
             cityService.addCity(city);

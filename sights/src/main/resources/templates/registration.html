@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html th:replace="~{base :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <title>Регистрация</title>
 </head>
 <body>
 <section class="container m-top">
+    <h1>Регистрация нового пользователя:</h1>
     <form method="post" th:action="@{/registration}" th:object="${user}">
         <div class="form-group">
-            <label for="login">Введите логин</label>
-            <input class="form-control" id="login" placeholder="Введите логин" type="text" th:field="*{login}">
-            <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
+            <label for="username">Введите логин</label>
+            <input class="form-control" id="username" placeholder="Введите логин" type="text" th:field="*{username}">
+            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
         </div>
         <div class="form-group">
             <label for="password">Введите пароль</label>
@@ -36,11 +36,6 @@
             <label for="phone">Введите номер телефона</label>
             <input class="form-control"  id="phone" type="text" th:field="*{phone}" placeholder="Введите номер телефона">
             <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
-        </div>
-        <div class="form-group">
-            <label for="photoURL">Введите ссылку для аватарки</label>
-            <input class="form-control"  id="photoURL" type="URL" th:field="*{photoURL}" placeholder="Введите ссылку для аватарки">
-            <p th:if="${#fields.hasErrors('photoURL')}" th:errors="*{photoURL}"></p>
         </div>
         <p th:if="${loginError}" th:utext="${loginError}"></p>
         <div><input type="submit" class="btn btn-primary" value="Регистрация"></div>

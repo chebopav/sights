@@ -6,9 +6,6 @@ import com.project.exceptions.DataException;
 import com.project.repository.RoleRepository;
 import com.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,28 +18,17 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-
+    private EntityManager entityManager;
     private UserRepository repository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder encoder;
 
     @Autowired
-    public void setUserRepository(UserRepository repository) {
-        this.repository = repository;
-    }
+    public void setUserRepository(UserRepository repository) { this.repository = repository; }
     @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
+    public void setRoleRepository(RoleRepository roleRepository) { this.roleRepository = roleRepository; }
     @Autowired
-    public void setEncoder(BCryptPasswordEncoder encoder) {
-        this.encoder = encoder;
-    }
-
-    @Autowired
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
+    public void setEncoder(BCryptPasswordEncoder encoder) { this.encoder = encoder; }
 
     public UserRepository getRepository() {
         return repository;
@@ -62,7 +48,7 @@ public class UserService implements UserDetailsService {
         return repository.save(user);
     }
 
-    public Optional<User> getUserById(long id) throws DataException {
+    public Optional<User> getUserById(int id) throws DataException {
         Optional<User> result = repository.findById(id);
         if (result.isEmpty()){
             throw new DataException("User не найден");
@@ -70,23 +56,23 @@ public class UserService implements UserDetailsService {
         return result;
     }
 
-    public void deleteUserById(long id) throws DataException {
+    public void deleteUserById(int id) throws DataException {
         if (!repository.existsById(id)){
             throw new DataException("User не найден");
         }
         repository.deleteById(id);
     }
 
-    public User getUserByLogin(String login) throws DataException {
-        User result = repository.getUserByLogin(login);
+    public User getUserByUserName(String username) throws DataException {
+        User result = repository.findByUsername(username);
         if (result == null)
             throw new DataException("User не найден");
         return result;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = repository.getUserByLogin(login);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repository.findByUsername(username);
         if (user == null){
             throw new UsernameNotFoundException("Пользователь не был найден");
         }
@@ -94,13 +80,12 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean saveUser(User user){
-        User loaded =
-                repository.getUserByLogin(user.getLogin());
+        User loaded = repository.findByUsername(user.getUsername());
         if (loaded != null){
             return false;
         }
 
-        Role role = roleRepository.findById(1L).get();
+        Role role = roleRepository.findById(1).get();
         user.getRoles().add(role);
         user.setPassword(encoder.encode(user.getPassword()));
         role.getUsers().add(user);

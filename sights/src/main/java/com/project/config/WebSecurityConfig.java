@@ -29,18 +29,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/registration").not().fullyAuthenticated()
                 .antMatchers("/").permitAll()
-                .antMatchers("/country/**").permitAll()
-                .antMatchers("/city/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .and()
                 .logout().permitAll()
-                .logoutSuccessUrl("/")
-                .and()
-                .antMatcher("/**").anonymous();
-
+                .logoutSuccessUrl("/");
     }
     @Override
     public void configure(WebSecurity webSecurity) throws Exception {

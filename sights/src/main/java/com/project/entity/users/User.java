@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -25,16 +24,16 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+    private int id;
 
     @Column(nullable = false, length = 30, unique = true)
     @NotBlank(message = "Логин не может быть пустым")
     @Size(min = 3, max = 30, message = "Не короче 3 и не длиннее 30 симовлов")
-    private String login;
+    private String username;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false)
     @NotBlank(message = "Пароль не может быть пустым")
-    @Size(min = 8, max = 30, message = "Не короче 8 и не длиннее 30 симовлов")
+    //@Size(min = 8, max = 30, message = "Не короче 8 и не длиннее 30 симовлов")
     private String password;
 
     @Transient
@@ -56,34 +55,30 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
-    @Column(unique = true)
-    @URL
-    private String photoURL;
-
     public User() {
     }
 
-    public User(String login, String password, String email, String name) {
-        this.setLogin(login);
+    public User(String username, String password, String email, String name) {
+        this.setUsername(username);
         this.setPassword(password);
         this.setEmail(email);
         this.setName(name);
     }
 
-    public User(String login, String password, String email, String name, String phone) {
-        this.setLogin(login);
+    public User(String username, String password, String email, String name, String phone) {
+        this.setUsername(username);
         this.setPassword(password);
         this.setEmail(email);
         this.setName(name);
         this.setPhone(phone);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -92,10 +87,6 @@ public class User implements UserDetails {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getPhotoURL() {
-        return photoURL;
     }
 
     public String getName() {
@@ -110,10 +101,10 @@ public class User implements UserDetails {
         return isOnline;
     }
 
-    public void setLogin(String login) {
-        if (login == null || login.trim().length() < 3)
+    public void setUsername(String username) {
+        if (username == null || username.trim().length() < 3)
             throw new IllegalArgumentException("Некорректный логин");
-        this.login = login;
+        this.username = username;
     }
 
     public void setPassword(String password) {
@@ -127,10 +118,6 @@ public class User implements UserDetails {
         if (!StaticVerifiers.verifiedEMail(email))
             throw new IllegalArgumentException("Недопустимый e-mail");
         this.email = email;
-    }
-
-    public void setPhotoURL(String photoURL) {
-        this.photoURL = photoURL;
     }
 
     public void setName(String name) {
@@ -166,11 +153,6 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
-    }
-
-    @Override
-    public String getUsername() {
-        return name;
     }
 
     @Override

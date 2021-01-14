@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.validation.Valid;
 
 @Controller
@@ -22,6 +21,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registrationForm(User user){
         return "registration";
@@ -33,12 +33,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String regUser(
-            @ModelAttribute("user") @Valid User user,
-            BindingResult bindingResult,
-            Model model
-    )
-    {
+    public String regUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+
         if (bindingResult.hasErrors()){
             return "registration";
         }
@@ -55,5 +51,4 @@ public class UserController {
         }
         return "redirect:/login";
     }
-
 }
