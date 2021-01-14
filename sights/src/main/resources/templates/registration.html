@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>Регистрация</title>
+</head>
+<body>
+<section class="container m-top">
+    <form method="post" th:action="@{/registration}" th:object="${user}">
+        <div class="form-group">
+            <label for="login">Введите логин</label>
+            <input class="form-control" id="login" placeholder="Введите логин" type="text" th:field="*{login}">
+            <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
+        </div>
+        <div class="form-group">
+            <label for="password">Введите пароль</label>
+            <input class="form-control"  id="password" type="password" th:field="*{password}" placeholder="Введите пароль">
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+        </div>
+        <div class="form-group">
+            <label for="confirm">Подтвердите пароль</label>
+            <input class="form-control"  id="confirm" type="password" th:field="*{passwordConfirm}" placeholder="Подтвердите пароль">
+            <p th:if="${confirmError}" th:utext="${confirmError}"></p>
+        </div>
+        <div class="form-group">
+            <label for="email">Введите почту</label>
+            <input class="form-control"  id="email" type="text" th:field="*{email}" placeholder="Введите почту">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+        <div class="form-group">
+            <label for="name">Введите ваше имя</label>
+            <input class="form-control"  id="name" type="text" th:field="*{name}" placeholder="Введите ваше имя">
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        </div>
+        <div class="form-group">
+            <label for="phone">Введите номер телефона</label>
+            <input class="form-control"  id="phone" type="text" th:field="*{phone}" placeholder="Введите номер телефона">
+            <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+        </div>
+        <div class="form-group">
+            <label for="photoURL">Введите ссылку для аватарки</label>
+            <input class="form-control"  id="photoURL" type="URL" th:field="*{photoURL}" placeholder="Введите ссылку для аватарки">
+            <p th:if="${#fields.hasErrors('photoURL')}" th:errors="*{photoURL}"></p>
+        </div>
+        <p th:if="${loginError}" th:utext="${loginError}"></p>
+        <div><input type="submit" class="btn btn-primary" value="Регистрация"></div>
+    </form>
+</section>
+</body>
+</html>
