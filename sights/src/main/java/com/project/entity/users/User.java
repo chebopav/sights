@@ -31,9 +31,9 @@ public class User implements UserDetails {
     @Size(min = 3, max = 30, message = "Не короче 3 и не длиннее 30 симовлов")
     private String login;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false)
     @NotBlank(message = "Пароль не может быть пустым")
-    @Size(min = 8, max = 30, message = "Не короче 8 и не длиннее 30 симовлов")
+    //@Size(min = 8, max = 30, message = "Не короче 8 и не длиннее 30 симовлов")
     private String password;
 
     @Transient

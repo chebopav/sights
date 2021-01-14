@@ -89,8 +89,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean saveUser(User user){
-        User loaded =
-                repository.getUserByLogin(user.getLogin());
+        User loaded = repository.getUserByLogin(user.getLogin());
         if (loaded != null){
             return false;
         }

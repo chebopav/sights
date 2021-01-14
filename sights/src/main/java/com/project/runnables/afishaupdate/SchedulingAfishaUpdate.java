@@ -2,8 +2,10 @@ package com.project.runnables.afishaupdate;
 
 import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
+import com.project.entity.users.Role;
 import com.project.exceptions.DataException;
 import com.project.helpers_and_statics.Statics;
+import com.project.repository.RoleRepository;
 import com.project.services.CityService;
 import com.project.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class SchedulingAfishaUpdate {
         City city = new City("Санкт-Петербург");
         country.addCity(city);
         city.setCountry(country);
+        RoleRepository roleRepository = context.getBean(RoleRepository.class);
+        roleRepository.save(new Role("ROLE_USER"));
+        roleRepository.save(new Role("ROLE_ADMIN"));
         try {
             countryService.addCountry(country);
             cityService.addCity(city);

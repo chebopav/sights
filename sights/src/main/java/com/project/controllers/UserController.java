@@ -22,6 +22,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registrationForm(User user){
         return "registration";
@@ -33,12 +34,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String regUser(
-            @ModelAttribute("user") @Valid User user,
-            BindingResult bindingResult,
-            Model model
-    )
-    {
+    public String regUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+
         if (bindingResult.hasErrors()){
             return "registration";
         }
