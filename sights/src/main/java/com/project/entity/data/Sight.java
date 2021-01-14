@@ -16,8 +16,8 @@ public class Sight extends BaseData {
     public Sight() {
     }
 
-    public Sight(String name, City city, String fullAddress, String description) {
-        super(city, description);
+    public Sight(City city, String name, String fullAddress, String description) {
+        super(city, name, description);
         this.setFullAddress(fullAddress);
         this.setName(name);
     }

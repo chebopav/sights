@@ -1,7 +1,6 @@
 package com.project.services;
 
 import com.project.entity.data.Excursion;
-import com.project.entity.data.Sight;
 import com.project.exceptions.DataException;
 import com.project.repository.ExcursionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

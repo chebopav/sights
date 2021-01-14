@@ -5,12 +5,13 @@ import com.project.entity.data.address.City;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.time.DayOfWeek;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Excursion extends BaseData{
-
-    private String name;
 
     @Column(nullable = false)
     private String startAddress;
@@ -23,8 +24,8 @@ public class Excursion extends BaseData{
     public Excursion() {
     }
 
-    public Excursion(City city, String description, String startAddress, Type type) {
-        super(city, description);
+    public Excursion(City city, String name, String description, String startAddress, Type type) {
+        super(city, name, description);
         this.setStartAddress(startAddress);
         this.setType(type);
     }

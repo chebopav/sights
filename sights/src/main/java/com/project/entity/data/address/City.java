@@ -1,6 +1,5 @@
 package com.project.entity.data.address;
 
-import com.project.entity.afisha.Event;
 import com.project.entity.data.Excursion;
 import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;

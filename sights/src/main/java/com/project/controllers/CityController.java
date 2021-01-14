@@ -11,11 +11,10 @@ import com.project.repository.MuseumRepository;
 import com.project.repository.SightRepository;
 import com.project.repository.TheaterRepository;
 import com.project.services.CityService;
-import com.project.services.MuseumService;
-import com.project.services.SightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -57,10 +56,7 @@ public class CityController {
 
     @GetMapping(value = "/all/events")
     public String getAllSightsOfCity(Model model, @RequestParam("page") int page, @RequestParam("size") int size){
-
-        MuseumService museumService = context.getBean(MuseumService.class);
         MuseumRepository museumRepository = context.getBean(MuseumRepository.class);
-        SightService sightService = context.getBean(SightService.class);
         SightRepository sightRepository = context.getBean(SightRepository.class);
         TheaterRepository theaterRepository = context.getBean(TheaterRepository.class);
         Iterable<Museum> museums = museumRepository.findAll();
@@ -77,11 +73,10 @@ public class CityController {
             list.add(theater);
         }
         Collections.shuffle(list);
-        System.out.println(list.size());
         Pageable pageable = PageRequest.of(page, size);
-        Page<BaseData> result = Page.empty(pageable);
-        result.getContent();
-        model.addAttribute("sights", result);
+        Page<BaseData> p = new PageImpl<>(list, pageable, list.size());
+        System.out.println(p.getTotalPages());
+        model.addAttribute("sights", p);
         return "all_events";
     }
 

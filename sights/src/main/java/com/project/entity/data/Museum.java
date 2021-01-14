@@ -13,8 +13,6 @@ import java.util.Set;
 
 @Entity
 public class Museum extends BaseData {
-    @Column(nullable = false, unique = true)
-    private String name;
 
     @Column(nullable = false)
     private String fullAddress;
@@ -29,20 +27,9 @@ public class Museum extends BaseData {
     }
 
     public Museum(City city, String name, String fullAddress, String description, String phone) {
-        super(city, description);
-        this.setName(name);
+        super(city, name, description);
         this.setFullAddress(fullAddress);
         this.setPhone(phone);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        if (name == null || name.trim().length() < 3)
-            throw new IllegalArgumentException("Некорректное название музея");
-        this.name = name;
     }
 
     public String getFullAddress() {

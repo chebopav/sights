@@ -11,13 +11,11 @@ public abstract class Museum_ extends com.project.entity.data.BaseData_ {
 
 	public static volatile SingularAttribute<Museum, ArrayList> workDays;
 	public static volatile SingularAttribute<Museum, String> phone;
-	public static volatile SingularAttribute<Museum, String> name;
 	public static volatile SingularAttribute<Museum, String> fullAddress;
 	public static volatile SingularAttribute<Museum, String> email;
 
 	public static final String WORK_DAYS = "workDays";
 	public static final String PHONE = "phone";
-	public static final String NAME = "name";
 	public static final String FULL_ADDRESS = "fullAddress";
 	public static final String EMAIL = "email";
 
