@@ -1,9 +1,7 @@
 package com.project.entity.afisha;
 
 import com.project.entity.data.Theater;
-import com.project.entity.data.address.City;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;

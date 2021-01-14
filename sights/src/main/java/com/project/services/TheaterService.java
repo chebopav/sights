@@ -1,7 +1,6 @@
 package com.project.services;
 
 import com.project.entity.data.Theater;
-import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;

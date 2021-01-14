@@ -4,10 +4,11 @@ import com.project.entity.data.address.City;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
-import java.util.HashSet;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Базовый класс для всех мест
@@ -19,6 +20,8 @@ public abstract class BaseData {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
+
+    private String name;
 
     @ManyToOne
     private City city;
@@ -33,8 +36,9 @@ public abstract class BaseData {
     public BaseData() {
     }
 
-    public BaseData(City city, String description) {
+    public BaseData(City city, String name, String description) {
         this.setCity(city);
+        this.setName(name);
         this.setDescription(description);
     }
 
@@ -75,6 +79,16 @@ public abstract class BaseData {
 
     public void setRateCount(long rateCount) {
         this.rateCount = rateCount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name == null || name.trim().length() < 3)
+            throw new IllegalArgumentException("Некорректное имя");
+        this.name = name;
     }
 
     public void addRating(int newRating){
