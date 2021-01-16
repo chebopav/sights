@@ -1,16 +1,19 @@
 package com.project.runnables.afishaupdate;
 
 import com.project.entity.afisha.Event;
+import com.project.entity.data.Excursion;
+import com.project.entity.data.NeedDate;
 import com.project.entity.data.Theater;
 import com.project.exceptions.DataException;
 import com.project.helpers_and_statics.Statics;
-import com.project.services.CityService;
-import com.project.services.EventService;
-import com.project.services.TheaterService;
+import com.project.repository.NeedDateRepository;
+import com.project.services.*;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -22,18 +25,10 @@ import java.util.List;
 public class AfishaUpdate implements Runnable{
 
     @Autowired
-    private EventService service;
+    private ApplicationContext context;
 
-    @Autowired
-    private CityService cityService;
-
-    @Autowired
-    private TheaterService theaterService;
-
-    public AfishaUpdate(EventService service, CityService cityService, TheaterService theaterService) {
-        this.service = service;
-        this.cityService = cityService;
-        this.theaterService = theaterService;
+    public AfishaUpdate(ApplicationContext context) {
+        this.context = context;
     }
 
     @Override
@@ -63,7 +58,7 @@ public class AfishaUpdate implements Runnable{
 
     private void stringParsing(String data) throws DataException, IOException {
         int date = Statics.UPDATE_DATE.getDayOfMonth();
-        org.jsoup.nodes.Document document = Jsoup.connect(data).get();
+        Document document = Jsoup.connect(data).get();
         Elements el = document.getElementsByClass("afishe-index");
         List<String> list = new ArrayList<>();
         for(Element element : el.select("a")){
@@ -83,18 +78,57 @@ public class AfishaUpdate implements Runnable{
         for (int i = 0; i < list.size(); i+=2) {
             String eventName = list.get(i);
             String place = list.get(i+1);
-            Theater theater;
-            try{
-                theater = theaterService.getTheaterByName(place);
-            } catch (DataException e){
-                theater = new Theater(place);
-                theater.setCity(cityService.getCityByName("Санкт-Петербург"));
-                theaterService.addTheater(theater);
+            if (eventName.contains("Автобусная экскурсия") || eventName.contains("City Sightseeing")){
+                addExcursion(eventName, place, Excursion.Type.BUS);
+            } else if (eventName.contains("Экскурсия") || eventName.contains("Экскурсии")){
+                addExcursion(eventName, place, Excursion.Type.ON_FOOT);
+            } else{
+                addEventToTheater(eventName, place);
             }
-            Event event = new Event(eventName, theater, Statics.UPDATE_DATE);
-            theater.addEvent(event);
-            theaterService.updateTheater(theater);
-            service.addEvent(event);
         }
+    }
+
+    private void addEventToTheater(String eventName, String theaterName) throws DataException {
+        Theater theater;
+        TheaterService theaterService = context.getBean(TheaterService.class);
+        CityService cityService = context.getBean(CityService.class);
+        EventService eventService = context.getBean(EventService.class);
+        NeedDateService dateService = context.getBean(NeedDateService.class);
+        NeedDate needDate = dateService.getNeedDateByDate(Statics.UPDATE_DATE);
+        try {
+            theater = theaterService.getTheaterByName(theaterName);
+        } catch (DataException e) {
+            theater = new Theater(theaterName);
+            theater.setCity(cityService.getCityByName("Санкт-Петербург"));
+            theaterService.addTheater(theater);
+        }
+        Event event = new Event(eventName, theater);
+        event.getDates().add(needDate);
+        needDate.getEvents().add(event);
+        theater.addEvent(event);
+        theaterService.updateTheater(theater);
+        eventService.addEvent(event);
+        dateService.updateDate(needDate);
+    }
+
+    private void addExcursion(String excursionName, String description, Excursion.Type type) throws DataException {
+        Excursion excursion;
+        ExcursionService excursionService = context.getBean(ExcursionService.class);
+        CityService cityService = context.getBean(CityService.class);
+        NeedDateRepository dateRepository = context.getBean(NeedDateRepository.class);
+        try{
+            excursion = excursionService.getExcursionByName(excursionName);
+        } catch (DataException e){
+            excursion = new Excursion();
+            excursion.setName(excursionName);
+            excursion.setDescription(description);
+            excursion.setCity(cityService.getCityByName("Санкт-Петербург"));
+            excursion.setType(type);
+        }
+        NeedDate date = dateRepository.findById(Statics.UPDATE_DATE).get();
+        excursion.getDates().add(date);
+        date.getExcursions().add(excursion);
+        excursionService.addExcursion(excursion);
+        dateRepository.save(date);
     }
 }

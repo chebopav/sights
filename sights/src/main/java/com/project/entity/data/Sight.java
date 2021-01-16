@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class Sight extends BaseData {
-    @Column(nullable = false, unique = true)
-    private String name;
 
     @Column(nullable = false)
     private String fullAddress;
@@ -17,7 +15,7 @@ public class Sight extends BaseData {
     }
 
     public Sight(String name, City city, String fullAddress, String description) {
-        super(city, description);
+        super(city, name, description);
         this.setFullAddress(fullAddress);
         this.setName(name);
     }
@@ -32,13 +30,4 @@ public class Sight extends BaseData {
         this.fullAddress = fullAddress;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        if (name == null || name.trim().length() < 4)
-            throw new IllegalArgumentException("Некорректное имя достопримчательности");
-        this.name = name;
-    }
 }

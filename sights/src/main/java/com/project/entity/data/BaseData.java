@@ -5,9 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Базовый класс для всех мест
@@ -23,6 +21,9 @@ public abstract class BaseData {
     @ManyToOne
     private City city;
 
+    @Column(unique = true, nullable = false)
+    private String name;
+
     @Type(type = "text")
     private String description;
 
@@ -33,9 +34,10 @@ public abstract class BaseData {
     public BaseData() {
     }
 
-    public BaseData(City city, String description) {
+    public BaseData(City city, String name, String description) {
         this.setCity(city);
         this.setDescription(description);
+        this.setName(name);
     }
 
     public long getId() {
@@ -82,5 +84,15 @@ public abstract class BaseData {
             throw new IllegalArgumentException("Некорректная оценка");
         }
         this.rating = ((this.rating * rateCount) + newRating) / (rateCount + 1);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name == null || name.trim().length() < 3)
+            throw new IllegalArgumentException("Некорректное название места");
+        this.name = name;
     }
 }

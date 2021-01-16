@@ -4,27 +4,32 @@ import com.project.entity.data.address.City;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import java.time.DayOfWeek;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Excursion extends BaseData{
 
-    private String name;
-
-    @Column(nullable = false)
     private String startAddress;
 
-    @Column(nullable = false)
+    @Column
     private Type type;
 
     private ArrayList<Integer> workDays = new ArrayList<>(7);
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<NeedDate> dates = new HashSet<>();
+
     public Excursion() {
     }
 
-    public Excursion(City city, String description, String startAddress, Type type) {
-        super(city, description);
+    public Excursion(City city, String name, String description, String startAddress, Type type) {
+        super(city, name, description);
         this.setStartAddress(startAddress);
         this.setType(type);
     }
@@ -68,5 +73,13 @@ public class Excursion extends BaseData{
             workDays.add(DayOfWeek.of(i));
         }
         return workDays;
+    }
+
+    public Set<NeedDate> getDates() {
+        return dates;
+    }
+
+    public void setDates(Set<NeedDate> dates) {
+        this.dates = dates;
     }
 }

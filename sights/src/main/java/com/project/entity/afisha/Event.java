@@ -1,12 +1,12 @@
 package com.project.entity.afisha;
 
+import com.project.entity.data.NeedDate;
 import com.project.entity.data.Theater;
-import com.project.entity.data.address.City;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Event {
@@ -17,17 +17,17 @@ public class Event {
 
     private String name;
 
-    private LocalDate date;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Theater theater;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<NeedDate> dates = new HashSet<>();
 
     public Event() {
     }
 
-    public Event(String name, Theater theater, LocalDate date){
+    public Event(String name, Theater theater){
         this.setName(name);
-        this.setDate(date);
         this.setTheater(theater);
     }
 
@@ -39,15 +39,6 @@ public class Event {
         this.name = name;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        if (date.isBefore(LocalDate.now()))
-            throw new IllegalArgumentException("Некорректная дата");
-        this.date = date;
-    }
 
     public Theater getTheater() {
         return theater;
@@ -61,4 +52,11 @@ public class Event {
         return id;
     }
 
+    public Set<NeedDate> getDates() {
+        return dates;
+    }
+
+    public void setDates(Set<NeedDate> dates) {
+        this.dates = dates;
+    }
 }

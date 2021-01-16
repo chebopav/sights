@@ -11,4 +11,7 @@ public interface ExcursionRepository extends PagingAndSortingRepository<Excursio
 
     @Query(nativeQuery = true, value = "SELECT * FROM excursion WHERE type = typ")
     public Iterable<Excursion> getExcursionByType(@Param("typ") int type);
+
+    @Query(value = "SELECT e FROM Excursion e WHERE e.name = :name")
+    public Excursion findByName(@Param("name") String name);
 }

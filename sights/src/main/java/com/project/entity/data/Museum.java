@@ -1,20 +1,16 @@
 package com.project.entity.data;
 
 import com.project.entity.data.address.City;
-import com.project.helpers_and_statics.StaticVerifiers;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.time.DayOfWeek;
-import java.util.ArrayList;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 public class Museum extends BaseData {
-    @Column(nullable = false, unique = true)
-    private String name;
 
     @Column(nullable = false)
     private String fullAddress;
@@ -23,27 +19,18 @@ public class Museum extends BaseData {
 
     private String email;
 
-    private ArrayList<Integer> workDays = new ArrayList<>(7);
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<NeedDate> dates = new HashSet<>();
 
     public Museum() {
     }
 
     public Museum(City city, String name, String fullAddress, String description, String phone) {
-        super(city, description);
-        this.setName(name);
+        super(city, name, description);
         this.setFullAddress(fullAddress);
         this.setPhone(phone);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        if (name == null || name.trim().length() < 3)
-            throw new IllegalArgumentException("Некорректное название музея");
-        this.name = name;
-    }
 
     public String getFullAddress() {
         return fullAddress;
@@ -69,24 +56,14 @@ public class Museum extends BaseData {
     }
 
     public void setEmail(String email) {
-        if (!StaticVerifiers.verifiedEMail(email))
-            throw new IllegalArgumentException("Некорректный e-mail");
         this.email = email;
     }
 
-    public List<Integer> getWorkDays() {
-        return workDays;
+    public Set<NeedDate> getDates() {
+        return dates;
     }
 
-    public void setWorkDays(ArrayList<Integer> workDays) {
-        this.workDays = workDays;
-    }
-
-    public Set<DayOfWeek> getWorkDays(List<Integer> set){
-        Set<DayOfWeek> workDays = new HashSet<>();
-        for (Integer i : set) {
-            workDays.add(DayOfWeek.of(i));
-        }
-        return workDays;
+    public void setDates(Set<NeedDate> dates) {
+        this.dates = dates;
     }
 }

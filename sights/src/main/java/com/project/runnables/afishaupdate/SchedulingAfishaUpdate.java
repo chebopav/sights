@@ -1,10 +1,12 @@
 package com.project.runnables.afishaupdate;
 
+import com.project.entity.data.NeedDate;
 import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
 import com.project.entity.users.Role;
 import com.project.exceptions.DataException;
 import com.project.helpers_and_statics.Statics;
+import com.project.repository.NeedDateRepository;
 import com.project.repository.RoleRepository;
 import com.project.services.CityService;
 import com.project.services.CountryService;
@@ -15,6 +17,9 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Component
 @EnableScheduling
@@ -32,6 +37,7 @@ public class SchedulingAfishaUpdate {
     public void start(){
         CountryService countryService = context.getBean(CountryService.class);
         CityService cityService = context.getBean(CityService.class);
+        NeedDateRepository dateRepository = context.getBean(NeedDateRepository.class);
         Country country = new Country("Россия");
         City city = new City("Санкт-Петербург");
         country.addCity(city);
@@ -45,6 +51,12 @@ public class SchedulingAfishaUpdate {
         } catch (DataException e){
             e.printStackTrace();
         }
+
+        for (int i = 0; i < 30; i++) {
+            NeedDate date = new NeedDate(LocalDate.now().plus(i, ChronoUnit.DAYS));
+            dateRepository.save(date);
+        }
+
 
         AfishaUpdate update = context.getBean(AfishaUpdate.class);
         executor.execute(update);
