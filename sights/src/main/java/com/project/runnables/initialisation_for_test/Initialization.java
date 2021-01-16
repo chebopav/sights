@@ -1,6 +1,7 @@
-package com.project.runnables.afishaupdate;
+package com.project.runnables.initialisation_for_test;
 
 import com.project.helpers_and_statics.Statics;
+import com.project.runnables.afishaupdate.AfishaUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -11,21 +12,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EnableScheduling
-public class SchedulingAfishaUpdate {
+public class Initialization {
     private TaskExecutor executor;
     private ApplicationContext context;
 
     @Autowired
-    public SchedulingAfishaUpdate(@Qualifier("executor") TaskExecutor executor, ApplicationContext context) {
+    public Initialization(@Qualifier("executor") TaskExecutor executor, ApplicationContext context) {
         this.executor = executor;
         this.context = context;
     }
 
-    @Scheduled(initialDelay = 1000L, fixedRate = Statics.DAY_IN_MILLIS)
+    @Scheduled(fixedRate = Statics.DAY_IN_MILLIS)
     public void start(){
-        AfishaUpdate update = context.getBean(AfishaUpdate.class);
-        executor.execute(update);
+        TestRunnable runnable = context.getBean(TestRunnable.class);
+        executor.execute(runnable);
     }
-
-
 }

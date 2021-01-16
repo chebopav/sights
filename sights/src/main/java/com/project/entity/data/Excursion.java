@@ -57,14 +57,6 @@ public class Excursion extends BaseData{
         COMPLEX
     }
 
-    public Set<DayOfWeek> getWorkDays(List<Integer> set){
-        Set<DayOfWeek> workDays = new HashSet<>();
-        for (Integer i : set) {
-            workDays.add(DayOfWeek.of(i));
-        }
-        return workDays;
-    }
-
     public Set<NeedDate> getDates() {
         return dates;
     }
