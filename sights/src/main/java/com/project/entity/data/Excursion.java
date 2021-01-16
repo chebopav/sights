@@ -20,8 +20,6 @@ public class Excursion extends BaseData{
     @Column
     private Type type;
 
-    private ArrayList<Integer> workDays = new ArrayList<>(7);
-
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<NeedDate> dates = new HashSet<>();
 
@@ -57,14 +55,6 @@ public class Excursion extends BaseData{
         WATER,
         ON_FOOT,
         COMPLEX
-    }
-
-    public List<Integer> getWorkDays() {
-        return workDays;
-    }
-
-    public void setWorkDays(ArrayList<Integer> workDays) {
-        this.workDays = workDays;
     }
 
     public Set<DayOfWeek> getWorkDays(List<Integer> set){
