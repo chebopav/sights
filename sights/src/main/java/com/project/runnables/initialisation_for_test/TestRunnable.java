@@ -29,15 +29,19 @@ public class TestRunnable implements Runnable{
         CityService cityService = context.getBean(CityService.class);
         NeedDateRepository dateRepository = context.getBean(NeedDateRepository.class);
         Country country = new Country("Россия");
-        City city = new City("Санкт-Петербург");
-        country.addCity(city);
-        city.setCountry(country);
+        City spb = new City("Санкт-Петербург");
+        City moscow = new City("Москва");
+        country.addCity(spb);
+        country.addCity(moscow);
+        spb.setCountry(country);
+        moscow.setCountry(country);
         RoleRepository roleRepository = context.getBean(RoleRepository.class);
         roleRepository.save(new Role("ROLE_USER"));
         roleRepository.save(new Role("ROLE_ADMIN"));
         try {
             countryService.addCountry(country);
-            cityService.addCity(city);
+            cityService.addCity(spb);
+            cityService.addCity(moscow);
         } catch (DataException e){
             e.printStackTrace();
         }

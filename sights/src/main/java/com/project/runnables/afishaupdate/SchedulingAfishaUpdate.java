@@ -25,6 +25,8 @@ public class SchedulingAfishaUpdate {
     public void start(){
         AfishaUpdate update = context.getBean(AfishaUpdate.class);
         executor.execute(update);
+        MoscowAfishaUpdate moscowAfishaUpdate = context.getBean(MoscowAfishaUpdate.class);
+        executor.execute(moscowAfishaUpdate);
     }
 
 
