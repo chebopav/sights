@@ -50,7 +50,7 @@ public class CityService {
         return cityPage;
     }
 
-    public Optional<City> getCityById(long id) throws DataException {
+    public Optional<City> getCityById(int id) throws DataException {
         Optional<City> result = repository.findById(id);
         if (result.isEmpty()){
             throw new DataException("Город не найден");
@@ -58,7 +58,7 @@ public class CityService {
         return result;
     }
 
-    public void deleteCityById(long id) throws DataException {
+    public void deleteCityById(int id) throws DataException {
         if (!repository.existsById(id)){
             throw new DataException("Город не найден");
         }

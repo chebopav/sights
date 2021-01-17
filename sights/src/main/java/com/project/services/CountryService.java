@@ -49,7 +49,7 @@ public class CountryService {
         return countryPage;
     }
 
-    public Optional<Country> getCountryById(long id) throws DataException {
+    public Optional<Country> getCountryById(int id) throws DataException {
         Optional<Country> result = repository.findById(id);
         if (result.isEmpty()){
             throw new DataException("Страна не найдена");
@@ -57,7 +57,7 @@ public class CountryService {
         return result;
     }
 
-    public void deleteCountryById(long id) throws DataException {
+    public void deleteCountryById(int id) throws DataException {
         if (!repository.existsById(id)){
             throw new DataException("Страна не найдена");
         }

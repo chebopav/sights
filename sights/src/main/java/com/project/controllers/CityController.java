@@ -5,11 +5,9 @@ import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;
 import com.project.entity.data.Theater;
 import com.project.entity.data.address.City;
+import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
-import com.project.repository.CityRepository;
-import com.project.repository.MuseumRepository;
-import com.project.repository.SightRepository;
-import com.project.repository.TheaterRepository;
+import com.project.repository.*;
 import com.project.services.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -20,27 +18,59 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Controller
-@RequestMapping("/city")
+@RequestMapping("/cities")
 public class CityController {
     private CityService service;
     private CityRepository repository;
+    private CountryRepository countryRepository;
     private ApplicationContext context;
 
     @Autowired
-    public CityController(CityService service, CityRepository repository, ApplicationContext context) {
+    public CityController(CityService service,
+                          CityRepository repository,
+                          CountryRepository countryRepository,
+                          ApplicationContext context) {
         this.service = service;
         this.repository = repository;
+        this.countryRepository = countryRepository;
         this.context = context;
+    }
+
+    @GetMapping(value = "/add")
+    public String showForm(Model model){
+        model.addAttribute("city", new City());
+        model.addAttribute("countries", countryRepository.findAll());
+        return "add_city";
+    }
+
+    @PostMapping(value = "/add")
+    public String addCity(@ModelAttribute("city") @Valid City city,
+                          BindingResult bindingResult,
+                          @RequestParam(name = "countryId") int countryId, Model model) {
+        System.out.println(bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("countries", countryRepository.findAll());
+            return "add_city";
+        }
+
+        Country country = countryRepository.findById(countryId).get();
+
+        country.getCities().add(city);
+
+        countryRepository.save(country);
+        repository.save(city);
+
+        return "redirect:/cities/add";
     }
 
     @GetMapping(value = "/all")
@@ -79,6 +109,4 @@ public class CityController {
         model.addAttribute("sights", p);
         return "all_events";
     }
-
-
 }

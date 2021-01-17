@@ -19,7 +19,7 @@ public abstract class City_ {
 	public static volatile SetAttribute<City, Theater> theaters;
 	public static volatile SingularAttribute<City, String> name;
 	public static volatile SetAttribute<City, Excursion> excursions;
-	public static volatile SingularAttribute<City, Long> id;
+	public static volatile SingularAttribute<City, Integer> id;
 
 	public static final String COUNTRY = "country";
 	public static final String MUSEUMS = "museums";

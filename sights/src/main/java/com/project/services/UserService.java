@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
         repository.deleteById(id);
     }
 
-    public User getUserByUserName(String username) throws DataException {
+    public User getUserByUsername(String username) throws DataException {
         User result = repository.findByUsername(username);
         if (result == null)
             throw new DataException("User не найден");
@@ -84,7 +84,6 @@ public class UserService implements UserDetailsService {
         if (loaded != null){
             return false;
         }
-
         Role role = roleRepository.findById(1).get();
         user.getRoles().add(role);
         user.setPassword(encoder.encode(user.getPassword()));

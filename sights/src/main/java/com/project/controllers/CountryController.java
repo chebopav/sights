@@ -9,13 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 @Controller
-@RequestMapping("/country")
+@RequestMapping("/countries")
 public class CountryController {
     private CountryService service;
     private CountryRepository repository;
@@ -37,4 +38,18 @@ public class CountryController {
         return "all_countries";
     }
 
+    @GetMapping(value = "/add")
+    public String showForm(Model model) {
+        model.addAttribute("country", new Country());
+        return "add_country";
+    }
+
+    @PostMapping(value = "/add")
+    public String addCountry(@ModelAttribute("country") @Valid Country country, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add_country";
+        }
+        repository.save(country);
+        return "redirect:/countries/add";
+    }
 }

@@ -15,7 +15,7 @@ public class City {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+    private int id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -42,7 +42,7 @@ public class City {
         this.setName(name);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

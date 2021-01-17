@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CountryRepository extends PagingAndSortingRepository<Country, Long> {
+public interface CountryRepository extends PagingAndSortingRepository<Country, Integer> {
 
     @Query(value = "SELECT c FROM Country c WHERE c.name = :name")
     public Country getCountryByName(@Param("name") String name);

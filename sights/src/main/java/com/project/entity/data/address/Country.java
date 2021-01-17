@@ -11,7 +11,7 @@ public class Country {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+    private int id;
 
     @Column(nullable = false)
     private String name;
@@ -26,7 +26,7 @@ public class Country {
         this.setName(name);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
