@@ -66,6 +66,7 @@ public class CityController {
         Country country = countryRepository.findById(countryId).get();
 
         country.getCities().add(city);
+        city.setCountry(country);
 
         countryRepository.save(country);
         repository.save(city);
