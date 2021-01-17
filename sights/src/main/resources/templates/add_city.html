@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавления города</title>
+</head>
+<body>
+<section class="container m-top">
+    <h3 th:if="${countries.empty}" class="m-bottom">Для добавления города вначале добавьте страну</h3>
+    <h3 th:if="not ${countries.empty}" class="m-bottom">Для добавления города заполните форму:</h3>
+    <div th:if="not ${countries.empty}" >
+        <form  method="post" th:action="@{/cities/add}" th:object="${city}">
+            <div class="form-group row">
+                <label for="country" class="col-lg-2 col-form-label">Страна: </label>
+                <select id="country" class="col-lg-10" name="countryId">
+                    <option th:each="country : ${countries}"
+                            th:value="${country.id}"
+                            th:utext="${country.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group row">
+                <label for="name" class="col-lg-2 col-form-label">Название города: </label>
+                <input id="name" class="col-lg-10" type="text" th:field="*{name}" placeholder="Название города">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+            <div><input type="submit" value="Добавить"></div>
+        </form>
+    </div>
+
+</section>
+</body>
+</html>
