@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Базовый класс для всех мест
@@ -30,6 +31,9 @@ public abstract class BaseData {
     private double rating;
 
     private long rateCount;
+
+    @ManyToMany
+    private Set<Comment> comments;
 
     public BaseData() {
     }

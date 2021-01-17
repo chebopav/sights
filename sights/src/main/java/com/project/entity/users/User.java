@@ -1,5 +1,6 @@
 package com.project.entity.users;
 
+import com.project.entity.data.Comment;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,10 +13,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Класс Юзеров
- * Не вижу смысла делить юзеров на обычных и суперюзеров
- */
 @Entity
 @Table(name = "all_users")
 public class User implements UserDetails {
@@ -31,7 +28,6 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     @NotBlank(message = "Пароль не может быть пустым")
-    //@Size(min = 8, max = 30, message = "Не короче 8 и не длиннее 30 симовлов")
     private String password;
 
     @Transient
@@ -52,6 +48,9 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments;
 
     public User() {
     }
