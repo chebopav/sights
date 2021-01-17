@@ -4,10 +4,7 @@ import com.project.entity.data.address.City;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -21,10 +18,11 @@ public abstract class BaseData {
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
-    private String name;
-
     @ManyToOne
     private City city;
+
+    @Column(unique = true, nullable = false)
+    private String name;
 
     @Type(type = "text")
     private String description;
@@ -38,8 +36,8 @@ public abstract class BaseData {
 
     public BaseData(City city, String name, String description) {
         this.setCity(city);
-        this.setName(name);
         this.setDescription(description);
+        this.setName(name);
     }
 
     public long getId() {
@@ -81,20 +79,20 @@ public abstract class BaseData {
         this.rateCount = rateCount;
     }
 
+    public void addRating(int newRating){
+        if (newRating < 0 || newRating > 5){
+            throw new IllegalArgumentException("Некорректная оценка");
+        }
+        this.rating = ((this.rating * rateCount) + newRating) / (rateCount + 1);
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         if (name == null || name.trim().length() < 3)
-            throw new IllegalArgumentException("Некорректное имя");
+            throw new IllegalArgumentException("Некорректное название места");
         this.name = name;
-    }
-
-    public void addRating(int newRating){
-        if (newRating < 0 || newRating > 5){
-            throw new IllegalArgumentException("Некорректная оценка");
-        }
-        this.rating = ((this.rating * rateCount) + newRating) / (rateCount + 1);
     }
 }

@@ -71,4 +71,11 @@ public class ExcursionService {
             throw new DataException("Экскурсии не найдены");
         return result;
     }
+
+    public Excursion getExcursionByName(String name) throws DataException {
+        Excursion result = repository.findByName(name);
+        if (result == null)
+            throw new DataException("Экскурсия не найдена");
+        return result;
+    }
 }

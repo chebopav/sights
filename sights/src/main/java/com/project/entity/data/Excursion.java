@@ -4,6 +4,8 @@ import com.project.entity.data.address.City;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,13 +15,13 @@ import java.util.Set;
 @Entity
 public class Excursion extends BaseData{
 
-    @Column(nullable = false)
     private String startAddress;
 
-    @Column(nullable = false)
+    @Column
     private Type type;
 
-    private ArrayList<Integer> workDays = new ArrayList<>(7);
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<NeedDate> dates = new HashSet<>();
 
     public Excursion() {
     }
@@ -55,19 +57,11 @@ public class Excursion extends BaseData{
         COMPLEX
     }
 
-    public List<Integer> getWorkDays() {
-        return workDays;
+    public Set<NeedDate> getDates() {
+        return dates;
     }
 
-    public void setWorkDays(ArrayList<Integer> workDays) {
-        this.workDays = workDays;
-    }
-
-    public Set<DayOfWeek> getWorkDays(List<Integer> set){
-        Set<DayOfWeek> workDays = new HashSet<>();
-        for (Integer i : set) {
-            workDays.add(DayOfWeek.of(i));
-        }
-        return workDays;
+    public void setDates(Set<NeedDate> dates) {
+        this.dates = dates;
     }
 }

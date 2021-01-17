@@ -1,14 +1,12 @@
 package com.project.entity.data;
 
 import com.project.entity.data.address.City;
-import com.project.helpers_and_statics.StaticVerifiers;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.time.DayOfWeek;
-import java.util.ArrayList;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,7 +19,8 @@ public class Museum extends BaseData {
 
     private String email;
 
-    private ArrayList<Integer> workDays = new ArrayList<>(7);
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<NeedDate> dates = new HashSet<>();
 
     public Museum() {
     }
@@ -31,6 +30,7 @@ public class Museum extends BaseData {
         this.setFullAddress(fullAddress);
         this.setPhone(phone);
     }
+
 
     public String getFullAddress() {
         return fullAddress;
@@ -56,24 +56,14 @@ public class Museum extends BaseData {
     }
 
     public void setEmail(String email) {
-        if (!StaticVerifiers.verifiedEMail(email))
-            throw new IllegalArgumentException("Некорректный e-mail");
         this.email = email;
     }
 
-    public List<Integer> getWorkDays() {
-        return workDays;
+    public Set<NeedDate> getDates() {
+        return dates;
     }
 
-    public void setWorkDays(ArrayList<Integer> workDays) {
-        this.workDays = workDays;
-    }
-
-    public Set<DayOfWeek> getWorkDays(List<Integer> set){
-        Set<DayOfWeek> workDays = new HashSet<>();
-        for (Integer i : set) {
-            workDays.add(DayOfWeek.of(i));
-        }
-        return workDays;
+    public void setDates(Set<NeedDate> dates) {
+        this.dates = dates;
     }
 }

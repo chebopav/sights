@@ -1,8 +1,6 @@
 package com.project.entity.users;
 
-import com.project.helpers_and_statics.StaticVerifiers;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -108,15 +106,10 @@ public class User implements UserDetails {
     }
 
     public void setPassword(String password) {
-        if (!StaticVerifiers.verifiedPass(password)) {
-            throw new IllegalArgumentException("Недопустимый пароль");
-        }
         this.password = password;
     }
 
     public void setEmail(String email) {
-        if (!StaticVerifiers.verifiedEMail(email))
-            throw new IllegalArgumentException("Недопустимый e-mail");
         this.email = email;
     }
 

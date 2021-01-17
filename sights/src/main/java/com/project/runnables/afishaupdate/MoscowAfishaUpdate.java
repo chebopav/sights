@@ -22,68 +22,71 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AfishaUpdate implements Runnable{
+public class MoscowAfishaUpdate implements Runnable{
 
     @Autowired
     private ApplicationContext context;
 
-    public AfishaUpdate(ApplicationContext context) {
+    public MoscowAfishaUpdate() {
+    }
+
+    public MoscowAfishaUpdate(ApplicationContext context) {
         this.context = context;
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < 4; i ++){
-            String url = getURL((i+1));
+        for (int i = 1; i <= 20; i++) {
+            String url = getURL(i);
             try {
                 stringParsing(url);
-            } catch (DataException | IOException e){
+            } catch (IOException | DataException e) {
                 e.printStackTrace();
             }
         }
+
     }
 
     private static String getURL(int page){
         StringBuilder sb = new StringBuilder();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String date = Statics.UPDATE_DATE.format(formatter);
-        sb.append("https://www.bileter.ru/afisha?date_from=")
+        sb.append("https://www.ticketland.ru/search/performance/?page=")
+                .append(page)
+                .append("&mnd=")
                 .append(date)
-                .append("&date_to=")
-                .append(date)
-                .append("&page=")
-                .append(page);
+                .append("&mxd=")
+                .append(date);
         return sb.toString();
     }
 
-    private void stringParsing(String data) throws DataException, IOException {
-        int date = Statics.UPDATE_DATE.getDayOfMonth();
-        Document document = Jsoup.connect(data).get();
-        Elements el = document.getElementsByClass("afishe-index");
+    private void stringParsing(String url) throws IOException, DataException {
+        Document document = Jsoup.connect(url).get();
+        Elements el = document.getElementsByClass("col-xs-12 col-sm-8 col-lg-9 p-0 p-sm-3");
         List<String> list = new ArrayList<>();
         for(Element element : el.select("a")){
             list.add(element.text());
         }
-        for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).startsWith("Купить")
-                    || list.get(i).startsWith("Билетов")
-                    || list.get(i).startsWith(String.valueOf(date))
-                    || list.get(i).startsWith("Подробнее")
-                    || list.get(i).equals("")){
-                list.remove(i);
-                i --;
-            }
 
-        }
-        for (int i = 0; i < list.size(); i+=2) {
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i).length()<=2){
+                i++;
+                continue;
+            }
             String eventName = list.get(i);
-            String place = list.get(i+1);
-            if (eventName.contains("Автобусная экскурсия") || eventName.contains("City Sightseeing")){
+            i++;
+            String place = list.get(i);
+            i += 3;
+            if (place.contains("Экскурсии автобусные")){
                 addExcursion(eventName, place, Excursion.Type.BUS);
-            } else if (eventName.contains("Экскурсия") || eventName.contains("Экскурсии")){
+            } else if (place.contains("Экскурсии пешие")){
                 addExcursion(eventName, place, Excursion.Type.ON_FOOT);
             } else{
                 addEventToTheater(eventName, place);
+            }
+
+            if (i >= list.size() - 4){
+                break;
             }
         }
     }
@@ -99,7 +102,7 @@ public class AfishaUpdate implements Runnable{
             theater = theaterService.getTheaterByName(theaterName);
         } catch (DataException e) {
             theater = new Theater(theaterName);
-            theater.setCity(cityService.getCityByName("Санкт-Петербург"));
+            theater.setCity(cityService.getCityByName("Москва"));
             theaterService.addTheater(theater);
         }
         Event event = new Event(eventName, theater);
@@ -122,7 +125,7 @@ public class AfishaUpdate implements Runnable{
             excursion = new Excursion();
             excursion.setName(excursionName);
             excursion.setDescription(description);
-            excursion.setCity(cityService.getCityByName("Санкт-Петербург"));
+            excursion.setCity(cityService.getCityByName("Москва"));
             excursion.setType(type);
         }
         NeedDate date = dateRepository.findById(Statics.UPDATE_DATE).get();
