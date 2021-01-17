@@ -6,8 +6,8 @@
 </head>
 <body>
 <section class="container m-top">
-    <h3 th:if="${countries.empty}" class="m-bottom">Для добавления города вначале добавьте страну</h3>
-    <h3 th:if="not ${countries.empty}" class="m-bottom">Для добавления города заполните форму:</h3>
+    <h1 th:if="${countries.empty}" class="m-bottom">Для добавления города вначале добавьте страну</h1>
+    <h1 th:if="not ${countries.empty}" class="m-bottom">Для добавления города заполните форму:</h1>
     <div th:if="not ${countries.empty}" >
         <form  method="post" th:action="@{/cities/add}" th:object="${city}">
             <div class="form-group row">

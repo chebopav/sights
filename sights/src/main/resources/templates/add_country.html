@@ -6,7 +6,7 @@
 </head>
 <body>
 <section class="container m-top">
-    <h3 class="m-bottom">Для добавления страны заполните форму:</h3>
+    <h1 class="m-bottom">Для добавления страны заполните форму:</h1>
     <form method="post" th:action="@{/countries/add}" th:object="${country}">
         <div class="form-group row">
             <label for="name" class="col-lg-2 col-form-label">Название страны: </label>
@@ -15,6 +15,12 @@
         </div>
         <div><input type="submit" value="Добавить"></div>
     </form>
+    <div class="container m-top">
+        <h2>Список стран: </h2>
+        <div th:each="country : ${countries}">
+            <h3>Название страны: <span th:utext="${country.name}"></span></h3>
+        </div>
+    </div>
 </section>
 </body>
 </html>

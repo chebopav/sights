@@ -7,8 +7,41 @@
 <section>
     <div class="container m-top">
         <h1>Список мест для путешевствий:</h1>
-    </div>
+        <div th:if="not ${countries.empty}" >
+            <form method="get" th:action="@{/museums/get}" th:object="${museum}">
+                <div class="form-group row">
+                    <label for="country" class="col-lg-2 col-form-label">Страна: </label>
+                    <select id="country" class="col-lg-10" name="countryId">
+                        <option th:each="country : ${countries}"
+                                th:value="${country.id}"
+                                th:utext="${country.name}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="city" class="col-lg-2 col-form-label">Город: </label>
+                    <select id="city" class="col-lg-10" name="cityId">
+                        <option th:each="city : ${cities}"
+                                th:value="${city.id}"
+                                th:utext="${city.name}">
+                        </option>
+                    </select>
+                </div>
+                <div><input type="submit" value="Найти места"></div>
+            </form>
+        </div>
 
+        <div th:each="country : ${countries}">
+            <h3>Название страны: <span th:utext="${country.name}"></span></h3>
+            <p th:if="${country.cities.empty}">Отсутствует информация о городах</p>
+            <p th:if="not ${country.cities.empty}">Города:</p>
+            <div th:each="city : ${country.cities}">
+                <p>
+                    <span th:utext="${city.name}"></span>
+                </p>
+            </div>
+        </div>
+    </div>
 </section>
 </body>
 </html>
