@@ -28,6 +28,14 @@
         </form>
     </div>
 
+    <h2>Список городов: </h2>
+    <div th:each="city : ${cities}">
+        <p>
+            <span th:utext="${city.name}"></span>
+            <a th:href="@{/cities/del(id=${city.id})}" th:action="@{/cities/del}">Удалить</a>
+        </p>
+    </div>
+
 </section>
 </body>
 </html>

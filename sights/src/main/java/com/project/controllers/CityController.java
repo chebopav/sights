@@ -9,6 +9,7 @@ import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
 import com.project.repository.*;
 import com.project.services.CityService;
+import com.project.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
@@ -30,18 +31,21 @@ import java.util.List;
 @Controller
 @RequestMapping("/cities")
 public class CityController {
-    private CityService service;
-    private CityRepository repository;
+    private CityService cityService;
+    private CountryService countryService;
+    private CityRepository cityRepository;
     private CountryRepository countryRepository;
     private ApplicationContext context;
 
     @Autowired
-    public CityController(CityService service,
-                          CityRepository repository,
+    public CityController(CityService cityService,
+                          CountryService countryService,
+                          CityRepository cityRepository,
                           CountryRepository countryRepository,
                           ApplicationContext context) {
-        this.service = service;
-        this.repository = repository;
+        this.cityService = cityService;
+        this.countryService = countryService;
+        this.cityRepository = cityRepository;
         this.countryRepository = countryRepository;
         this.context = context;
     }
@@ -49,6 +53,7 @@ public class CityController {
     @GetMapping(value = "/add")
     public String showForm(Model model){
         model.addAttribute("city", new City());
+        model.addAttribute("cities", cityRepository.findAll());
         model.addAttribute("countries", countryRepository.findAll());
         return "add_city";
     }
@@ -69,15 +74,31 @@ public class CityController {
         city.setCountry(country);
 
         countryRepository.save(country);
-        repository.save(city);
 
+        try {
+            cityService.addCity(city);
+        } catch (DataException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/cities/add";
+    }
+
+    @GetMapping(value = "/del")
+    public String delCity(@ModelAttribute("city") @Valid City city,
+                             BindingResult bindingResult,
+                             @RequestParam("id") int id) {
+        try {
+            cityService.deleteCityById(id);
+        } catch (DataException e) {
+            e.printStackTrace();
+        }
         return "redirect:/cities/add";
     }
 
     @GetMapping(value = "/all")
     public String getAllCities(Model model, @RequestParam("page") int page, @RequestParam("size") int size){
         try {
-            Page<City> cityPage = service.getPageOfCities(page, size);
+            Page<City> cityPage = cityService.getPageOfCities(page, size);
             model.addAttribute("cities", cityPage);
         } catch (DataException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
