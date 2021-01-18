@@ -15,12 +15,15 @@
         </div>
         <div><input type="submit" value="Добавить"></div>
     </form>
-    <div class="container m-top">
-        <h2>Список стран: </h2>
-        <div th:each="country : ${countries}">
-            <h3>Название страны: <span th:utext="${country.name}"></span></h3>
-        </div>
+
+    <h2>Список стран: </h2>
+    <div th:each="country : ${countries}">
+        <p>
+            <span th:utext="${country.name}"></span>
+            <a th:href="@{/countries/del(id=${country.id})}" th:action="@{/countries/del}">Удалить</a>
+        </p>
     </div>
+
 </section>
 </body>
 </html>

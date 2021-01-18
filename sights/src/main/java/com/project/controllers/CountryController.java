@@ -6,6 +6,7 @@ import com.project.repository.CountryRepository;
 import com.project.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +42,7 @@ public class CountryController {
     @GetMapping(value = "/add")
     public String showForm(Model model) {
         model.addAttribute("country", new Country());
+        model.addAttribute("countries", repository.findAll());
         return "add_country";
     }
 
@@ -49,7 +51,23 @@ public class CountryController {
         if (bindingResult.hasErrors()) {
             return "add_country";
         }
-        repository.save(country);
+        try {
+            service.addCountry(country);
+        } catch (DataException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/countries/add";
+    }
+
+    @GetMapping(value = "/del")
+    public String delCountry(@ModelAttribute("country") @Valid Country country,
+                             BindingResult bindingResult,
+                             @RequestParam("id") int id) {
+        try {
+            service.deleteCountryById(id);
+        } catch (DataException e) {
+            e.printStackTrace();
+        }
         return "redirect:/countries/add";
     }
 }
