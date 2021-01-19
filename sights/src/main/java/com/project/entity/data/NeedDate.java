@@ -20,9 +20,6 @@ public class NeedDate {
     @ManyToMany(mappedBy = "dates", fetch = FetchType.EAGER)
     private Set<Event> events;
 
-    @ManyToMany(mappedBy = "dates", fetch = FetchType.EAGER)
-    private Set<Museum> museums;
-
     public NeedDate() {
     }
 
@@ -54,11 +51,12 @@ public class NeedDate {
         this.events = events;
     }
 
-    public Set<Museum> getMuseums() {
-        return museums;
+    public void addEvent(Event event){
+        events.add(event);
     }
 
-    public void setMuseums(Set<Museum> museums) {
-        this.museums = museums;
+    public void addExcursion(Excursion excursion){
+        excursions.add(excursion);
     }
+
 }
