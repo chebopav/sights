@@ -81,7 +81,7 @@ public class MoscowAfishaUpdate implements Runnable{
                 addExcursion(eventName, place, Excursion.Type.BUS);
             } else if (place.contains("Экскурсии пешие")){
                 addExcursion(eventName, place, Excursion.Type.ON_FOOT);
-            } else{
+            } else {
                 addEventToTheater(eventName, place);
             }
 

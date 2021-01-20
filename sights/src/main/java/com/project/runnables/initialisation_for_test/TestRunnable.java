@@ -68,15 +68,5 @@ public class TestRunnable implements Runnable{
         } catch (DataException e) {
             e.printStackTrace();
         }
-
-        User i = new User("chebopav", "cg32165a", "chebopav@bk.ru", "Pavel");
-        i.getRoles().add(user);
-        user.getUsers().add(i);
-        UserService userService = context.getBean(UserService.class);
-        try {
-            userService.addUser(i);
-        } catch (DataException e) {
-            e.printStackTrace();
-        }
     }
 }

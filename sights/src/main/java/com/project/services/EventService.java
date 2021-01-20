@@ -1,6 +1,7 @@
 package com.project.services;
 
 import com.project.entity.afisha.Event;
+import com.project.entity.data.NeedDate;
 import com.project.exceptions.DataException;
 import com.project.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class EventService {
@@ -60,6 +63,10 @@ public class EventService {
             throw new DataException("Мероприятие не найдено");
         }
         repository.deleteById(id);
+    }
+
+    public List<Event> getAllEventsToDate(NeedDate date){
+        return repository.getAllEventsToDate(date.getDate());
     }
 
 }

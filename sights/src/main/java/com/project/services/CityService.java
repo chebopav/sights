@@ -21,8 +21,9 @@ public class CityService {
     private CountryRepository countryRepository;
 
     @Autowired
-    public CityService(CityRepository repository) {
+    public CityService(CityRepository repository, CountryRepository countryRepository) {
         this.cityRepository = repository;
+        this.countryRepository = countryRepository;
     }
 
     public CityRepository getRepository() {

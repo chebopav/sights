@@ -96,7 +96,7 @@ public class CityController {
     }
 
     @GetMapping(value = "/sel")
-    public List<City> selCitiesByCountry(@ModelAttribute("city") @Valid City city,
+    public String selCitiesByCountry(@ModelAttribute("city") @Valid City city,
                                          BindingResult bindingResult,
                                          @RequestParam("id") int id) {
         List<City> cityList = new ArrayList<>();
@@ -105,7 +105,8 @@ public class CityController {
         } catch (DataException e) {
             e.printStackTrace();
         }
-        return cityList;
+        System.out.println(cityList);
+        return "redirect:/index";
     }
 
     @GetMapping(value = "/all")
@@ -117,31 +118,5 @@ public class CityController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
         return "all_cities";
-    }
-
-    @GetMapping(value = "/all/events")
-    public String getAllSightsOfCity(Model model, @RequestParam("page") int page, @RequestParam("size") int size){
-        MuseumRepository museumRepository = context.getBean(MuseumRepository.class);
-        SightRepository sightRepository = context.getBean(SightRepository.class);
-        TheaterRepository theaterRepository = context.getBean(TheaterRepository.class);
-        Iterable<Museum> museums = museumRepository.findAll();
-        Iterable<Sight> sights = sightRepository.findAll();
-        Iterable<Theater> theaters = theaterRepository.findAll();
-        List<BaseData> list = new ArrayList<>();
-        for (Museum museum : museums) {
-            list.add(museum);
-        }
-        for (Sight sight : sights) {
-            list.add(sight);
-        }
-        for (Theater theater : theaters) {
-            list.add(theater);
-        }
-        Collections.shuffle(list);
-        Pageable pageable = PageRequest.of(page, size);
-        Page<BaseData> p = new PageImpl<>(list, pageable, list.size());
-        System.out.println(p.getTotalPages());
-        model.addAttribute("sights", p);
-        return "all_events";
     }
 }

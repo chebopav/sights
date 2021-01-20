@@ -1,6 +1,8 @@
 package com.project.runnables.afishaupdate;
 
 import com.project.helpers_and_statics.Statics;
+import com.project.repository.NeedDateRepository;
+import com.project.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +29,16 @@ public class SchedulingAfishaUpdate {
         executor.execute(update);
         MoscowAfishaUpdate moscowAfishaUpdate = context.getBean(MoscowAfishaUpdate.class);
         executor.execute(moscowAfishaUpdate);
+
+
+        try {
+            Thread.sleep(11000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        EventService eventService = context.getBean(EventService.class);
+        NeedDateRepository repository = context.getBean(NeedDateRepository.class);
+        System.out.println(eventService.getAllEventsToDate(repository.findById(Statics.UPDATE_DATE).get()));
     }
 
 
