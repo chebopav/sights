@@ -19,9 +19,6 @@ public class Museum extends BaseData {
 
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<NeedDate> dates = new HashSet<>();
-
     public Museum() {
     }
 
@@ -59,11 +56,4 @@ public class Museum extends BaseData {
         this.email = email;
     }
 
-    public Set<NeedDate> getDates() {
-        return dates;
-    }
-
-    public void setDates(Set<NeedDate> dates) {
-        this.dates = dates;
-    }
 }
