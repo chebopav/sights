@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/cities")
 public class CityController {
     private CityService cityService;
@@ -85,24 +83,6 @@ public class CityController {
             e.printStackTrace();
         }
         return "redirect:/cities/add";
-    }
-
-    @GetMapping(value = "/sel")
-    public City[] selCitiesByCountry(@ModelAttribute("city") @Valid City city,
-                                         BindingResult bindingResult,
-                                         @RequestParam("id") int id) {
-        List<City> cityList = new ArrayList<>();
-        try {
-            cityList = cityService.selectCitiesByCountry(id);
-        } catch (DataException e) {
-            e.printStackTrace();
-        }
-        City[] citiesArray = new City[cityList.size()];
-        for (int i = 0; i < citiesArray.length; i ++){
-            citiesArray[i] = cityList.get(i);
-        }
-        System.out.println(citiesArray);
-        return citiesArray;
     }
 
     @GetMapping(value = "/all")
