@@ -1,6 +1,11 @@
+$(document).ready(function(){
+    console.log("Hello Java");
+    });
 $(function(){
 // Запускаем функцию при изменении страны
-    alert('a');
+    $(document).ready(function(){
+        console.log("Hello Java");
+        });
     $('#country').on('change', function(){
       let countryId =  $(this).val();  // создаем переменную с выбранной страной - это Object из которого нам нужен будет value
 

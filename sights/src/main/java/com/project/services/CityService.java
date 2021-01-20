@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,7 +86,8 @@ public class CityService {
 
     public List<City> selectCitiesByCountry(int id) throws DataException {
         Country selectedCountry = countryRepository.findById(id).get();
-        List<City> cityList = cityRepository.getAllCitiesOfCountry(selectedCountry);
+        List<City> cityList = new ArrayList<>();
+        cityRepository.getAllCitiesOfCountry(selectedCountry).forEach(it -> cityList.add(it));
         return cityList;
     }
 }
