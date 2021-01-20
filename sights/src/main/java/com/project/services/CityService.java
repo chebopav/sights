@@ -4,46 +4,49 @@ import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
 import com.project.repository.CityRepository;
+import com.project.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CityService {
 
-    private CityRepository repository;
+    private CityRepository cityRepository;
+    private CountryRepository countryRepository;
 
     @Autowired
     public CityService(CityRepository repository) {
-        this.repository = repository;
+        this.cityRepository = repository;
     }
 
     public CityRepository getRepository() {
-        return repository;
+        return cityRepository;
     }
 
     public City addCity(City city) throws DataException{
-        if(repository.existsById(city.getId())
-            || repository.getCityByName(city.getName()) != null){
+        if(cityRepository.existsById(city.getId())
+            || cityRepository.getCityByName(city.getName()) != null){
             throw new DataException("Город уже существует");
         }
-        return repository.save(city);
+        return cityRepository.save(city);
     }
 
     public City updateCity(City city) throws DataException {
-        if(!repository.existsById(city.getId())){
+        if(!cityRepository.existsById(city.getId())){
             throw new DataException("Город не существует");
         }
-        return repository.save(city);
+        return cityRepository.save(city);
     }
 
     public Page<City> getPageOfCities(int page, int size) throws DataException {
         Pageable pageable = PageRequest.of(page, size);
-        Page<City> cityPage = repository.findAll(pageable);
+        Page<City> cityPage = cityRepository.findAll(pageable);
         if (cityPage.isEmpty()){
             throw new DataException("Записи городов не найдены");
         }
@@ -51,7 +54,7 @@ public class CityService {
     }
 
     public Optional<City> getCityById(int id) throws DataException {
-        Optional<City> result = repository.findById(id);
+        Optional<City> result = cityRepository.findById(id);
         if (result.isEmpty()){
             throw new DataException("Город не найден");
         }
@@ -59,23 +62,29 @@ public class CityService {
     }
 
     public void deleteCityById(int id) throws DataException {
-        if (!repository.existsById(id)){
+        if (!cityRepository.existsById(id)){
             throw new DataException("Город не найден");
         }
-        repository.deleteById(id);
+        cityRepository.deleteById(id);
     }
 
     public City getCityByName(String name) throws DataException {
-        City result = repository.getCityByName(name);
+        City result = cityRepository.getCityByName(name);
         if (result == null)
             throw new DataException("Город не найден");
         return result;
     }
 
     public Iterable<City> getAllCitiesOfCountry(Country country) throws DataException {
-        Iterable<City> result = repository.getAllCitiesOfCountry(country);
+        Iterable<City> result = cityRepository.getAllCitiesOfCountry(country);
         if (result == null)
             throw new DataException("Города не найдены");
         return result;
+    }
+
+    public List<City> selectCitiesByCountry(int id) throws DataException {
+        Country selectedCountry = countryRepository.findById(id).get();
+        List<City> cityList = cityRepository.getAllCitiesOfCountry(selectedCountry);
+        return cityList;
     }
 }

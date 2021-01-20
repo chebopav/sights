@@ -24,4 +24,5 @@ public class IndexController {
         model.addAttribute("cities", cityRepository.findAll());
         return "index";
     }
+
 }

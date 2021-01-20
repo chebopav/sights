@@ -95,6 +95,19 @@ public class CityController {
         return "redirect:/cities/add";
     }
 
+    @GetMapping(value = "/sel")
+    public List<City> selCitiesByCountry(@ModelAttribute("city") @Valid City city,
+                                         BindingResult bindingResult,
+                                         @RequestParam("id") int id) {
+        List<City> cityList = new ArrayList<>();
+        try {
+            cityList = cityService.selectCitiesByCountry(id);
+        } catch (DataException e) {
+            e.printStackTrace();
+        }
+        return cityList;
+    }
+
     @GetMapping(value = "/all")
     public String getAllCities(Model model, @RequestParam("page") int page, @RequestParam("size") int size){
         try {
