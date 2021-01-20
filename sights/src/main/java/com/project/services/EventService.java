@@ -1,23 +1,31 @@
 package com.project.services;
 
 import com.project.entity.afisha.Event;
+import com.project.entity.data.NeedDate;
+import com.project.entity.data.Theater;
+import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class EventService {
     private EventRepository repository;
+    private ApplicationContext context;
 
     @Autowired
-    public EventService(EventRepository repository) {
+    public EventService(EventRepository repository, ApplicationContext context) {
         this.repository = repository;
+        this.context = context;
     }
 
     public EventRepository getRepository() {
@@ -60,6 +68,23 @@ public class EventService {
             throw new DataException("Мероприятие не найдено");
         }
         repository.deleteById(id);
+    }
+
+    public List<Event> getAllEventsToDate(NeedDate date){
+        return repository.getAllEventsToDate(date.getDate());
+    }
+
+    public List<Event> getAllEventsToDateInCity(NeedDate date, City city){
+        List<Event> events = getAllEventsToDate(date);
+        TheaterService theaterService = context.getBean(TheaterService.class);
+        List<Theater> theatersOfCity = theaterService.getAllTheatersOfCity(city);
+        List<Event> result = new ArrayList<>();
+        for (Event event : events) {
+            if(theatersOfCity.contains(event.getTheater())){
+                result.add(event);
+            }
+        }
+        return result;
     }
 
 }

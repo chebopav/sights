@@ -53,7 +53,7 @@ public class CountryController {
         try {
             service.addCountry(country);
         } catch (DataException e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
         return "redirect:/countries/add";
     }
@@ -65,7 +65,7 @@ public class CountryController {
         try {
             service.deleteCountryById(id);
         } catch (DataException e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
         return "redirect:/countries/add";
     }

@@ -12,8 +12,6 @@ import java.util.Set;
 
 public interface EventRepository extends PagingAndSortingRepository<Event, Long> {
 
-    //@Query(value = "SELECT e FROM Event e WHERE e.dates = :date")
-    @Query(nativeQuery = true,
-            value = "SELECT id, name, theater_id FROM event_dates INNER JOIN event ON (events_id = id) WHERE dates_date= :date")
+    @Query(nativeQuery = true, value = "SELECT * FROM event_dates INNER JOIN event ON (events_id = id) WHERE dates_date = :date")
     public List<Event> getAllEventsToDate(@Param("date")LocalDate date);
 }
