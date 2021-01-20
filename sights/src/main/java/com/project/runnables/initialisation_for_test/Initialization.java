@@ -1,7 +1,6 @@
 package com.project.runnables.initialisation_for_test;
 
 import com.project.helpers_and_statics.Statics;
-import com.project.runnables.afishaupdate.AfishaUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;

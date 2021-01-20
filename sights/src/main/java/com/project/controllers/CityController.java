@@ -1,21 +1,15 @@
 package com.project.controllers;
 
-import com.project.entity.data.BaseData;
-import com.project.entity.data.Museum;
-import com.project.entity.data.Sight;
-import com.project.entity.data.Theater;
 import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
-import com.project.repository.*;
+import com.project.repository.CityRepository;
+import com.project.repository.CountryRepository;
 import com.project.services.CityService;
 import com.project.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -103,7 +96,7 @@ public class CityController {
         try {
             cityList = cityService.selectCitiesByCountry(id);
         } catch (DataException e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
         System.out.println(cityList);
         return "redirect:/index";
