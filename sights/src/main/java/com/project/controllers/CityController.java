@@ -1,9 +1,5 @@
 package com.project.controllers;
 
-import com.project.entity.data.BaseData;
-import com.project.entity.data.Museum;
-import com.project.entity.data.Sight;
-import com.project.entity.data.Theater;
 import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
@@ -13,9 +9,6 @@ import com.project.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +18,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/cities")
 public class CityController {
     private CityService cityService;
@@ -96,7 +88,7 @@ public class CityController {
     }
 
     @GetMapping(value = "/sel")
-    public List<City> selCitiesByCountry(@ModelAttribute("city") @Valid City city,
+    public City[] selCitiesByCountry(@ModelAttribute("city") @Valid City city,
                                          BindingResult bindingResult,
                                          @RequestParam("id") int id) {
         List<City> cityList = new ArrayList<>();
@@ -105,7 +97,12 @@ public class CityController {
         } catch (DataException e) {
             e.printStackTrace();
         }
-        return cityList;
+        City[] citiesArray = new City[cityList.size()];
+        for (int i = 0; i < citiesArray.length; i ++){
+            citiesArray[i] = cityList.get(i);
+        }
+        System.out.println(citiesArray);
+        return citiesArray;
     }
 
     @GetMapping(value = "/all")
@@ -117,31 +114,5 @@ public class CityController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
         return "all_cities";
-    }
-
-    @GetMapping(value = "/all/events")
-    public String getAllSightsOfCity(Model model, @RequestParam("page") int page, @RequestParam("size") int size){
-        MuseumRepository museumRepository = context.getBean(MuseumRepository.class);
-        SightRepository sightRepository = context.getBean(SightRepository.class);
-        TheaterRepository theaterRepository = context.getBean(TheaterRepository.class);
-        Iterable<Museum> museums = museumRepository.findAll();
-        Iterable<Sight> sights = sightRepository.findAll();
-        Iterable<Theater> theaters = theaterRepository.findAll();
-        List<BaseData> list = new ArrayList<>();
-        for (Museum museum : museums) {
-            list.add(museum);
-        }
-        for (Sight sight : sights) {
-            list.add(sight);
-        }
-        for (Theater theater : theaters) {
-            list.add(theater);
-        }
-        Collections.shuffle(list);
-        Pageable pageable = PageRequest.of(page, size);
-        Page<BaseData> p = new PageImpl<>(list, pageable, list.size());
-        System.out.println(p.getTotalPages());
-        model.addAttribute("sights", p);
-        return "all_events";
     }
 }
