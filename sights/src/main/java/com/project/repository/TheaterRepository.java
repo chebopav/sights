@@ -15,6 +15,6 @@ public interface TheaterRepository extends PagingAndSortingRepository<Theater, L
     @Query(value = "SELECT t FROM Theater t WHERE t.name = :name")
     public Theater getTheaterByName(@Param("name") String name);
 
-    @Query(value = "SELECT t FROM Theater t WHERE t.city = :city" )
-    public List<Theater> getTheatersOfCity(@Param("city") City city);
+    @Query(nativeQuery = true, value = "SELECT * FROM theater WHERE city_id = :id" )
+    public List<Theater> getTheatersOfCity(@Param("id") int cityId);
 }

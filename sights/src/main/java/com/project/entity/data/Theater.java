@@ -20,14 +20,16 @@ public class Theater extends BaseData{
     @OneToMany(mappedBy = "theater", fetch = FetchType.EAGER)
     private Set<Event> events = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private City city;
-
     public Theater() {
     }
 
     public Theater(String name){
         this.setName(name);
+    }
+
+    public Theater(String name, City city){
+        this.setName(name);
+        this.setCity(city);
     }
 
     public String getFullAddress() {

@@ -32,7 +32,7 @@ public class City {
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Excursion> excursions = new HashSet<>();
 
-    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "city", fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Theater> theaters = new HashSet<>();
 
     public City() {
@@ -92,5 +92,13 @@ public class City {
         if(excursions == null)
             throw new IllegalArgumentException("Экскурсии не могут быть null");
         this.excursions = excursions;
+    }
+
+    public Set<Theater> getTheaters() {
+        return theaters;
+    }
+
+    public void setTheaters(Set<Theater> theaters) {
+        this.theaters = theaters;
     }
 }

@@ -1,6 +1,10 @@
 package com.project.services;
 
+import com.project.entity.afisha.Event;
 import com.project.entity.data.Excursion;
+import com.project.entity.data.NeedDate;
+import com.project.entity.data.Theater;
+import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.ExcursionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -77,5 +83,21 @@ public class ExcursionService {
         if (result == null)
             throw new DataException("Экскурсия не найдена");
         return result;
+    }
+
+    public List<Excursion> getAllExcursionsToDateInCity(NeedDate date, City city){
+        List<Excursion> excursions = repository.getAllEventsToDate(date.getDate());
+        List<Excursion> result = new ArrayList<>();
+        for (Excursion excursion : excursions) {
+            if(excursion.getCity().equals(city)){
+                result.add(excursion);
+            }
+        }
+        return result;
+    }
+
+    public Excursion getRandomEventToDateInCity(NeedDate date, City city){
+        List<Excursion> events = getAllExcursionsToDateInCity(date, city);
+        return events.get((int)(Math.random() * events.size()));
     }
 }

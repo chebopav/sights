@@ -4,9 +4,11 @@ import com.project.entity.afisha.Event;
 import com.project.entity.data.Excursion;
 import com.project.entity.data.NeedDate;
 import com.project.entity.data.Theater;
+import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.helpers_and_statics.Statics;
 import com.project.repository.NeedDateRepository;
+import com.project.repository.TheaterRepository;
 import com.project.services.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -89,8 +91,9 @@ public class AfishaUpdate implements Runnable{
     }
 
     private void addEventToTheater(String eventName, String theaterName) throws DataException {
-        Theater theater;
+        Theater theater = null;
         TheaterService theaterService = context.getBean(TheaterService.class);
+        TheaterRepository theaterRepository = context.getBean(TheaterRepository.class);
         CityService cityService = context.getBean(CityService.class);
         EventService eventService = context.getBean(EventService.class);
         NeedDateService dateService = context.getBean(NeedDateService.class);
@@ -98,15 +101,19 @@ public class AfishaUpdate implements Runnable{
         try {
             theater = theaterService.getTheaterByName(theaterName);
         } catch (DataException e) {
-            theater = new Theater(theaterName);
-            theater.setCity(cityService.getCityByName("Санкт-Петербург"));
-            theaterService.addTheater(theater);
+            e.printStackTrace();
         }
+        if (theater == null){
+            theater = new Theater();
+            theater.setName(theaterName);
+            theater.setCity(cityService.getCityByName("Санкт-Петербург"));
+        }
+
         Event event = new Event(eventName, theater);
         event.getDates().add(needDate);
         needDate.getEvents().add(event);
         theater.addEvent(event);
-        theaterService.updateTheater(theater);
+        theaterRepository.save(theater);
         eventService.addEvent(event);
         dateService.updateDate(needDate);
     }

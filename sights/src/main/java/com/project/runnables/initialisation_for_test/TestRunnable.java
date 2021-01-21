@@ -15,6 +15,7 @@ import com.project.services.MuseumService;
 import com.project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -65,6 +66,18 @@ public class TestRunnable implements Runnable{
         MuseumService museumService = context.getBean(MuseumService.class);
         try {
             museumService.addMuseum(museum);
+        } catch (DataException e) {
+            e.printStackTrace();
+        }
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String pwd = "admin";
+        User superUser = new User("admin", encoder.encode(pwd), "admin@mail.ru", "Admin");
+        superUser.getRoles().add(admin);
+        superUser.getRoles().add(user);
+        UserService userService = context.getBean(UserService.class);
+        try {
+            userService.addUser(superUser);
         } catch (DataException e) {
             e.printStackTrace();
         }
