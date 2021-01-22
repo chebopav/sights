@@ -1,6 +1,7 @@
 package com.project.services;
 
 import com.project.entity.data.Museum;
+import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.MuseumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -68,5 +70,13 @@ public class MuseumService {
         if (result == null)
             throw new DataException("Музей не найден");
         return result;
+    }
+
+    public List<Museum> getAllMuseumsOfCity(City city){
+        return repository.getMuseumsByCity(city);
+    }
+
+    public Museum getRandomMuseumOnCity(City city){
+        return repository.getRandomMuseumForCity(city.getId());
     }
 }

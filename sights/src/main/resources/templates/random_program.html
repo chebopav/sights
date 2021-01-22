@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Культурная программа</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<section>
+    <div class="container m-top">
+        <h1>Результат:</h1>
+        <form method="get" >
+            <div>
+                <h3>Рекомендованный музей: <span th:utext = "${museum.name}"></span></h3>
+                <h3>Рекомендованно сходить<span th:utext = "${event.name}"></span></h3>
+
+
+            </div>
+        </form>
+    </div>
+
+</section>
+</body>
+</html>

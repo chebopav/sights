@@ -87,4 +87,9 @@ public class EventService {
         return result;
     }
 
+    public Event getRandomEventToDateInCity(NeedDate date, City city){
+        List<Event> events = getAllEventsToDateInCity(date, city);
+        return events.get((int)(Math.random() * events.size()));
+    }
+
 }
