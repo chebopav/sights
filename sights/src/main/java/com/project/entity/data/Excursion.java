@@ -1,5 +1,9 @@
 package com.project.entity.data;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.project.entity.data.address.City;
 
 import javax.persistence.Column;
@@ -21,6 +25,7 @@ public class Excursion extends BaseData{
     private Type type;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<NeedDate> dates = new HashSet<>();
 
     public Excursion() {

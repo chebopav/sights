@@ -68,5 +68,8 @@ public class TestRunnable implements Runnable{
         } catch (DataException e) {
             e.printStackTrace();
         }
+
+        // добавление в таблицу Category
+
     }
 }

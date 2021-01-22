@@ -1,5 +1,9 @@
 package com.project.entity.data;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.project.entity.data.address.City;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -20,6 +24,7 @@ public abstract class BaseData {
     private long id;
 
     @ManyToOne
+    @JsonIgnore
     private City city;
 
     @Column(unique = true, nullable = false)

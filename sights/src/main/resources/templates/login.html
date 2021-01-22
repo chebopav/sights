@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{base :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{base :: layout(~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
     <title>Вход</title>
@@ -22,6 +22,6 @@
         <h4><a href="/registration">Регистрация</a></h4>
     </form>
 </section>
-
+<script src="/js/test.js" th:src="@{/js/test.js}"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.project.entity.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.entity.users.User;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,15 +21,19 @@ public class Comment {
     private User user;
 
     @ManyToMany(mappedBy = "comments")
+    @JsonIgnore
     private Set<Museum> museums;
 
     @ManyToMany(mappedBy = "comments")
+    @JsonIgnore
     private Set<Sight> sights;
 
     @ManyToMany(mappedBy = "comments")
+    @JsonIgnore
     private Set<Excursion> excursions;
 
     @ManyToMany(mappedBy = "comments")
+    @JsonIgnore
     private Set<Theater> theaters;
 
     public long getId() {

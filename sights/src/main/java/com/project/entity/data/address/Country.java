@@ -1,5 +1,6 @@
 package com.project.entity.data.address;
 
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Country {
     private String name;
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private Set<City> cities = new HashSet<>();
 
     public Country() {

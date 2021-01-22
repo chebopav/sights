@@ -1,5 +1,6 @@
 package com.project.entity.data.address;
 
+import com.fasterxml.jackson.annotation.*;
 import com.project.entity.data.Excursion;
 import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;
@@ -21,18 +22,23 @@ public class City {
     private String name;
 
     @ManyToOne
+    @JsonIgnore
     private Country country;
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private Set<Museum> museums = new HashSet<>();
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private Set<Sight> sights = new HashSet<>();
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private Set<Excursion> excursions = new HashSet<>();
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private Set<Theater> theaters = new HashSet<>();
 
     public City() {

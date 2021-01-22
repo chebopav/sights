@@ -27,7 +27,6 @@ public class CitiesByCountryController {
         } catch (DataException e) {
             e.printStackTrace();
         }
-        System.out.println(cityList);
         return cityList;
     }
 }
