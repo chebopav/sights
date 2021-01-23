@@ -101,12 +101,10 @@ public class AfishaUpdate implements Runnable{
         try {
             theater = theaterService.getTheaterByName(theaterName);
         } catch (DataException e) {
-            e.printStackTrace();
-        }
-        if (theater == null){
-            theater = new Theater();
-            theater.setName(theaterName);
-            theater.setCity(cityService.getCityByName("Санкт-Петербург"));
+            City city = cityService.getCityByName("Санкт-Петербург");
+            theater = new Theater(theaterName, city);
+            theaterService.addTheater(theater);
+            cityService.updateCity(city);
         }
 
         Event event = new Event(eventName, theater);

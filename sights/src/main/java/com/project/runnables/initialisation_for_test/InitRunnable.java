@@ -2,6 +2,7 @@ package com.project.runnables.initialisation_for_test;
 
 import com.project.entity.data.Museum;
 import com.project.entity.data.NeedDate;
+import com.project.entity.data.Sight;
 import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
 import com.project.entity.users.Role;
@@ -9,10 +10,7 @@ import com.project.entity.users.User;
 import com.project.exceptions.DataException;
 import com.project.repository.NeedDateRepository;
 import com.project.repository.RoleRepository;
-import com.project.services.CityService;
-import com.project.services.CountryService;
-import com.project.services.MuseumService;
-import com.project.services.UserService;
+import com.project.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +20,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @Component
-public class TestRunnable implements Runnable{
+public class InitRunnable implements Runnable{
 
     @Autowired
     private ApplicationContext context;
@@ -70,9 +68,21 @@ public class TestRunnable implements Runnable{
             e.printStackTrace();
         }
 
+        Sight sight = new Sight();
+        sight.setName("Медный всадник");
+        sight.setCity(spb);
+        sight.setDescription("Памятник Петру I, расположенный на Сенатской площади");
+        sight.setFullAddress("Санкт-Петербург, Сенатская площадь");
+        SightService sightService = context.getBean(SightService.class);
+        try {
+            sightService.addSight(sight);
+        } catch (DataException e) {
+            e.printStackTrace();
+        }
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String pwd = "admin";
-        User superUser = new User("admin", encoder.encode(pwd), "admin@mail.ru", "Admin");
+        User superUser = new User("admin", encoder.encode(pwd), "chebopav@bk.ru", "Admin");
         superUser.getRoles().add(admin);
         superUser.getRoles().add(user);
         UserService userService = context.getBean(UserService.class);

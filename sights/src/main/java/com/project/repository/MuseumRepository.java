@@ -20,4 +20,7 @@ public interface MuseumRepository extends PagingAndSortingRepository<Museum, Lon
 
     @Query(nativeQuery = true, value = "SELECT * FROM museum WHERE city_id = :id ORDER BY RANDOM() LIMIT 1")
     public Museum getRandomMuseumForCity(@Param("id") int cityId);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM museum ORDER BY RANDOM() LIMIT 1")
+    public Museum getRandomMuseumFromAll();
 }
