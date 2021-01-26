@@ -2,8 +2,11 @@ package com.project.runnables.remove_old;
 
 import com.project.entity.afisha.Event;
 import com.project.entity.data.Excursion;
+import com.project.entity.data.NeedDate;
 import com.project.repository.EventRepository;
 import com.project.repository.ExcursionRepository;
+import com.project.repository.NeedDateRepository;
+import com.project.services.NeedDateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -19,14 +22,25 @@ public class RemoverRunnable implements Runnable{
 
     @Override
     public void run() {
-        List<Event> events = context.getBean(EventRepository.class).getAllEventsToDate(LocalDate.now().minus(1, ChronoUnit.DAYS));
-        List<Excursion> excursions = context.getBean(ExcursionRepository.class).getAllEventsToDate(LocalDate.now().minus(1, ChronoUnit.DAYS));
+        LocalDate forRemove = LocalDate.now().minus(1, ChronoUnit.DAYS);
+        NeedDate removeDate = context.getBean(NeedDateService.class).getNeedDateByDate(forRemove);
+        List<Event> events = context.getBean(EventRepository.class).getAllEventsToDate(forRemove);
+        List<Excursion> excursions = context.getBean(ExcursionRepository.class).getAllEventsToDate(forRemove);
         for (Excursion excursion : excursions) {
-            context.getBean(ExcursionRepository.class).delete(excursion);
+            if (excursion.getDates().size() == 1) {
+                context.getBean(ExcursionRepository.class).delete(excursion);
+            } else {
+                excursion.getDates().remove(removeDate);
+            }
         }
 
         for (Event event : events) {
-            context.getBean(EventRepository.class).delete(event);
+            if (event.getDates().size() == 1) {
+                context.getBean(EventRepository.class).delete(event);
+            } else {
+                event.getDates().remove(removeDate);
+            }
         }
+        context.getBean(NeedDateRepository.class).delete(removeDate);
     }
 }
