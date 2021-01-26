@@ -1,9 +1,6 @@
 package com.project.entity.data;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.project.entity.data.address.City;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -88,13 +85,6 @@ public abstract class BaseData {
         this.rateCount = rateCount;
     }
 
-    public void addRating(int newRating){
-        if (newRating < 0 || newRating > 5){
-            throw new IllegalArgumentException("Некорректная оценка");
-        }
-        this.rating = ((this.rating * rateCount) + newRating) / (rateCount + 1);
-    }
-
     public String getName() {
         return name;
     }
@@ -103,5 +93,16 @@ public abstract class BaseData {
         if (name == null || name.trim().length() < 3)
             throw new IllegalArgumentException("Некорректное название места");
         this.name = name;
+    }
+
+    public void addRating(int newRating){
+        if (newRating < 0 || newRating > 5){
+            throw new IllegalArgumentException("Некорректная оценка");
+        }
+        this.rating = ((this.rating * rateCount) + newRating) / (rateCount + 1);
+    }
+
+    public double getRatingForPrint(){
+        return Math.ceil(rating * 100) / 100;
     }
 }

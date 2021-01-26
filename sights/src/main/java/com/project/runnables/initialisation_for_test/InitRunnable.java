@@ -25,7 +25,6 @@ public class InitRunnable implements Runnable{
     @Autowired
     private ApplicationContext context;
 
-
     @Override
     public void run() {
         CountryService countryService = context.getBean(CountryService.class);

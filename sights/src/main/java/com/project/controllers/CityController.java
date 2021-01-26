@@ -52,7 +52,6 @@ public class CityController {
     public String addCity(@ModelAttribute("city") @Valid City city,
                           BindingResult bindingResult,
                           @RequestParam(name = "countryId") int countryId, Model model) {
-        System.out.println(bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("countries", countryRepository.findAll());
             return "add_city";
