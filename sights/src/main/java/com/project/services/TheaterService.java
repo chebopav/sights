@@ -5,7 +5,6 @@ import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

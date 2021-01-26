@@ -9,10 +9,7 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * Базовый класс для всех мест
- * (в БД таблица не добавляется, но у всех наследников будут такие поля)
- */
+
 @MappedSuperclass
 public abstract class BaseData {
     @Id

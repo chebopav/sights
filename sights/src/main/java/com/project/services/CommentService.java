@@ -1,8 +1,6 @@
 package com.project.services;
 
 import com.project.entity.data.Comment;
-import com.project.entity.data.address.City;
-import com.project.entity.data.address.Country;
 import com.project.entity.users.User;
 import com.project.exceptions.DataException;
 import com.project.repository.CommentRepository;
@@ -12,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

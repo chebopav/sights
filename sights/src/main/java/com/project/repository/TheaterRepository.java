@@ -1,7 +1,6 @@
 package com.project.repository;
 
 import com.project.entity.data.Theater;
-import com.project.entity.data.address.City;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;

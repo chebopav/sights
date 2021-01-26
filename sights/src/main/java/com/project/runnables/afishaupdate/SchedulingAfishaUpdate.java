@@ -1,8 +1,6 @@
 package com.project.runnables.afishaupdate;
 
 import com.project.helpers_and_statics.Statics;
-import com.project.repository.NeedDateRepository;
-import com.project.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;

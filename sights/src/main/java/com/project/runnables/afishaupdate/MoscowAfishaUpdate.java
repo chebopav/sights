@@ -1,15 +1,8 @@
 package com.project.runnables.afishaupdate;
 
-import com.project.entity.afisha.Event;
 import com.project.entity.data.Excursion;
-import com.project.entity.data.NeedDate;
-import com.project.entity.data.Theater;
-import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.helpers_and_statics.Statics;
-import com.project.repository.NeedDateRepository;
-import com.project.repository.TheaterRepository;
-import com.project.services.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
