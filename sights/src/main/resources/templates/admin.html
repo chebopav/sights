@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Администрирование сайта</title>
+</head>
+<body>
+<section class="container m-top">
+
+    <h1>Управление разделами и записями сайта:</h1>
+    <p><a href="/countries/add">Страны</a></p>
+    <p><a href="/cities/add">Города</a></p>
+</section>
+<script src="/js/test.js" th:src="@{/js/test.js}"></script>
+</body>
+</html>
