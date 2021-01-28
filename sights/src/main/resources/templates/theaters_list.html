@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html th:replace="~{base :: layout(~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Список музеев</title>
+    <title>Список театров</title>
     <link rel="stylesheet" href="css/style.css" th:src="@{/css/style.css}">
 </head>
 <body>
 <section>
     <div class="container m-top">
-        <h1>Список музеев:</h1>
+        <h1>Список театров:</h1>
         <table class="table_list" cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td width="20%"><b>Название</b></td>
                 <td width="35%"><b>Описание</b></td>
                 <td width="20%"><b>Адрес</b></td>
-                <td width="10%"><b>Эл. почта</b></td>
                 <td width="10%"><b>Телефон</b></td>
                 <td width="5%"><b>Обзор</b></td>
             </tr>
-            <tr th:each="museum : ${museums}">
-                <td><span th:utext="${museum.name}"></span></td>
-                <td><span th:utext="${museum.description}"></span></td>
-                <td><span th:utext="${museum.fullAddress}"></span></td>
-                <td><span th:utext="${museum.email}"></span></td>
-                <td><span th:utext="${museum.phone}"></span></td>
-                <td><a th:href="@{/museums/view(id=${museum.id})}" th:action="@{/museums/view}">Подробнее</a></td>
+            <tr th:each="theater : ${theaters}">
+                <td><span th:utext="${theater.name}"></span></td>
+                <td><span th:utext="${theater.description}"></span></td>
+                <td><span th:utext="${theater.fullAddress}"></span></td>
+                <td><span th:utext="${theater.phone}"></span></td>
+                <td><a th:href="@{/theaters/view(id=${theater.id})}" th:action="@{/theaters/view}">Подробнее</a></td>
             </tr>
         </table>
     </div>

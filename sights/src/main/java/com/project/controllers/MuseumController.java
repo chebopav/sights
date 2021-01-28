@@ -96,7 +96,7 @@ public class MuseumController {
         }
         else if (placeId.trim().equalsIgnoreCase("excursion")) {
             model.addAttribute("excursions", excursionService.getAllExcursionsOfCity(cityId));
-            return "excursion_list";
+            return "excursions_list";
         }
         else {
             model.addAttribute("theaters", theaterService.getAllTheatersOfCity(cityId));

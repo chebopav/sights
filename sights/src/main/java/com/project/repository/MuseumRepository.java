@@ -15,7 +15,7 @@ public interface MuseumRepository extends PagingAndSortingRepository<Museum, Lon
     @Query(value = "SELECT m FROM Museum m WHERE m.name = :name")
     public Museum getMuseumByName(@Param("name") String name);
 
-    @Query(value = "SELECT m FROM Museum m WHERE m.city = :city")
+    @Query(value = "SELECT m FROM Museum m WHERE m.city = :city ORDER BY m.name")
     public List<Museum> getMuseumsByCity(@Param("city") City city);
 
     @Query(nativeQuery = true, value = "SELECT * FROM museum WHERE city_id = :id ORDER BY RANDOM() LIMIT 1")
