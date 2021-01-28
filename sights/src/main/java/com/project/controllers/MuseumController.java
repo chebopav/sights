@@ -2,6 +2,7 @@ package com.project.controllers;
 
 import com.project.entity.data.Museum;
 import com.project.entity.data.address.City;
+import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
 import com.project.repository.CityRepository;
 import com.project.repository.MuseumRepository;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/museums")
@@ -52,6 +54,7 @@ public class MuseumController {
         }
 
         City city = cityRepository.findById(city_id).get();
+        museum.setCity(city);
 
         try {
             museumService.addMuseum(museum);
@@ -74,10 +77,10 @@ public class MuseumController {
     }
 
     @GetMapping(value = "/list")
-    public String listMuseum(@ModelAttribute("museum") @Valid Museum museum,
-                            BindingResult bindingResult,
-                            @RequestParam("cityId") int cityId, @RequestParam("countryId") int countryId) {
-        museumService.getAllMuseumsOfCity(cityId);
+    public String listMuseum(@ModelAttribute("museum") @Valid Museum museum, Model model,
+                                   BindingResult bindingResult,
+                                   @RequestParam("cityId") int cityId, @RequestParam("countryId") int countryId) {
+        model.addAttribute(museumService.getAllMuseumsOfCity(cityId));
         return "museums_list";
     }
 }

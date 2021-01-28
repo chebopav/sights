@@ -16,15 +16,13 @@
                 <td>Эл. почта</td>
                 <td>Телефон</td>
             </tr>
-        <div th:each="museum : ${museums}">
-            <tr>
+            <tr th:each="museum : ${museums}">
                 <td><span th:utext="${museum.name}"></span></td>
                 <td><span th:utext="${museum.description}"></span></td>
                 <td><span th:utext="${museum.fullAddress}"></span></td>
                 <td><span th:utext="${museum.mail}"></span></td>
                 <td><span th:utext="${museum.phone}"></span></td>
             </tr>
-        </div>
         </table>
     </div>
 </section>
