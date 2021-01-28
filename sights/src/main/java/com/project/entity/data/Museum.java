@@ -1,15 +1,9 @@
 package com.project.entity.data;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.project.entity.data.address.City;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Museum extends BaseData {

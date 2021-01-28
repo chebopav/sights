@@ -20,7 +20,7 @@ public class Initialization {
 
     @Bean
     public void start(){
-        TestRunnable runnable = context.getBean(TestRunnable.class);
+        InitRunnable runnable = context.getBean(InitRunnable.class);
         executor.execute(runnable);
     }
 }

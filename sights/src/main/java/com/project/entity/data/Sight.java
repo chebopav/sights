@@ -1,7 +1,5 @@
 package com.project.entity.data;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.project.entity.data.address.City;
 
 import javax.persistence.Column;

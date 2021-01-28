@@ -58,7 +58,6 @@ public class ProgramController {
         Museum randomMuseum = museumService.getRandomMuseumOnCity(city);
         model.addAttribute("museum", randomMuseum);
 
-
         return "random_program";
     }
 }

@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/registration").not().fullyAuthenticated()
+                .antMatchers("/countries/add", "/cities/add").hasRole("USER") // эта строчка исключает доступ юзера к путям, которые мы прописываем в скобках
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()

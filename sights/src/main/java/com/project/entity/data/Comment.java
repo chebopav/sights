@@ -87,4 +87,5 @@ public class Comment {
     public void setTheaters(Set<Theater> theaters) {
         this.theaters = theaters;
     }
+
 }

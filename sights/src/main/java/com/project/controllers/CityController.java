@@ -3,7 +3,8 @@ package com.project.controllers;
 import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
-import com.project.repository.*;
+import com.project.repository.CityRepository;
+import com.project.repository.CountryRepository;
 import com.project.services.CityService;
 import com.project.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,6 @@ public class CityController {
     public String addCity(@ModelAttribute("city") @Valid City city,
                           BindingResult bindingResult,
                           @RequestParam(name = "countryId") int countryId, Model model) {
-        System.out.println(bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("countries", countryRepository.findAll());
             return "add_city";

@@ -1,6 +1,6 @@
 package com.project.entity.data.address;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.entity.data.Excursion;
 import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;
