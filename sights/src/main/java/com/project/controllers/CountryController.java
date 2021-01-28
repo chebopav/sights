@@ -59,9 +59,7 @@ public class CountryController {
     }
 
     @GetMapping(value = "/del")
-    public String delCountry(@ModelAttribute("country") @Valid Country country,
-                             BindingResult bindingResult,
-                             @RequestParam("id") int id) {
+    public String delCountry(@RequestParam("id") int id) {
         try {
             service.deleteCountryById(id);
         } catch (DataException e) {

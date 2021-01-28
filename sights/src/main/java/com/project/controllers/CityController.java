@@ -58,7 +58,10 @@ public class CityController {
             return "add_city";
         }
 
-        Country country = countryRepository.findById(countryId).get();
+        Country country = countryRepository.findById(countryId).orElse(null);
+        if (country == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
 
         country.getCities().add(city);
         city.setCountry(country);
@@ -68,19 +71,17 @@ public class CityController {
         try {
             cityService.addCity(city);
         } catch (DataException e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
         return "redirect:/cities/add";
     }
 
     @GetMapping(value = "/del")
-    public String delCity(@ModelAttribute("city") @Valid City city,
-                             BindingResult bindingResult,
-                             @RequestParam("id") int id) {
+    public String delCity(@RequestParam("id") int id) {
         try {
             cityService.deleteCityById(id);
         } catch (DataException e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
         return "redirect:/cities/add";
     }

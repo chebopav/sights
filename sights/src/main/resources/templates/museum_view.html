@@ -6,7 +6,7 @@
 </head>
 <body>
 <section>
-    <div class="container m-top">
+    <div class="container m-top" th:object = ${museum}>
         <h1 th:utext="${museum.name}"></h1>
         <p th:utext="${museum.description}"></p>
         <p th:utext="${museum.fullAddress}"></p>

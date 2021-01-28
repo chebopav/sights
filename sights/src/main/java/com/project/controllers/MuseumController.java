@@ -7,10 +7,12 @@ import com.project.repository.CityRepository;
 import com.project.repository.MuseumRepository;
 import com.project.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
@@ -71,21 +73,17 @@ public class MuseumController {
     }
 
     @GetMapping(value = "/del")
-    public String delMuseum(@ModelAttribute("museum") @Valid Museum museum,
-                          BindingResult bindingResult,
-                          @RequestParam("id") int id) {
+    public String delMuseum(@RequestParam("id") int id) {
         try {
             museumService.deleteMuseumById(id);
         } catch (DataException e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
         return "redirect:/museums/add";
     }
 
     @GetMapping(value = "/list")
-    public String listMuseum(@ModelAttribute("museum") @Valid Museum museum, Model model,
-                                   BindingResult bindingResult,
-                                   @RequestParam("cityId") int cityId, @RequestParam("placeId") String placeId) {
+    public String listMuseum(Model model, @RequestParam("cityId") int cityId, @RequestParam("placeId") String placeId) {
         if (placeId.trim().equalsIgnoreCase("museum")) {
             model.addAttribute("museums", museumService.getAllMuseumsOfCity(cityId));
             return "museums_list";
@@ -105,14 +103,16 @@ public class MuseumController {
     }
 
     @GetMapping(value = "/view")
-    public String viewMuseum(@ModelAttribute("museum") @Valid Museum museum, Model model,
-                             BindingResult bindingResult,
-                             @RequestParam("id") long id) {
+    public String viewMuseum(Model model, @RequestParam("id") long id) {
+        Museum museum;
         try {
-            model.addAttribute("museum", museumService.getMuseumById(id));
+            museum = museumService.getMuseumById(id).orElse(null);
         } catch (DataException e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+
+        model.addAttribute("museum", museum);
+
         return "museum_view";
     }
 }
