@@ -49,7 +49,7 @@
     <div th:each="museum : ${museums}">
         <p>
             <span th:utext="${museum.name}"></span>
-            <a th:href="@{/museums/del(id=${museum.id})}" th:action="@{/museums/del}">Удалить</a>
+            <a th:href="@{/museums/del(id=${museum.id})}" th:action="@{/museums/del}"><img th:src="@{/img/delete_icon.png}"></a>
         </p>
     </div>
 

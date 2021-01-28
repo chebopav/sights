@@ -32,7 +32,7 @@
     <div th:each="city : ${cities}">
         <p>
             <span th:utext="${city.name}"></span>
-            <a th:href="@{/cities/del(id=${city.id})}" th:action="@{/cities/del}">Удалить</a>
+            <a th:href="@{/cities/del(id=${city.id})}" th:action="@{/cities/del}"><img th:src="@{/img/delete_icon.png}"></a>
         </p>
     </div>
 

@@ -20,7 +20,7 @@
     <div th:each="country : ${countries}">
         <p>
             <span th:utext="${country.name}"></span>
-            <a th:href="@{/countries/del(id=${country.id})}" th:action="@{/countries/del}">Удалить</a>
+            <a th:href="@{/countries/del(id=${country.id})}" th:action="@{/countries/del}"><img th:src="@{/img/delete_icon.png}"></a>
         </p>
     </div>
 

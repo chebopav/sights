@@ -39,7 +39,7 @@
     <div th:each="sight : ${sights}">
         <p>
             <span th:utext="${sight.name}"></span>
-            <a th:href="@{/sights/del(id=${sight.id})}" th:action="@{/sights/del}">Удалить</a>
+            <a th:href="@{/sights/del(id=${sight.id})}" th:action="@{/sights/del}"><img th:src="@{/img/delete_icon.png}"></a>
         </p>
     </div>
 
