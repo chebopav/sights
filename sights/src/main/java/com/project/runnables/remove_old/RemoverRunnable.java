@@ -41,6 +41,7 @@ public class RemoverRunnable implements Runnable{
                 event.getDates().remove(removeDate);
             }
         }
-        context.getBean(NeedDateRepository.class).delete(removeDate);
+        if (removeDate != null)
+            context.getBean(NeedDateRepository.class).delete(removeDate);
     }
 }

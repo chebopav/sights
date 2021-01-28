@@ -20,7 +20,7 @@ public class NeedDateService {
 
     public NeedDate getNeedDateByDate(LocalDate date){
         Optional<NeedDate> needDate = repository.findById(date);
-        return needDate.get();
+        return needDate.orElse(null);
     }
 
     public void updateDate(NeedDate date){
