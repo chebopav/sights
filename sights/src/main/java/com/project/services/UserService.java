@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-    private EntityManager entityManager;
     private UserRepository repository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder encoder;

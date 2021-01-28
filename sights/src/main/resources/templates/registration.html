@@ -12,6 +12,7 @@
             <input class="form-control" id="username" placeholder="Введите логин" type="text" th:field="*{username}">
             <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
         </div>
+        <p th:if="${usernameError}" th:utext="${usernameError}"></p>
         <div class="form-group">
             <label for="password">Введите пароль</label>
             <input class="form-control"  id="password" type="password" th:field="*{password}" placeholder="Введите пароль">
@@ -37,7 +38,6 @@
             <input class="form-control"  id="phone" type="text" th:field="*{phone}" placeholder="Введите номер телефона">
             <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
         </div>
-        <p th:if="${loginError}" th:utext="${loginError}"></p>
         <div><input type="submit" class="btn btn-primary" value="Регистрация"></div>
     </form>
 </section>
