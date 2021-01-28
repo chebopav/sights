@@ -77,7 +77,7 @@ public class EventService {
     public List<Event> getAllEventsToDateInCity(NeedDate date, City city){
         List<Event> events = getAllEventsToDate(date);
         TheaterService theaterService = context.getBean(TheaterService.class);
-        List<Theater> theatersOfCity = theaterService.getAllTheatersOfCity(city);
+        List<Theater> theatersOfCity = theaterService.getAllTheatersOfCity(city.getId());
         List<Event> result = new ArrayList<>();
         for (Event event : events) {
             if(theatersOfCity.contains(event.getTheater())){

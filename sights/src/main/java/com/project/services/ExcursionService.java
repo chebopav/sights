@@ -1,9 +1,11 @@
 package com.project.services;
 
 import com.project.entity.data.Excursion;
+import com.project.entity.data.Museum;
 import com.project.entity.data.NeedDate;
 import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
+import com.project.repository.CityRepository;
 import com.project.repository.ExcursionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +21,12 @@ import java.util.Optional;
 public class ExcursionService {
 
     private ExcursionRepository repository;
+    private CityRepository cityRepository;
 
     @Autowired
-    public ExcursionService(ExcursionRepository repository) {
+    public ExcursionService(ExcursionRepository repository, CityRepository cityRepository) {
         this.repository = repository;
+        this.cityRepository = cityRepository;
     }
 
 
@@ -92,6 +96,11 @@ public class ExcursionService {
             }
         }
         return result;
+    }
+
+    public List<Excursion> getAllExcursionsOfCity(int cityId){
+        City selectedCity = cityRepository.findById(cityId).get();
+        return repository.getAllExcursionsOfCity(selectedCity);
     }
 
     public Excursion getRandomEventToDateInCity(NeedDate date, City city){

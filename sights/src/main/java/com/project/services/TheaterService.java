@@ -1,8 +1,10 @@
 package com.project.services;
 
+import com.project.entity.data.Sight;
 import com.project.entity.data.Theater;
 import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
+import com.project.repository.CityRepository;
 import com.project.repository.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,9 +19,11 @@ import java.util.Optional;
 public class TheaterService {
 
     private TheaterRepository repository;
+    private CityRepository cityRepository;
 
     @Autowired
-    public TheaterService(TheaterRepository repository) {
+    public TheaterService(TheaterRepository repository, CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
         this.repository = repository;
     }
 
@@ -73,7 +77,8 @@ public class TheaterService {
         return result;
     }
 
-    public List<Theater> getAllTheatersOfCity(City city){
-        return repository.getTheatersOfCity(city.getId());
+    public List<Theater> getAllTheatersOfCity(int cityId){
+        City selectedCity = cityRepository.findById(cityId).get();
+        return repository.getAllTheatersOfCity(selectedCity);
     }
 }
