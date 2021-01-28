@@ -1,0 +1,7 @@
+table.table_list {
+border:1px solid #666;
+}
+table.table_list td {
+border:1px solid #999;
+padding:5px;
+}

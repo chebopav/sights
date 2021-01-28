@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Главная</title>
+    <link rel="stylesheet" href="css/style.css" th:src="@{/css/style.css}">
+</head>
+<body>
+<section>
+    <div class="container m-top">
+        <h1 th:utext="${museum_view.name}"></h1>
+        <p th:utext="${museum_view.description}"></p>
+        <p th:utext="${museum_view.fullAddress}"></p>
+        <p th:utext="${museum_view.email}"></p>
+        <p th:utext="${museum_view.phone}"></p>
+    </div>
+</section>
+<script src="/js/city.js" th:src="@{/js/city.js}"></script>
+</body>
+</html>
