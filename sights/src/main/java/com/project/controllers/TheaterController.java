@@ -1,12 +1,15 @@
 package com.project.controllers;
 
-import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;
+import com.project.entity.data.Theater;
 import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.CityRepository;
 import com.project.repository.SightRepository;
-import com.project.services.*;
+import com.project.repository.TheaterRepository;
+import com.project.services.CityService;
+import com.project.services.SightService;
+import com.project.services.TheaterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -18,60 +21,60 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/sights")
-public class SightController {
+@RequestMapping("/theaters")
+public class TheaterController {
     private CityService cityService;
     private CityRepository cityRepository;
-    private SightService sightService;
-    private SightRepository sightRepository;
+    private TheaterService theaterService;
+    private TheaterRepository theaterRepository;
 
     @Autowired
-    public SightController(CityService cityService,
-                           CityRepository cityRepository,
-                           SightService sightService,
-                           SightRepository sightRepository) {
+    public TheaterController(CityService cityService,
+                             CityRepository cityRepository,
+                             TheaterService theaterService,
+                             TheaterRepository theaterRepository) {
         this.cityService = cityService;
         this.cityRepository = cityRepository;
-        this.sightService = sightService;
-        this.sightRepository = sightRepository;
+        this.theaterService = theaterService;
+        this.theaterRepository = theaterRepository;
     }
 
     @GetMapping(value = "/add")
     public String showForm(Model model){
-        model.addAttribute("sight", new Sight());
+        model.addAttribute("theater", new Theater());
         model.addAttribute("cities", cityRepository.findAll());
-        model.addAttribute("sights", sightRepository.findAll());
-        return "add_sight";
+        model.addAttribute("theaters", theaterRepository.findAll());
+        return "add_theater";
     }
 
     @PostMapping(value = "/add")
-    public String addSight(@ModelAttribute("sight") @Valid Sight sight,
-                            BindingResult bindingResult,
-                            @RequestParam(name = "city_id") int city_id, Model model) {
+    public String addTheater(@ModelAttribute("theater") @Valid Theater theater,
+                           BindingResult bindingResult,
+                           @RequestParam(name = "city_id") int city_id, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("cities", cityRepository.findAll());
-            return "add_sight";
+            return "add_theater";
         }
 
         City city = cityRepository.findById(city_id).get();
-        sight.setCity(city);
+        theater.setCity(city);
 
         try {
-            sightService.addSight(sight);
+            theaterService.addTheater(theater);
         } catch (DataException e) {
             e.printStackTrace();
         }
-        return "redirect:/sights/add";
+        return "redirect:/theaters/add";
     }
 
     @GetMapping(value = "/del")
-    public String delSight(@RequestParam("id") int id) {
+    public String delTheater(@RequestParam("id") int id) {
         try {
-            sightService.deleteSightById(id);
+            theaterService.deleteTheaterById(id);
         } catch (DataException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        return "redirect:/sights/add";
+        return "redirect:/theaters/add";
     }
 
     /*
@@ -96,15 +99,15 @@ public class SightController {
     }*/
 
     @GetMapping(value = "/view")
-    public String viewSight(Model model, @RequestParam("id") long id) {
-        Sight sight;
+    public String viewTheater(Model model, @RequestParam("id") long id) {
+        Theater theater;
         try {
-            sight = sightService.getSightById(id).orElse(null);
+            theater = theaterService.getTheaterById(id).orElse(null);
         } catch (DataException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        model.addAttribute("sight", sight);
+        model.addAttribute("theater", theater);
         /*model.addAttribute("comments", commentService.getAllCommentsById("museum", id));*/
-        return "sight_view";
+        return "theater_view";
     }
 }

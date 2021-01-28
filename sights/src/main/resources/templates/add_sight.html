@@ -6,10 +6,10 @@
 </head>
 <body>
 <section class="container m-top">
-    <h1 class="m-bottom">Для добавления достопримечательности заполните форму:</h1>
+    <h1 class="m-bottom">Для создания достопримечательности заполните форму:</h1>
     <form method="post" th:action="@{/sights/add}" th:object="${sight}">
         <div class="form-group row">
-            <label for="name" class="col-lg-2 col-form-label">Название достопримечательности: </label>
+            <label for="name" class="col-lg-2 col-form-label">Название: </label>
             <input class="col-lg-10" id="name" type="text" th:field="*{name}" placeholder="Название достопримечательности">
             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         </div>
@@ -24,18 +24,18 @@
         </div>
         <div class="form-group row">
             <label for="description" class="col-lg-2 col-form-label">Описание: </label>
-            <input class="col-lg-10" id="description" type="text" th:field="*{description}" placeholder="Описание музея">
+            <input class="col-lg-10" id="description" type="text" th:field="*{description}" placeholder="Описание достопримечательности">
             <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
         <div class="form-group row">
             <label for="fullAddress" class="col-lg-2 col-form-label">Адрес: </label>
-            <input class="col-lg-10" id="fullAddress" type="text" th:field="*{fullAddress}" placeholder="Адрес музея">
+            <input class="col-lg-10" id="fullAddress" type="text" th:field="*{fullAddress}" placeholder="Адрес достопримечательности">
             <p th:if="${#fields.hasErrors('fullAddress')}" th:errors="*{fullAddress}"></p>
         </div>
         <div id="button"><input type="submit" value="Добавить"></div>
     </form>
 
-    <h2>Список музеев: </h2>
+    <h2>Список достопримечательностей: </h2>
     <div th:each="sight : ${sights}">
         <p>
             <span th:utext="${sight.name}"></span>

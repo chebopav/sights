@@ -1,12 +1,15 @@
 package com.project.controllers;
 
-import com.project.entity.data.Museum;
+import com.project.entity.data.Excursion;
 import com.project.entity.data.Sight;
 import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.CityRepository;
+import com.project.repository.ExcursionRepository;
 import com.project.repository.SightRepository;
-import com.project.services.*;
+import com.project.services.CityService;
+import com.project.services.ExcursionService;
+import com.project.services.SightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -18,60 +21,60 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/sights")
-public class SightController {
+@RequestMapping("/excursions")
+public class ExcursionController {
     private CityService cityService;
     private CityRepository cityRepository;
-    private SightService sightService;
-    private SightRepository sightRepository;
+    private ExcursionService excursionService;
+    private ExcursionRepository excursionRepository;
 
     @Autowired
-    public SightController(CityService cityService,
+    public ExcursionController(CityService cityService,
                            CityRepository cityRepository,
-                           SightService sightService,
-                           SightRepository sightRepository) {
+                           ExcursionService excursionService,
+                           ExcursionRepository excursionRepository) {
         this.cityService = cityService;
         this.cityRepository = cityRepository;
-        this.sightService = sightService;
-        this.sightRepository = sightRepository;
+        this.excursionService = excursionService;
+        this.excursionRepository = excursionRepository;
     }
 
     @GetMapping(value = "/add")
     public String showForm(Model model){
-        model.addAttribute("sight", new Sight());
+        model.addAttribute("excursion", new Excursion());
         model.addAttribute("cities", cityRepository.findAll());
-        model.addAttribute("sights", sightRepository.findAll());
-        return "add_sight";
+        model.addAttribute("excursions", excursionRepository.findAll());
+        return "add_excursion";
     }
 
     @PostMapping(value = "/add")
-    public String addSight(@ModelAttribute("sight") @Valid Sight sight,
-                            BindingResult bindingResult,
-                            @RequestParam(name = "city_id") int city_id, Model model) {
+    public String addExcursion(@ModelAttribute("excursion") @Valid Excursion excursion,
+                           BindingResult bindingResult,
+                           @RequestParam(name = "city_id") int city_id, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("cities", cityRepository.findAll());
-            return "add_sight";
+            return "add_excursion";
         }
 
         City city = cityRepository.findById(city_id).get();
-        sight.setCity(city);
+        excursion.setCity(city);
 
         try {
-            sightService.addSight(sight);
+            excursionService.addExcursion(excursion);
         } catch (DataException e) {
             e.printStackTrace();
         }
-        return "redirect:/sights/add";
+        return "redirect:/excursions/add";
     }
 
     @GetMapping(value = "/del")
-    public String delSight(@RequestParam("id") int id) {
+    public String delExcursion(@RequestParam("id") int id) {
         try {
-            sightService.deleteSightById(id);
+            excursionService.deleteExcursionById(id);
         } catch (DataException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        return "redirect:/sights/add";
+        return "redirect:/excursions/add";
     }
 
     /*
@@ -96,15 +99,15 @@ public class SightController {
     }*/
 
     @GetMapping(value = "/view")
-    public String viewSight(Model model, @RequestParam("id") long id) {
-        Sight sight;
+    public String viewExcursion(Model model, @RequestParam("id") long id) {
+        Excursion excursion;
         try {
-            sight = sightService.getSightById(id).orElse(null);
+            excursion = excursionService.getExcursionById(id).orElse(null);
         } catch (DataException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        model.addAttribute("sight", sight);
+        model.addAttribute("excursion", excursion);
         /*model.addAttribute("comments", commentService.getAllCommentsById("museum", id));*/
-        return "sight_view";
+        return "excursion_view";
     }
 }
