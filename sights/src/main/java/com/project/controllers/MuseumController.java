@@ -72,4 +72,12 @@ public class MuseumController {
         }
         return "redirect:/museums/add";
     }
+
+    @GetMapping(value = "/list")
+    public String listMuseum(@ModelAttribute("museum") @Valid Museum museum,
+                            BindingResult bindingResult,
+                            @RequestParam("cityId") int cityId, @RequestParam("countryId") int countryId) {
+        museumService.getAllMuseumsOfCity(cityId);
+        return "museums_list";
+    }
 }

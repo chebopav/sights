@@ -2,7 +2,9 @@ package com.project.services;
 
 import com.project.entity.data.Museum;
 import com.project.entity.data.address.City;
+import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
+import com.project.repository.CityRepository;
 import com.project.repository.MuseumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +20,11 @@ import java.util.Optional;
 public class MuseumService {
 
     private MuseumRepository repository;
+    private CityRepository cityRepository;
 
     @Autowired
-    public MuseumService(MuseumRepository repository) {
+    public MuseumService(MuseumRepository repository, CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
         this.repository = repository;
     }
 
@@ -72,8 +77,9 @@ public class MuseumService {
         return result;
     }
 
-    public List<Museum> getAllMuseumsOfCity(City city){
-        return repository.getMuseumsByCity(city);
+    public List<Museum> getAllMuseumsOfCity(int cityId){
+        City selectedCity = cityRepository.findById(cityId).get();
+        return repository.getMuseumsByCity(selectedCity);
     }
 
     public Museum getRandomMuseumOnCity(City city){
