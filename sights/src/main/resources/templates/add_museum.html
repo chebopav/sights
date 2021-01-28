@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавления музея</title>
+</head>
+<body>
+<section class="container m-top">
+    <h1 class="m-bottom">Для добавления музея заполните форму:</h1>
+    <form method="post" th:action="@{/museums/add}" th:object="${museum}">
+        <div class="form-group row">
+            <label for="name" class="col-lg-2 col-form-label">Название музея: </label>
+            <input class="col-lg-10" id="name" type="text" th:field="*{name}" placeholder="Название музея">
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        </div>
+        <div class="form-group row">
+            <label for="city" class="col-lg-2 col-form-label">Город: </label>
+            <select id="city" class="col-lg-10" name="cityId">
+                <option th:each="city : ${cities}"
+                        th:value="${city.id}"
+                        th:utext="${city.name}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-lg-2 col-form-label">Описание: </label>
+            <input class="col-lg-10" id="description" type="text" th:field="*{description}" placeholder="Описание музея">
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-lg-2 col-form-label">Эл. почта: </label>
+            <input class="col-lg-10" id="email" type="text" th:field="*{email}" placeholder="Электронная почта музея">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+        <div class="form-group row">
+            <label for="full_address" class="col-lg-2 col-form-label">Адрес: </label>
+            <input class="col-lg-10" id="full_address" type="text" th:field="*{full_address}" placeholder="Адрес музея">
+            <p th:if="${#fields.hasErrors('full_address')}" th:errors="*{full_address}"></p>
+        </div>
+        <div class="form-group row">
+            <label for="phone" class="col-lg-2 col-form-label">Телефон: </label>
+            <input class="col-lg-10" id="phone" type="text" th:field="*{phone}" placeholder="Телефон музея">
+            <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+        </div>
+        <div><input type="submit" value="Добавить"></div>
+    </form>
+
+    <h2>Список музеев: </h2>
+    <div th:each="museum : ${museums}">
+        <p>
+            <span th:utext="${museum.name}"></span>
+            <a th:href="@{/museums/del(id=${museum.id})}" th:action="@{/museums/del}">Удалить</a>
+        </p>
+    </div>
+
+</section>
+<script src="/js/test.js" th:src="@{/js/test.js}"></script>
+</body>
+</html>
