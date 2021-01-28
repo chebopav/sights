@@ -1,6 +1,8 @@
 package com.project.services;
 
 import com.project.entity.data.Comment;
+import com.project.entity.data.Museum;
+import com.project.entity.data.address.City;
 import com.project.entity.users.User;
 import com.project.exceptions.DataException;
 import com.project.repository.CommentRepository;
@@ -64,5 +66,20 @@ public class CommentService {
     public List<Comment> getAllCommentsOfUser(User user){
         return null;
     }
+
+    /*public List<Comment> getAllCommentsById(String place, long id){
+        if (place.trim().equalsIgnoreCase("museum")) {
+
+        }
+        else if (place.trim().equalsIgnoreCase("sight")) {
+
+        }
+        else if (place.trim().equalsIgnoreCase("excursion")) {
+
+        }
+        else {
+
+        }
+    }*/
 
 }

@@ -8,11 +8,16 @@
 <section>
     <div class="container m-top" th:object = ${museum}>
         <h1 th:utext="${museum.name}"></h1>
+        <h3>Описание:</h3>
         <p th:utext="${museum.description}"></p>
+        <h3>Полный адрес:</h3>
         <p th:utext="${museum.fullAddress}"></p>
+        <h3>Электронная почта:</h3>
         <p th:utext="${museum.email}"></p>
+        <h3>Телефонный номер:</h3>
         <p th:utext="${museum.phone}"></p>
     </div>
+
 </section>
 <script src="/js/city.js" th:src="@{/js/city.js}"></script>
 </body>
