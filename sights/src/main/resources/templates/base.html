@@ -12,7 +12,7 @@
         <a class="navbar-brand" href="#">CITY INSIDE</a>
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/">Главная</a>
-            <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="/admin/show">Управление сайтом</a>
+            <a sec:authorize="${hasRole('ROLE_ADMIN')}" class="nav-item nav-link" href="/admin/show">Управление сайтом</a>
             <a class="nav-link" sec:authorize="isAnonymous()" href="/login">Войти</a>
             <a class="nav-link" sec:authorize="isAnonymous()" href="/registration">Регистрация</a>
             <a class="nav-link" sec:authorize="isAuthenticated()" href="/logout">Выйти</a>
