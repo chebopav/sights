@@ -42,7 +42,7 @@
             <input class="col-lg-10" id="phone" type="text" th:field="*{phone}" placeholder="Телефон музея">
             <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
         </div>
-        <div><input type="submit" value="Добавить"></div>
+        <div id="button"><input type="submit" value="Добавить"></div>
     </form>
 
     <h2>Список музеев: </h2>

@@ -32,7 +32,7 @@
             <input class="col-lg-10" id="fullAddress" type="text" th:field="*{fullAddress}" placeholder="Адрес музея">
             <p th:if="${#fields.hasErrors('fullAddress')}" th:errors="*{fullAddress}"></p>
         </div>
-        <div><input type="submit" value="Добавить"></div>
+        <div id="button"><input type="submit" value="Добавить"></div>
     </form>
 
     <h2>Список музеев: </h2>

@@ -24,7 +24,7 @@
                 <input id="name" class="col-lg-10" type="text" th:field="*{name}" placeholder="Название города">
                 <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
             </div>
-            <div><input type="submit" value="Добавить"></div>
+            <div id="button"><input type="submit" value="Добавить"></div>
         </form>
     </div>
 
