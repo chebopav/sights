@@ -7,7 +7,7 @@
 <body>
 <section class="container m-top">
     <h1 class="m-bottom">Для добавления страны заполните форму:</h1>
-    <form method="post" th:action="@{/countries/add}" th:object="${country}">
+    <form method="post" th:action="@{/admin/countries/add}" th:object="${country}">
         <div class="form-group row">
             <label for="name" class="col-lg-2 col-form-label">Название страны: </label>
             <input class="col-lg-10" id="name" type="text" th:field="*{name}" placeholder="Название страны">
@@ -20,7 +20,7 @@
     <div th:each="country : ${countries}">
         <p>
             <span th:utext="${country.name}"></span>
-            <a th:href="@{/countries/del(id=${country.id})}" th:action="@{/countries/del}"><img th:src="@{/img/delete_icon.png}"></a>
+            <a th:href="@{/admin/countries/del(id=${country.id})}" th:action="@{/admin/countries/del}"><img th:src="@{/img/delete_icon.png}"></a>
         </p>
     </div>
 

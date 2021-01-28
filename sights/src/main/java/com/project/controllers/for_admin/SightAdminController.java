@@ -1,4 +1,4 @@
-package com.project.controllers;
+package com.project.controllers.for_admin;
 
 import com.project.entity.data.Museum;
 import com.project.entity.data.Sight;
@@ -18,18 +18,18 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/sights")
-public class SightController {
+@RequestMapping("/admin/sights")
+public class SightAdminController {
     private CityService cityService;
     private CityRepository cityRepository;
     private SightService sightService;
     private SightRepository sightRepository;
 
     @Autowired
-    public SightController(CityService cityService,
-                           CityRepository cityRepository,
-                           SightService sightService,
-                           SightRepository sightRepository) {
+    public SightAdminController(CityService cityService,
+                                CityRepository cityRepository,
+                                SightService sightService,
+                                SightRepository sightRepository) {
         this.cityService = cityService;
         this.cityRepository = cityRepository;
         this.sightService = sightService;
@@ -61,7 +61,7 @@ public class SightController {
         } catch (DataException e) {
             e.printStackTrace();
         }
-        return "redirect:/sights/add";
+        return "redirect:/admin/sights/add";
     }
 
     @GetMapping(value = "/del")
@@ -71,40 +71,6 @@ public class SightController {
         } catch (DataException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        return "redirect:/sights/add";
-    }
-
-    /*
-    @GetMapping(value = "/list")
-    public String listMuseum(Model model, @RequestParam("cityId") int cityId, @RequestParam("placeId") String placeId) {
-        if (placeId.trim().equalsIgnoreCase("museum")) {
-            model.addAttribute("museums", museumService.getAllMuseumsOfCity(cityId));
-            return "museums_list";
-        }
-        else if (placeId.trim().equalsIgnoreCase("sight")) {
-            model.addAttribute("sights", sightService.getAllSightsOfCity(cityId));
-            return "sights_list";
-        }
-        else if (placeId.trim().equalsIgnoreCase("excursion")) {
-            model.addAttribute("excursions", excursionService.getAllExcursionsOfCity(cityId));
-            return "excursions_list";
-        }
-        else {
-            model.addAttribute("theaters", theaterService.getAllTheatersOfCity(cityId));
-            return "theaters_list";
-        }
-    }*/
-
-    @GetMapping(value = "/view")
-    public String viewSight(Model model, @RequestParam("id") long id) {
-        Sight sight;
-        try {
-            sight = sightService.getSightById(id).orElse(null);
-        } catch (DataException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
-        model.addAttribute("sight", sight);
-        /*model.addAttribute("comments", commentService.getAllCommentsById("museum", id));*/
-        return "sight_view";
+        return "redirect:/admin/sights/add";
     }
 }

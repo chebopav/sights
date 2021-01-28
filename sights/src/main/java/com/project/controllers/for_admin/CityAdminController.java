@@ -1,4 +1,4 @@
-package com.project.controllers;
+package com.project.controllers.for_admin;
 
 import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
@@ -20,8 +20,8 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/cities")
-public class CityController {
+@RequestMapping("/admin/cities")
+public class CityAdminController {
     private CityService cityService;
     private CountryService countryService;
     private CityRepository cityRepository;
@@ -29,11 +29,11 @@ public class CityController {
     private ApplicationContext context;
 
     @Autowired
-    public CityController(CityService cityService,
-                          CountryService countryService,
-                          CityRepository cityRepository,
-                          CountryRepository countryRepository,
-                          ApplicationContext context) {
+    public CityAdminController(CityService cityService,
+                               CountryService countryService,
+                               CityRepository cityRepository,
+                               CountryRepository countryRepository,
+                               ApplicationContext context) {
         this.cityService = cityService;
         this.countryService = countryService;
         this.cityRepository = cityRepository;
@@ -73,7 +73,7 @@ public class CityController {
         } catch (DataException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
-        return "redirect:/cities/add";
+        return "redirect:/admin/cities/add";
     }
 
     @GetMapping(value = "/del")
@@ -83,17 +83,6 @@ public class CityController {
         } catch (DataException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        return "redirect:/cities/add";
-    }
-
-    @GetMapping(value = "/all")
-    public String getAllCities(Model model, @RequestParam("page") int page, @RequestParam("size") int size){
-        try {
-            Page<City> cityPage = cityService.getPageOfCities(page, size);
-            model.addAttribute("cities", cityPage);
-        } catch (DataException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
-        return "all_cities";
+        return "redirect:/admin/cities/add";
     }
 }

@@ -1,4 +1,4 @@
-package com.project.controllers;
+package com.project.controllers.for_user;
 
 import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;

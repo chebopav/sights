@@ -1,4 +1,4 @@
-package com.project.controllers;
+package com.project.controllers.for_user;
 
 import com.project.entity.users.User;
 import com.project.services.UserService;

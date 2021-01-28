@@ -7,7 +7,7 @@
 <body>
 <section class="container m-top">
     <h1 class="m-bottom">Для создания достопримечательности заполните форму:</h1>
-    <form method="post" th:action="@{/sights/add}" th:object="${sight}">
+    <form method="post" th:action="@{/admin/sights/add}" th:object="${sight}">
         <div class="form-group row">
             <label for="name" class="col-lg-2 col-form-label">Название: </label>
             <input class="col-lg-10" id="name" type="text" th:field="*{name}" placeholder="Название достопримечательности">
@@ -39,7 +39,7 @@
     <div th:each="sight : ${sights}">
         <p>
             <span th:utext="${sight.name}"></span>
-            <a th:href="@{/sights/del(id=${sight.id})}" th:action="@{/sights/del}"><img th:src="@{/img/delete_icon.png}"></a>
+            <a th:href="@{/admin/sights/del(id=${sight.id})}" th:action="@{/admin/sights/del}"><img th:src="@{/img/delete_icon.png}"></a>
         </p>
     </div>
 

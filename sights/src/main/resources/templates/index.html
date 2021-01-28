@@ -9,7 +9,7 @@
     <div class="container m-top">
         <h1>Список мест для путешевствий:</h1>
         <div th:if="not ${countries.empty}" >
-            <form method="get" th:action="@{/museums/list}" th:object="${museum}">
+            <form method="get" th:action="@{/list}" th:object="${museum}">
                 <div class="form-group row">
                     <label for="country" class="col-lg-2 col-form-label">Страна: </label>
                     <select id="country" class="col-lg-10" name="countryId" onchange="checkParams()" >

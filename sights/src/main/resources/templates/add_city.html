@@ -9,7 +9,7 @@
     <h1 th:if="${countries.empty}" class="m-bottom">Для добавления города вначале добавьте страну</h1>
     <h1 th:if="not ${countries.empty}" class="m-bottom">Для добавления города заполните форму:</h1>
     <div th:if="not ${countries.empty}" >
-        <form  method="post" th:action="@{/cities/add}" th:object="${city}">
+        <form  method="post" th:action="@{/admin/cities/add}" th:object="${city}">
             <div class="form-group row">
                 <label for="country" class="col-lg-2 col-form-label">Страна: </label>
                 <select id="country" class="col-lg-10" name="countryId">
@@ -32,7 +32,7 @@
     <div th:each="city : ${cities}">
         <p>
             <span th:utext="${city.name}"></span>
-            <a th:href="@{/cities/del(id=${city.id})}" th:action="@{/cities/del}"><img th:src="@{/img/delete_icon.png}"></a>
+            <a th:href="@{/admin/cities/del(id=${city.id})}" th:action="@{/admin/cities/del}"><img th:src="@{/img/delete_icon.png}"></a>
         </p>
     </div>
 
