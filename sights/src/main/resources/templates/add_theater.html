@@ -14,12 +14,19 @@
             <p class="warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         </div>
         <div class="form-group row">
-            <label for="city_id" class="col-lg-2 col-form-label">Город: </label>
-            <select id="city_id" class="col-lg-10" name="city_id">
-                <option th:each="city : ${cities}"
-                        th:value="${city.id}"
-                        th:utext="${city.name}">
+            <label for="country" class="col-lg-2 col-form-label">Страна: </label>
+            <select id="country" class="col-lg-10" name="countryId" onchange="checkParams()" >
+                <option disabled selected value>Выберите страну</option>
+                <option th:each="country : ${countries}"
+                        th:value="${country.id}"
+                        th:utext="${country.name}">
                 </option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label for="city" class="col-lg-2 col-form-label">Город: </label>
+            <select id="city" class="col-lg-10" name="cityId" onchange="checkParams()" >
+
             </select>
         </div>
         <div class="form-group row">
@@ -49,6 +56,6 @@
     </div>
 
 </section>
-<script src="/js/test.js" th:src="@{/js/test.js}"></script>
+<script src="/js/city.js" th:src="@{/js/city.js}"></script>
 </body>
 </html>

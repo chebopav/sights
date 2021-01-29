@@ -4,6 +4,7 @@ import com.project.entity.data.Museum;
 import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.CityRepository;
+import com.project.repository.CountryRepository;
 import com.project.repository.MuseumRepository;
 import com.project.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,37 +20,26 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/admin/museums")
 public class MuseumAdminController {
-    private CityService cityService;
     private CityRepository cityRepository;
     private MuseumService museumService;
     private MuseumRepository museumRepository;
-    private ExcursionService excursionService;
-    private SightService sightService;
-    private TheaterService theaterService;
-    private CommentService commentService;
+    private CountryRepository countryRepository;
 
     @Autowired
-    public MuseumAdminController(CityService cityService,
-                                 CityRepository cityRepository,
+    public MuseumAdminController(CityRepository cityRepository,
                                  MuseumRepository museumRepository,
                                  MuseumService museumService,
-                                 ExcursionService excursionService,
-                                 TheaterService theaterService,
-                                 SightService sightService,
-                                 CommentService commentService) {
-        this.cityService = cityService;
+                                 CountryRepository countryRepository) {
         this.museumService = museumService;
         this.cityRepository = cityRepository;
         this.museumRepository = museumRepository;
-        this.excursionService = excursionService;
-        this.sightService = sightService;
-        this.theaterService = theaterService;
-        this.commentService = commentService;
+        this.countryRepository = countryRepository;
     }
 
     @GetMapping(value = "/add")
     public String showForm(Model model){
         model.addAttribute("museum", new Museum());
+        model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("cities", cityRepository.findAll());
         model.addAttribute("museums", museumRepository.findAll());
         return "add_museum";
@@ -58,7 +48,7 @@ public class MuseumAdminController {
     @PostMapping(value = "/add")
     public String addMuseum(@ModelAttribute("museum") @Valid Museum museum,
                           BindingResult bindingResult,
-                          @RequestParam(name = "city_id") int city_id, Model model) {
+                          @RequestParam(name = "cityId") int city_id, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("cities", cityRepository.findAll());
             return "add_museum";

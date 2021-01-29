@@ -5,6 +5,7 @@ import com.project.entity.data.Sight;
 import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.CityRepository;
+import com.project.repository.CountryRepository;
 import com.project.repository.SightRepository;
 import com.project.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,17 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/admin/sights")
 public class SightAdminController {
-    private CityService cityService;
     private CityRepository cityRepository;
     private SightService sightService;
     private SightRepository sightRepository;
+    private CountryRepository countryRepository;
 
     @Autowired
-    public SightAdminController(CityService cityService,
-                                CityRepository cityRepository,
+    public SightAdminController(CityRepository cityRepository,
                                 SightService sightService,
-                                SightRepository sightRepository) {
-        this.cityService = cityService;
+                                SightRepository sightRepository,
+                                CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
         this.cityRepository = cityRepository;
         this.sightService = sightService;
         this.sightRepository = sightRepository;
@@ -39,6 +40,7 @@ public class SightAdminController {
     @GetMapping(value = "/add")
     public String showForm(Model model){
         model.addAttribute("sight", new Sight());
+        model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("cities", cityRepository.findAll());
         model.addAttribute("sights", sightRepository.findAll());
         return "add_sight";
@@ -47,7 +49,7 @@ public class SightAdminController {
     @PostMapping(value = "/add")
     public String addSight(@ModelAttribute("sight") @Valid Sight sight,
                             BindingResult bindingResult,
-                            @RequestParam(name = "city_id") int city_id, Model model) {
+                            @RequestParam(name = "cityId") int city_id, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("cities", cityRepository.findAll());
             return "add_sight";

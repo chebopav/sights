@@ -8,14 +8,14 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">CITY INSIDE</a>
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/">Главная</a>
-            <a sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item nav-link" href="/admin/show">Управление сайтом</a>
-            <a class="nav-link" sec:authorize="isAnonymous()" href="/login">Войти</a>
-            <a class="nav-link" sec:authorize="isAnonymous()" href="/registration">Регистрация</a>
-            <a class="nav-link" sec:authorize="isAuthenticated()" href="/logout">Выйти</a>
+            <a class="nav-item nav-link active" sec:authorize="hasAuthority('ROLE_ADMIN')" href="/admin/show">Управление сайтом</a>
+            <a class="nav-item nav-link active" sec:authorize="isAnonymous()" href="/login">Войти</a>
+            <a class="nav-item nav-link active" sec:authorize="isAnonymous()" href="/registration">Регистрация</a>
+            <a class="nav-item nav-link active" sec:authorize="isAuthenticated()" href="/logout">Выйти</a>
             </li>
         </div>
     </nav>

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html th:replace="~{base :: layout(~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Главная</title>
+    <title>CITY INSIDE</title>
     <link rel="stylesheet" href="css/style.css" th:src="@{/css/style.css}">
 </head>
 <body>
 <section>
     <div class="container m-top">
         <h1>Список мест для путешевствий:</h1>
-        <div th:if="not ${countries.empty}" >
+        <div th:if="not ${countries.empty}">
             <form method="get" th:action="@{/list}" th:object="${museum}">
                 <div class="form-group row">
                     <label for="country" class="col-lg-2 col-form-label">Страна: </label>
@@ -39,19 +39,6 @@
             </form>
         </div>
     </div>
-    <script>
-    function checkParams() {
-    var country = $('#country').val();
-    var city = $('#city').val();
-    var place = $('#place').val();
-
-    if(country.length != 0 && city.length != 0 && place.length != 0) {
-    $('#submit').removeAttr('disabled');
-    } else {
-    $('#submit').attr('disabled', 'disabled');
-    }
-    }
-    </script>
 </section>
 <script src="/js/city.js" th:src="@{/js/city.js}"></script>
 </body>
