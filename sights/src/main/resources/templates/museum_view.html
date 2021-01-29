@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:replace="~{base :: layout(~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Главная</title>
+    <title th:utext="${museum.name}"></title>
     <link rel="stylesheet" href="css/style.css" th:src="@{/css/style.css}">
 </head>
 <body>
@@ -9,15 +9,18 @@
     <div class="container m-top" th:object = ${museum}>
         <h1 th:utext="${museum.name}"></h1>
         <h3>Описание:</h3>
-        <p th:utext="${museum.description}"></p>
+        <p th:if="${museum.description}" th:utext="${museum.description}"></p>
+        <p th:if="not ${museum.description}">Отсутствует информация</p>
         <h3>Полный адрес:</h3>
-        <p th:utext="${museum.fullAddress}"></p>
+        <p th:if="${museum.fullAddress}" th:utext="${museum.fullAddress}"></p>
+        <p th:if="not ${museum.fullAddress}">Отсутствует информация</p>
         <h3>Электронная почта:</h3>
-        <p th:utext="${museum.email}"></p>
+        <p th:if="${museum.email}" th:utext="${museum.email}"></p>
+        <p th:if="not ${museum.email}">Отсутствует информация</p>
         <h3>Телефонный номер:</h3>
-        <p th:utext="${museum.phone}"></p>
+        <p th:if="${museum.phone}" th:utext="${museum.phone}"></p>
+        <p th:if="not ${museum.phone}">Отсутствует информация</p>
     </div>
-
 </section>
 <script src="/js/city.js" th:src="@{/js/city.js}"></script>
 </body>
