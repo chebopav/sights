@@ -7,7 +7,7 @@
 <body>
 <section class="container m-top">
     <h1 class="m-bottom">Для добавления экскурсии заполните форму:</h1>
-    <form method="post" th:action="@{/excursions/add}" th:object="${excursion}">
+    <form method="post" th:action="@{/admin/excursions/add}" th:object="${excursion}">
         <div class="form-group row">
             <label for="name" class="col-lg-2 col-form-label">Название: </label>
             <input class="col-lg-10" id="name" type="text" th:field="*{name}" placeholder="Название экскурсии">
@@ -48,7 +48,7 @@
     <div th:each="excursion : ${excursions}">
         <p>
             <span th:utext="${excursion.name}"></span>
-            <a th:href="@{/excursions/del(id=${excursion.id})}" th:action="@{/excursions/del}"><img th:src="@{/img/delete_icon.png}"></a>
+            <a th:href="@{/admin/excursions/del(id=${excursion.id})}" th:action="@{/admin/excursions/del}"><img th:src="@{/img/delete_icon.png}"></a>
         </p>
     </div>
 

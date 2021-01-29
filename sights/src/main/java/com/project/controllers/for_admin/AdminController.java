@@ -1,4 +1,4 @@
-package com.project.controllers;
+package com.project.controllers.for_admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-
-    @Autowired
-    public AdminController() {
-    }
 
     @GetMapping(value = "/show")
     public String admin(Model model){

@@ -7,7 +7,7 @@
 <body>
 <section class="container m-top">
     <h1 class="m-bottom">Для добавления музея заполните форму:</h1>
-    <form method="post" th:action="@{/museums/add}" th:object="${museum}">
+    <form method="post" th:action="@{/admin/museums/add}" th:object="${museum}">
         <div class="form-group row">
             <label for="name" class="col-lg-2 col-form-label">Название: </label>
             <input class="col-lg-10" id="name" type="text" th:field="*{name}" placeholder="Название музея">
@@ -49,7 +49,7 @@
     <div th:each="museum : ${museums}">
         <p>
             <span th:utext="${museum.name}"></span>
-            <a th:href="@{/museums/del(id=${museum.id})}" th:action="@{/museums/del}"><img th:src="@{/img/delete_icon.png}"></a>
+            <a th:href="@{/admin/museums/del(id=${museum.id})}" th:action="@{/admin/museums/del}"><img th:src="@{/img/delete_icon.png}"></a>
         </p>
     </div>
 
