@@ -1,11 +1,9 @@
 package com.project.controllers;
 
-import com.project.entity.data.Sight;
 import com.project.entity.data.Theater;
 import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.CityRepository;
-import com.project.repository.SightRepository;
 import com.project.repository.TheaterRepository;
 import com.project.services.CityService;
 import com.project.services.SightService;
