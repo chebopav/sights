@@ -1,5 +1,6 @@
 package com.project.services;
 
+import com.project.entity.data.Comment;
 import com.project.entity.data.Museum;
 import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
