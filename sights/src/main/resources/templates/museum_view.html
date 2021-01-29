@@ -26,22 +26,22 @@
             <p th:if="${museum.comments.empty}">Комментарии отсутствуют</p>
             <ul th:if="not ${museum.comments.empty}">
                 <li th:each="comment : ${museum.comments}">
-                    <span th:utext="${comment.user.name}">: </span>
+                    <span th:utext="${comment.user.name}"></span><span>: </span>
                     <span th:utext="${comment.text}"></span>
                 </li>
             </ul>
         </div>
 
-        <form method="post" th:action="@{/museums/comment}" th:object="${comment}">
+        <!--
+        <form method="post" th:action="@{/comments/add}" th:object="${comment}">
             <h3>Написать комментарий:</h3>
             <div class="form-group row">
                 <label for="text" class="col-lg-2 col-form-label">Комментарий: </label>
-                <input class="col-lg-10" id="text" type="text" th:field="*{text}" placeholder="Текст сообщения">
+                <input class="col-lg-10" id="text" type="text" th:field="*{comment.text}" placeholder="Текст сообщения">
                 <p class="warning" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
             </div>
-            <input id="museum_id" th:field="*{museum.id}" th:uvalue="${museum.id}">
             <div id="button"><input type="submit" value="Отправить"></div>
-        </form>
+        </form>-->
 
     </div>
 </section>
