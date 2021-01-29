@@ -17,7 +17,19 @@
         <h3>Телефонный номер:</h3>
         <p th:if="${theater.phone}" th:utext="${theater.phone}"></p>
         <p th:if="not ${theater.phone}">Отсутствует информация</p>
+
+        <div id="events_list">
+            <h2>Репертуар театра:</h2>
+            <p th:if="${theater.events.empty}">Отсутствует информация</p>
+            <ul th:if="not ${theater.events.empty}">
+                <li th:each="event : ${theater.events}">
+                    <span th:utext="${event.name}"> - </span>
+                    <span th:each="date : ${event.dates}" th:utext="${date.date}"></span>
+                </li>
+            </ul>
+        </div>
     </div>
+
 </section>
 <script src="/js/city.js" th:src="@{/js/city.js}"></script>
 </body>

@@ -1,3 +1,4 @@
+/* Таблица с выводом списка места для юзера */
 table.table_list {
 border:1px solid #666;
 }
@@ -5,8 +6,17 @@ table.table_list td {
 border:1px solid #999;
 padding:5px;
 }
+/* Стандартные тэги */
 h1, h2, h3{
 padding:10px 0 10px 0;
+}
+h1{
+color:blue;
+padding-top:20px;
+padding-bottom:20px;
+}
+h3{
+font-size:24px;
 }
 form{
 margin-bottom:30px;
@@ -15,6 +25,7 @@ background-color:#87CEEB;
 border-radius:10px;
 padding:40px 60px 40px 60px;
 }
+/* Кнопка в формах */
 #button{
 text-align:center;
 }
@@ -27,10 +38,12 @@ color:#000;
 background-color:#00008B;
 color:#fff;
 }
+/* FOOTER */
 footer{
 text-align:center;
 margin-top:50px;
 }
+/* Сообщение об ошибки */
 p.warning{
 color:blue;
 }
