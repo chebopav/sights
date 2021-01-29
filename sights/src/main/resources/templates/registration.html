@@ -38,7 +38,7 @@
             <input class="form-control"  id="phone" type="text" th:field="*{phone}" placeholder="Введите номер телефона">
             <p class="warning" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
         </div>
-        <div><input type="submit" class="btn btn-primary" value="Регистрация"></div>
+        <div id="button"><input type="submit" value="Регистрация"></div>
     </form>
 </section>
 <script src="/js/test.js" th:src="@{/js/test.js}"></script>

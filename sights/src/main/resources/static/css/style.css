@@ -31,3 +31,6 @@ footer{
 text-align:center;
 margin-top:50px;
 }
+p.warning{
+color:blue;
+}
