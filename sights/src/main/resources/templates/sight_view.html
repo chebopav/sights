@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:utext="${sight.name}"></title>
+    <link rel="stylesheet" href="css/style.css" th:src="@{/css/style.css}">
+</head>
+<body>
+<section>
+    <div class="container m-top" th:object = ${sight}>
+        <h1 th:utext="${sight.name}"></h1>
+        <h3>Описание:</h3>
+        <p th:if="${sight.description}" th:utext="${sight.description}"></p>
+        <p th:if="not ${sight.description}">Отсутствует информация</p>
+        <h3>Полный адрес:</h3>
+        <p th:if="${sight.fullAddress}" th:utext="${sight.fullAddress}"></p>
+        <p th:if="not ${sight.fullAddress}">Отсутствует информация</p>
+    </div>
+</section>
+<script src="/js/city.js" th:src="@{/js/city.js}"></script>
+</body>
+</html>

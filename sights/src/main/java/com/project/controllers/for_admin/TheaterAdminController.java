@@ -4,6 +4,7 @@ import com.project.entity.data.Theater;
 import com.project.entity.data.address.City;
 import com.project.exceptions.DataException;
 import com.project.repository.CityRepository;
+import com.project.repository.CountryRepository;
 import com.project.repository.TheaterRepository;
 import com.project.services.CityService;
 import com.project.services.TheaterService;
@@ -20,25 +21,26 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/admin/theaters")
 public class TheaterAdminController {
-    private CityService cityService;
     private CityRepository cityRepository;
     private TheaterService theaterService;
     private TheaterRepository theaterRepository;
+    private CountryRepository countryRepository;
 
     @Autowired
-    public TheaterAdminController(CityService cityService,
-                                  CityRepository cityRepository,
+    public TheaterAdminController(CityRepository cityRepository,
                                   TheaterService theaterService,
-                                  TheaterRepository theaterRepository) {
-        this.cityService = cityService;
+                                  TheaterRepository theaterRepository,
+                                  CountryRepository countryRepository) {
         this.cityRepository = cityRepository;
         this.theaterService = theaterService;
         this.theaterRepository = theaterRepository;
+        this.countryRepository = countryRepository;
     }
 
     @GetMapping(value = "/add")
     public String showForm(Model model){
         model.addAttribute("theater", new Theater());
+        model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("cities", cityRepository.findAll());
         model.addAttribute("theaters", theaterRepository.findAll());
         return "add_theater";
@@ -47,7 +49,7 @@ public class TheaterAdminController {
     @PostMapping(value = "/add")
     public String addTheater(@ModelAttribute("theater") @Valid Theater theater,
                            BindingResult bindingResult,
-                           @RequestParam(name = "city_id") int city_id, Model model) {
+                           @RequestParam(name = "cityId") int city_id, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("cities", cityRepository.findAll());
             return "add_theater";

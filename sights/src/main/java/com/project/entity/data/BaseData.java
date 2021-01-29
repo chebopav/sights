@@ -102,4 +102,12 @@ public abstract class BaseData {
     public double getRatingForPrint(){
         return Math.ceil(rating * 100) / 100;
     }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 }

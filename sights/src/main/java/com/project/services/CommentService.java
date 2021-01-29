@@ -66,20 +66,4 @@ public class CommentService {
     public List<Comment> getAllCommentsOfUser(User user){
         return null;
     }
-
-    /*public List<Comment> getAllCommentsById(String place, long id){
-        if (place.trim().equalsIgnoreCase("museum")) {
-
-        }
-        else if (place.trim().equalsIgnoreCase("sight")) {
-
-        }
-        else if (place.trim().equalsIgnoreCase("excursion")) {
-
-        }
-        else {
-
-        }
-    }*/
-
 }

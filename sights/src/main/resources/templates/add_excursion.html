@@ -11,21 +11,28 @@
         <div class="form-group row">
             <label for="name" class="col-lg-2 col-form-label">Название: </label>
             <input class="col-lg-10" id="name" type="text" th:field="*{name}" placeholder="Название экскурсии">
-            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            <p class="warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         </div>
         <div class="form-group row">
-            <label for="city_id" class="col-lg-2 col-form-label">Город: </label>
-            <select id="city_id" class="col-lg-10" name="city_id">
-                <option th:each="city : ${cities}"
-                        th:value="${city.id}"
-                        th:utext="${city.name}">
+            <label for="country" class="col-lg-2 col-form-label">Страна: </label>
+            <select id="country" class="col-lg-10" name="countryId" onchange="checkParams()" >
+                <option disabled selected value>Выберите страну</option>
+                <option th:each="country : ${countries}"
+                        th:value="${country.id}"
+                        th:utext="${country.name}">
                 </option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label for="city" class="col-lg-2 col-form-label">Город: </label>
+            <select id="city" class="col-lg-10" name="cityId" onchange="checkParams()" >
+
             </select>
         </div>
         <div class="form-group row">
             <label for="description" class="col-lg-2 col-form-label">Описание: </label>
             <input class="col-lg-10" id="description" type="text" th:field="*{description}" placeholder="Описание экскурсии">
-            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+            <p class="warning" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
         <div class="form-group row">
             <label for="type" class="col-lg-2 col-form-label">Тип: </label>
@@ -39,7 +46,7 @@
         <div class="form-group row">
             <label for="startAddress" class="col-lg-2 col-form-label">Адрес старта: </label>
             <input class="col-lg-10" id="startAddress" type="text" th:field="*{startAddress}" placeholder="Адрес старта экскурсии">
-            <p th:if="${#fields.hasErrors('startAddress')}" th:errors="*{startAddress}"></p>
+            <p class="warning" th:if="${#fields.hasErrors('startAddress')}" th:errors="*{startAddress}"></p>
         </div>
         <div id="button"><input type="submit" value="Добавить"></div>
     </form>
@@ -53,6 +60,6 @@
     </div>
 
 </section>
-<script src="/js/test.js" th:src="@{/js/test.js}"></script>
+<script src="/js/city.js" th:src="@{/js/city.js}"></script>
 </body>
 </html>

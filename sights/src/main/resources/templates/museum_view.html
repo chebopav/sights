@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:replace="~{base :: layout(~{::title}, ~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Главная</title>
+    <title th:utext="${museum.name}"></title>
     <link rel="stylesheet" href="css/style.css" th:src="@{/css/style.css}">
 </head>
 <body>
@@ -9,15 +9,41 @@
     <div class="container m-top" th:object = ${museum}>
         <h1 th:utext="${museum.name}"></h1>
         <h3>Описание:</h3>
-        <p th:utext="${museum.description}"></p>
+        <p th:if="${museum.description}" th:utext="${museum.description}"></p>
+        <p th:if="not ${museum.description}">Отсутствует информация</p>
         <h3>Полный адрес:</h3>
-        <p th:utext="${museum.fullAddress}"></p>
+        <p th:if="${museum.fullAddress}" th:utext="${museum.fullAddress}"></p>
+        <p th:if="not ${museum.fullAddress}">Отсутствует информация</p>
         <h3>Электронная почта:</h3>
-        <p th:utext="${museum.email}"></p>
+        <p th:if="${museum.email}" th:utext="${museum.email}"></p>
+        <p th:if="not ${museum.email}">Отсутствует информация</p>
         <h3>Телефонный номер:</h3>
-        <p th:utext="${museum.phone}"></p>
-    </div>
+        <p th:if="${museum.phone}" th:utext="${museum.phone}"></p>
+        <p th:if="not ${museum.phone}">Отсутствует информация</p>
 
+        <div id="events_list">
+            <h2>Комментарии пользователей:</h2>
+            <p th:if="${museum.comments.empty}">Комментарии отсутствуют</p>
+            <ul th:if="not ${museum.comments.empty}">
+                <li th:each="comment : ${museum.comments}">
+                    <span th:utext="${comment.user.name}">: </span>
+                    <span th:utext="${comment.text}"></span>
+                </li>
+            </ul>
+        </div>
+
+        <form method="post" th:action="@{/museums/comment}" th:object="${comment}">
+            <h3>Написать комментарий:</h3>
+            <div class="form-group row">
+                <label for="text" class="col-lg-2 col-form-label">Комментарий: </label>
+                <input class="col-lg-10" id="text" type="text" th:field="*{text}" placeholder="Текст сообщения">
+                <p class="warning" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
+            </div>
+            <input id="museum_id" th:field="*{museum.id}" th:uvalue="${museum.id}">
+            <div id="button"><input type="submit" value="Отправить"></div>
+        </form>
+
+    </div>
 </section>
 <script src="/js/city.js" th:src="@{/js/city.js}"></script>
 </body>
