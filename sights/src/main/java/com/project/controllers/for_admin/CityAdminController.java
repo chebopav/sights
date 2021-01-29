@@ -68,10 +68,11 @@ public class CityAdminController {
 
         countryRepository.save(country);
 
-        try {
-            cityService.addCity(city);
-        } catch (DataException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        if (!cityService.saveCity(city)){
+            model.addAttribute("nameError", "Такой город уже существует");
+            model.addAttribute("cities", cityRepository.findAll());
+            model.addAttribute("countries", countryRepository.findAll());
+            return "add_city";
         }
         return "redirect:/admin/cities/add";
     }
