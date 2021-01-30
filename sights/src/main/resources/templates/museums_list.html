@@ -21,7 +21,7 @@
                 <td><span th:utext="${museum.name}"></span></td>
                 <td><span th:utext="${museum.description}"></span></td>
                 <td><span th:utext="${museum.fullAddress}"></span></td>
-                <td><span th:utext="${museum.email}"></span></td>
+                <td><a th:href="mailto:${museum.email}"><span th:utext="${museum.email}"></span></a></td>
                 <td><span th:utext="${museum.phone}"></span></td>
                 <td><a th:href="@{/museums/view(id=${museum.id})}" th:action="@{/museums/view}">Подробнее</a></td>
             </tr>
