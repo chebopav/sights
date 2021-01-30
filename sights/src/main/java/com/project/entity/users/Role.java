@@ -16,6 +16,7 @@ public class Role implements GrantedAuthority {
     @GenericGenerator(name = "increment", strategy = "increment")
     private int id;
 
+    @Column(unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "roles")

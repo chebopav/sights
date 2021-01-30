@@ -14,7 +14,7 @@ public class Country {
     @GenericGenerator(name = "increment", strategy = "increment")
     private int id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, orphanRemoval = true)
