@@ -21,6 +21,7 @@
         <p th:if="${museum.phone}" th:utext="${museum.phone}"></p>
         <p th:if="not ${museum.phone}">Отсутствует информация</p>
 
+        <!--
         <div id="events_list">
             <h2>Комментарии пользователей:</h2>
             <p th:if="${museum.comments.empty}">Комментарии отсутствуют</p>
@@ -30,7 +31,7 @@
                     <span th:utext="${comment.text}"></span>
                 </li>
             </ul>
-        </div>
+        </div>-->
 
         <!--
         <form method="post" th:action="@{/comments/add}" th:object="${comment}">

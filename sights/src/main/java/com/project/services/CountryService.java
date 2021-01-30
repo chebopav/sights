@@ -1,5 +1,6 @@
 package com.project.services;
 
+import com.project.entity.data.address.City;
 import com.project.entity.data.address.Country;
 import com.project.exceptions.DataException;
 import com.project.repository.CountryRepository;
@@ -23,6 +24,15 @@ public class CountryService {
 
     public CountryRepository getRepository() {
         return repository;
+    }
+
+    public boolean saveCountry(Country country){
+        Country loaded = repository.getCountryByName(country.getName());
+        if (loaded != null){
+            return false;
+        }
+        repository.save(country);
+        return true;
     }
 
     public Country addCountry(Country country) throws DataException {

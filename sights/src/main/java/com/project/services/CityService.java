@@ -33,7 +33,6 @@ public class CityService {
         return cityRepository;
     }
 
-    // Don't work
     public boolean saveCity(City city){
         City loaded = cityRepository.getCityByName(city.getName());
         if (loaded != null){
