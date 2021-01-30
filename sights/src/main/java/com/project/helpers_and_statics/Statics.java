@@ -44,13 +44,16 @@ public class Statics {
             theaterService.addTheater(theater);
             cityService.updateCity(city);
         }
-
-        Event event = new Event(eventName, theater);
+        Event event = eventService.getEventByName(eventName);
+        if (event == null) {
+            event = new Event(eventName, theater);
+            theater.addEvent(event);
+            theaterRepository.save(theater);
+            eventService.addEvent(event);
+        }
         event.getDates().add(needDate);
         needDate.getEvents().add(event);
-        theater.addEvent(event);
-        theaterRepository.save(theater);
-        eventService.addEvent(event);
+        eventService.updateEvent(event);
         dateService.updateDate(needDate);
     }
 
@@ -71,7 +74,11 @@ public class Statics {
         NeedDate date = dateRepository.findById(Statics.UPDATE_DATE).get();
         excursion.getDates().add(date);
         date.getExcursions().add(excursion);
-        excursionService.addExcursion(excursion);
+        try {
+            excursionService.addExcursion(excursion);
+        } catch (DataException e){
+            excursionService.updateExcursion(excursion);
+        }
         dateRepository.save(date);
     }
 

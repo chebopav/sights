@@ -92,4 +92,9 @@ public class EventService {
         return events.get((int)(Math.random() * events.size()));
     }
 
+
+    public Event getEventByName(String name){
+        return repository.getEventByName(name);
+    }
+
 }
