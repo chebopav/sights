@@ -32,6 +32,15 @@ public class CommentService {
         return repository.save(comment);
     }
 
+    public boolean saveComment(Comment comment){
+        Comment loaded = repository.getCommentByID(comment.getId());
+        if (loaded != null){
+            return false;
+        }
+        repository.save(comment);
+        return true;
+    }
+
     public Comment updateComment(Comment comment) throws DataException {
         if(!repository.existsById(comment.getId())){
             throw new DataException("Комментарий не существует");

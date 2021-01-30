@@ -34,14 +34,16 @@ public class CountryAdminController {
     }
 
     @PostMapping(value = "/add")
-    public String addCountry(@ModelAttribute("country") @Valid Country country, BindingResult bindingResult) {
+    public String addCountry(@ModelAttribute("country") @Valid Country country,
+                             BindingResult bindingResult,
+                             Model model) {
         if (bindingResult.hasErrors()) {
             return "add_country";
         }
-        try {
-            service.addCountry(country);
-        } catch (DataException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        if (!service.saveCountry(country)){
+            model.addAttribute("nameError", "Такая страна уже существует");
+            model.addAttribute("countries", repository.findAll());
+            return "add_country";
         }
         return "redirect:/admin/countries/add";
     }

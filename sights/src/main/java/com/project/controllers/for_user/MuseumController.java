@@ -2,7 +2,6 @@ package com.project.controllers.for_user;
 
 import com.project.entity.data.Museum;
 import com.project.exceptions.DataException;
-import com.project.services.CommentService;
 import com.project.services.MuseumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,13 +14,9 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/museums")
 public class MuseumController {
     private MuseumService museumService;
-    private CommentService commentService;
 
     @Autowired
-    public MuseumController(MuseumService museumService, CommentService commentService) {
-        this.museumService = museumService;
-        this.commentService = commentService;
-    }
+    public MuseumController(MuseumService museumService) { this.museumService = museumService; }
 
     public MuseumService getMuseumService() {
         return museumService;

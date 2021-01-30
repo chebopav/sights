@@ -8,8 +8,6 @@ import com.project.repository.CountryRepository;
 import com.project.services.CityService;
 import com.project.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,19 +24,16 @@ public class CityAdminController {
     private CountryService countryService;
     private CityRepository cityRepository;
     private CountryRepository countryRepository;
-    private ApplicationContext context;
 
     @Autowired
     public CityAdminController(CityService cityService,
                                CountryService countryService,
                                CityRepository cityRepository,
-                               CountryRepository countryRepository,
-                               ApplicationContext context) {
+                               CountryRepository countryRepository) {
         this.cityService = cityService;
         this.countryService = countryService;
         this.cityRepository = cityRepository;
         this.countryRepository = countryRepository;
-        this.context = context;
     }
 
     @GetMapping(value = "/add")

@@ -12,7 +12,7 @@ $(function(){
       });
       $('#city').html(citiesOptions);
     }).fail(function() {
-      alert("error");
+      alert("Для использования функций сайта выполните авторизацию");
     });
   });
 })
