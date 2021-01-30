@@ -21,6 +21,6 @@ public class Initialization {
     @Bean
     public void start(){
         InitRunnable runnable = context.getBean(InitRunnable.class);
-        executor.execute(runnable);
+        // executor.execute(runnable);
     }
 }
